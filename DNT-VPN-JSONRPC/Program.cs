@@ -1,4 +1,5 @@
 ﻿using System;
+using SoftEther.VPNServerRpc;
 
 namespace DNT_VPN_JSONRPC
 {
@@ -6,7 +7,7 @@ namespace DNT_VPN_JSONRPC
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            VpnServerRpc r = new VpnServerRpc("127.0.0.1", 88, "", "");
         }
     }
 }
