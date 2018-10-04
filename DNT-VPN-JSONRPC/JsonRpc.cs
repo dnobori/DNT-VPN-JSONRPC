@@ -167,6 +167,7 @@ namespace SoftEther.JsonRpc
             client_handler.ServerCertificateCustomValidationCallback = cert_check_proc;
 
             client = new HttpClient(client_handler, true);
+            Console.WriteLine("new HttpClient(client_handler, true);");
 
             this.base_url = url;
 
@@ -201,7 +202,9 @@ namespace SoftEther.JsonRpc
                 ret_string = await streamReader.ReadToEndAsync();
             }
 
-            JsonRpcResponse<TResult> ret = ret_string.JsonToObject<JsonRpcResponse<TResult>>();
+            Console.WriteLine($"ret: {ret_string}");
+
+            JsonRpcResponse <TResult> ret = ret_string.JsonToObject<JsonRpcResponse<TResult>>();
 
             ret.ThrowIfError();
 
