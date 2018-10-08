@@ -58,6 +58,13 @@ namespace SoftEther.JsonRpc
             };
             return JsonConvert.DeserializeObject(str, type, setting);
         }
+
+        public static void Print(this object o)
+        {
+            string str = o.ObjectToJson();
+
+            Console.WriteLine(str);
+        }
     }
 
     class JsonRpcException : Exception
@@ -202,7 +209,7 @@ namespace SoftEther.JsonRpc
                 ret_string = await streamReader.ReadToEndAsync();
             }
 
-            Console.WriteLine($"ret: {ret_string}");
+            //Console.WriteLine($"ret: {ret_string}");
 
             JsonRpcResponse <TResult> ret = ret_string.JsonToObject<JsonRpcResponse<TResult>>();
 
