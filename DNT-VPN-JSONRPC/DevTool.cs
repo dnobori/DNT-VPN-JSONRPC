@@ -254,7 +254,7 @@ namespace SoftEther.VPNServerRpc
                 funcs_gen.WriteLine();
             }
 
-            //Console.WriteLine(funcs_gen.ToString());
+            Console.WriteLine(funcs_gen.ToString());
         }
     }
 }
