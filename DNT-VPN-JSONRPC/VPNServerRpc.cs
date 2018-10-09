@@ -19,7 +19,7 @@ namespace SoftEther.VPNServerRpc
 
         public VpnServerRpc(string vpnserver_host, int vpnserver_port, string admin_password, string hub_name = null)
         {
-            rpc_client = new JsonRpcClient($"https://{vpnserver_host}:{vpnserver_port }/jsonrpc/", null);
+            rpc_client = new JsonRpcClient($"https://{vpnserver_host}:{vpnserver_port }/api/", null);
 
             /*
             LABEL_A:
@@ -47,5 +47,8 @@ namespace SoftEther.VPNServerRpc
 
             return response;
         }
+
+        public async Task<RpcServerInfo> GetServerInfoAsync() => await Call<RpcServerInfo>("GetServerInfo", new RpcServerInfo());
+        public RpcServerInfo GetServerInfo() => GetServerInfoAsync().Result;
     }
 }

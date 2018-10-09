@@ -1,7 +1,6 @@
 ﻿using System;
 using SoftEther.JsonRpc;
 using SoftEther.VPNServerRpc;
-using SoftEther.VPNServerRpc.Types;
 
 namespace DNT_VPN_JSONRPC
 {
@@ -11,9 +10,11 @@ namespace DNT_VPN_JSONRPC
         {
             VpnServerRpc r = new VpnServerRpc("127.0.0.1", 443, "", "");
 
-            RpcServerInfo a = r.Call<RpcServerInfo>("GetServerInfo", new RpcServerInfo()).Result;
+            RpcServerInfo a = r.GetServerInfoAsync().Result;
 
             a.Print();
+
+            Tools.GenCode1();
         }
     }
 }

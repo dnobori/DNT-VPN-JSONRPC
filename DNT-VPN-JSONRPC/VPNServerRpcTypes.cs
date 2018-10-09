@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SoftEther.JsonRpc;
 
-namespace SoftEther.VPNServerRpc.Types
+namespace SoftEther.VPNServerRpc
 {
     /// <summary>
     /// Type of VPN Server
