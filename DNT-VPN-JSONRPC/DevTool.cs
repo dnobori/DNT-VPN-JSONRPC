@@ -167,7 +167,7 @@ namespace SoftEther.VPNServerRpc
                                 break;
 
                             case "UINT64":
-                                w.WriteLine($"    public uint64 {name}_u64;");
+                                w.WriteLine($"    public ulong {name}_u64;");
                                 break;
 
                             case "bool":
@@ -175,7 +175,7 @@ namespace SoftEther.VPNServerRpc
                                 break;
 
                             case "UCHAR":
-                                w.WriteLine($"    public byte[] {name}_b64;");
+                                w.WriteLine($"    public byte[] {name}_bin;");
                                 break;
 
                             case "IP":
