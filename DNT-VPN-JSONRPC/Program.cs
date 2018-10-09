@@ -10,6 +10,10 @@ namespace DNT_VPN_JSONRPC
         {
             VpnServerRpc r = new VpnServerRpc("127.0.0.1", 443, "", "");
 
+            VpnRpcServerInfo a = r.GetServerInfo();
+
+            a.Print();
+
             //RpcServerInfo a = r.GetServerInfoAsync().Result;
 
             //a.Print();
