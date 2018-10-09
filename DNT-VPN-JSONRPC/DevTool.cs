@@ -103,11 +103,11 @@ namespace SoftEther.VPNServerRpc
 
                 if (string.IsNullOrEmpty(Comment) == false)
                 {
-                    w.WriteLine($"/// <summary>VPN RPC Parameter: {Comment}</summary>");
+                    w.WriteLine($"/// <summary>\r\n/// {Comment}\r\n/// </summary>");
                 }
                 else
                 {
-                    w.WriteLine($"/// <summary>VPN RPC Parameter: TODO</summary>");
+                    w.WriteLine($"/// <summary>\r\n/// TODO\r\n///</summary>");
                 }
 
                 w.WriteLine($"public class {Name}");
@@ -149,7 +149,7 @@ namespace SoftEther.VPNServerRpc
 
                         if (string.IsNullOrEmpty(comment) == false)
                         {
-                            w.WriteLine($"    /// <summary>{comment}</summary>");
+                            w.WriteLine($"    /// <summary>\r\n    /// {comment}\r\n    /// </summary>");
                         }
 
                         switch (type)
@@ -383,15 +383,15 @@ namespace SoftEther.VPNServerRpc
             foreach (var item in funcs.Values)
             {
                 if (string.IsNullOrEmpty(item.Comment.Value) == false)
-                    funcs_gen.WriteLine($"/// <summary>VPN RPC: {item.Comment.Value} (Async mode)</summary>");
+                    funcs_gen.WriteLine($"/// <summary>\r\n/// {item.Comment.Value} (Async mode)\r\n/// </summary>");
                 else
-                    funcs_gen.WriteLine($"/// <summary>VPN RPC: TODO (Async mode)</summary>");
+                    funcs_gen.WriteLine($"/// <summary>\r\n/// TODO (Async mode)\r\n/// </summary>");
                 funcs_gen.WriteLine($"public async Task<{item.TypeName}> {item.FuncName}Async() => await Call<{item.TypeName}>(\"{item.FuncName}\", new {item.TypeName}());");
                 funcs_gen.WriteLine();
                 if (string.IsNullOrEmpty(item.Comment.Value) == false)
-                    funcs_gen.WriteLine($"/// <summary>VPN RPC: {item.Comment.Value} (Sync mode)</summary>");
+                    funcs_gen.WriteLine($"/// <summary>\r\n/// {item.Comment.Value} (Sync mode)\r\n/// </summary>");
                 else
-                    funcs_gen.WriteLine($"/// <summary>VPN RPC: TODO (Sync mode)</summary>");
+                    funcs_gen.WriteLine($"/// <summary>\r\n/// TODO (Sync mode)\r\n/// </summary>");
                 funcs_gen.WriteLine($"public {item.TypeName} {item.FuncName}() => {item.FuncName}Async().Result;");
                 funcs_gen.WriteLine();
 
