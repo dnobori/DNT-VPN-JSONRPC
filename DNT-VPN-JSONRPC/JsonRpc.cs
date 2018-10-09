@@ -63,6 +63,8 @@ namespace SoftEther.JsonRpc
         {
             string str = o.ObjectToJson();
 
+            if (o is string) str = (string)o;
+
             Console.WriteLine(str);
         }
     }

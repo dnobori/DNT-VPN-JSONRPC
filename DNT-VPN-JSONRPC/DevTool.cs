@@ -13,11 +13,40 @@ using SoftEther.JsonRpc;
 
 namespace SoftEther.VPNServerRpc
 {
+
+    // Ref クラス
+    public class Ref<T>
+    {
+        public Ref() : this(default(T)) { }
+        public Ref(T value)
+        {
+            Value = value;
+        }
+
+        public T Value { get; set; }
+        public void Set(T value) => this.Value = value;
+        public T Get() => this.Value;
+        public override string ToString() => Value?.ToString() ?? null;
+
+        public override bool Equals(object obj)
+        {
+            var @ref = obj as Ref<T>;
+            return @ref != null &&
+                   EqualityComparer<T>.Default.Equals(Value, @ref.Value);
+        }
+
+        public override int GetHashCode()
+        {
+            return -1937169414 + EqualityComparer<T>.Default.GetHashCode(Value);
+        }
+    }
+
+
     public static class Tools
     {
         public static string TypeNameConv(string name)
         {
-            string[] tokens = name.Split('_');
+            string[] tokens = name.Split('_', StringSplitOptions.RemoveEmptyEntries);
 
             string ret = "";
 
@@ -45,23 +74,130 @@ namespace SoftEther.VPNServerRpc
                 ret += s;
             }
 
+            /*if (ret.StartsWith("Rpc") == false)
+            {
+                ret = "Rpc" + ret;
+            }*/
+
+            ret = "Vpn" + ret;
+
             return ret;
         }
 
         class CStruct
         {
             public string OrigName = "";
+            public string Name = "";
 
             [JsonIgnore]
             public StringWriter Body = new StringWriter();
 
             public string BodyStr => Body.ToString();
             public string Comment = "";
+
+            public override string ToString()
+            {
+                StringWriter w = new StringWriter();
+
+                StringReader r = new StringReader(this.BodyStr);
+
+                if (string.IsNullOrEmpty(Comment) == false)
+                {
+                    w.WriteLine($"/// <summary>VPN RPC Parameter: {Comment}</summary>");
+                }
+                else
+                {
+                    w.WriteLine($"/// <summary>VPN RPC Parameter: TODO</summary>");
+                }
+
+                w.WriteLine($"public class {Name}");
+                w.WriteLine("{");
+
+                int num = 0;
+
+                while (true)
+                {
+                    string line = r.ReadLine();
+                    if (line == null)
+                    {
+                        break;
+                    }
+                    line = line.Trim();
+
+                    string comment = "";
+
+                    int comment_index = line.IndexOf("//");
+                    if (comment_index != -1)
+                    {
+                        comment = line.Substring(comment_index + 2).Trim();
+                        line = line.Substring(0, comment_index).Trim();
+                    }
+
+                    string[] tokens = line.Split(new char[] { ' ', '\t', '[', '*', ';', }, StringSplitOptions.RemoveEmptyEntries);
+
+                    if (tokens.Length >= 2)
+                    {
+                        num++;
+
+                        string type = tokens[0];
+                        string name = tokens[1];
+
+                        if (num >= 2)
+                        {
+                            w.WriteLine();
+                        }
+
+                        if (string.IsNullOrEmpty(comment) == false)
+                        {
+                            w.WriteLine($"    /// <summary>{comment}</summary>");
+                        }
+
+                        switch (type)
+                        {
+                            case "char":
+                                w.WriteLine($"    public string {name}_str;");
+                                break;
+
+                            case "wchar_t":
+                                w.WriteLine($"    public string {name}_utf;");
+                                break;
+
+                            case "UINT":
+                                w.WriteLine($"    public uint {name}_u32;");
+                                break;
+
+                            case "UINT64":
+                                w.WriteLine($"    public uint64 {name}_u64;");
+                                break;
+
+                            case "bool":
+                                w.WriteLine($"    public bool {name}_bool;");
+                                break;
+
+                            case "UCHAR":
+                                w.WriteLine($"    public byte[] {name}_b64;");
+                                break;
+
+                            case "IP":
+                                w.WriteLine($"    public string {name}_ip;");
+                                break;
+
+                            default:
+                                w.WriteLine($"    // TODO: {line}");
+                                break;
+                        }
+                    }
+                }
+
+                w.WriteLine("}");
+
+                return w.ToString();
+            }
         }
 
         public static void GenCode1()
         {
-            SortedList<string, (string FuncName, string TypeName, string OrigFuncName, string Comment)> funcs = new SortedList<string, (string FuncName, string TypeName, string OrigFuncName, string Comment)>();
+            SortedList<string, (string FuncName, string TypeName, string OrigFuncName, Ref<string> Comment)> funcs = new SortedList<string, (string FuncName, string TypeName, string OrigFuncName, Ref<string> Comment)>();
             Dictionary<string, string> type_name_conv_table = new Dictionary<string, string>();
             Dictionary<string, CStruct> struct_defs = new Dictionary<string, CStruct>();
 
@@ -94,24 +230,24 @@ namespace SoftEther.VPNServerRpc
                     continue;
                 }
 
-                int comment_index = line.IndexOf("//");
+                /*int comment_index = line.IndexOf("//");
 
                 if (comment_index != -1)
                 {
                     line = line.Substring(0, comment_index);
-                }
+                }*/
 
                 string[] tokens = line.Split(new char[] { ' ', '\t', }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (tokens.Length == 2 && tokens[0] == "struct")
                 {
-                    cs = new CStruct() { OrigName = tokens[1], Comment = last_comment };
+                    cs = new CStruct() { OrigName = tokens[1], Name = TypeNameConv(tokens[1]), Comment = last_comment };
                 }
                 else if (line == "};")
                 {
                     if (cs != null)
                     {
-                        struct_defs[cs.OrigName] = cs;
+                        struct_defs[cs.Name] = cs;
                     }
                     cs = null;
                 }
@@ -160,12 +296,6 @@ namespace SoftEther.VPNServerRpc
                                 string type_name_orig = s2.Substring(0, i);
                                 string type_name = TypeNameConv(type_name_orig);
 
-                                if (type_name.StartsWith("Rpc") == false)
-                                {
-                                    type_name = "Rpc" + type_name;
-                                }
-
-                                type_name = "Vpn" + type_name;
 
                                 //Console.WriteLine(type_name);
 
@@ -175,7 +305,7 @@ namespace SoftEther.VPNServerRpc
 
                                 string orig_func_name = s3.Substring(0, i).Trim();
 
-                                funcs[func_name] = (func_name, type_name, orig_func_name, "");
+                                funcs[func_name] = (func_name, type_name, orig_func_name, new Ref<string>(""));
 
                                 type_name_conv_table[type_name] = type_name_orig;
                             }
@@ -232,10 +362,9 @@ namespace SoftEther.VPNServerRpc
                         {
                             if (string.IsNullOrEmpty(last_comment) == false)
                             {
-                                var t2 = t;
-                                t2.Comment = last_comment;
+                                t.Comment.Set(last_comment);
 
-                                Console.WriteLine($"{t2.OrigFuncName} = {t2.Comment}");
+                                //Console.WriteLine($"{t2.OrigFuncName} = {t2.Comment}");
                             }
                         }
                     }
@@ -247,14 +376,57 @@ namespace SoftEther.VPNServerRpc
 
             StringWriter funcs_gen = new StringWriter();
 
+            StringWriter structs_gen = new StringWriter();
+
+            HashSet<string> structs_exists = new HashSet<string>();
+
             foreach (var item in funcs.Values)
             {
+                if (string.IsNullOrEmpty(item.Comment.Value) == false)
+                    funcs_gen.WriteLine($"/// <summary>VPN RPC: {item.Comment.Value} (Async mode)</summary>");
+                else
+                    funcs_gen.WriteLine($"/// <summary>VPN RPC: TODO (Async mode)</summary>");
                 funcs_gen.WriteLine($"public async Task<{item.TypeName}> {item.FuncName}Async() => await Call<{item.TypeName}>(\"{item.FuncName}\", new {item.TypeName}());");
+                funcs_gen.WriteLine();
+                if (string.IsNullOrEmpty(item.Comment.Value) == false)
+                    funcs_gen.WriteLine($"/// <summary>VPN RPC: {item.Comment.Value} (Sync mode)</summary>");
+                else
+                    funcs_gen.WriteLine($"/// <summary>VPN RPC: TODO (Sync mode)</summary>");
                 funcs_gen.WriteLine($"public {item.TypeName} {item.FuncName}() => {item.FuncName}Async().Result;");
                 funcs_gen.WriteLine();
+
+                var st = struct_defs[item.TypeName];
+
+                if (structs_exists.Contains(st.OrigName) == false)
+                {
+                    structs_exists.Add(st.OrigName);
+                    structs_gen.WriteLine(st.ToString());
+                }
             }
 
-            Console.WriteLine(funcs_gen.ToString());
+            string code_all_funcs = funcs_gen.ToString();
+
+            string code_used_structs = structs_gen.ToString();
+
+            StringWriter structs_gen_all = new StringWriter();
+
+            foreach (var st in struct_defs.Values)
+            {
+                structs_gen_all.WriteLine(st.ToString());
+            }
+
+            string code_all_structs = structs_gen_all.ToString();
+
+            //Console.WriteLine(code_used_structs);
+
+            //struct_defs["RPC_LOCALBRIDGE"].ToString().Print();
+
+            string dir = @"c:\tmp\vpnrpc";
+            try { Directory.CreateDirectory(dir); } catch { };
+
+            File.WriteAllText(Path.Combine(dir, "code_all_funcs.cs"), code_all_funcs);
+            File.WriteAllText(Path.Combine(dir, "code_used_structs.cs"), code_used_structs);
+            File.WriteAllText(Path.Combine(dir, "code_all_structs.cs"), code_all_structs);
         }
     }
 }
