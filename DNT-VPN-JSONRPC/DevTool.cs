@@ -197,6 +197,7 @@ namespace SoftEther.VPNServerRpc
 
         public static void GenCode1()
         {
+            List<string> rpc_seqs = new List<string>();
             SortedList<string, (string FuncName, string TypeName, string OrigFuncName, Ref<string> Comment)> funcs = new SortedList<string, (string FuncName, string TypeName, string OrigFuncName, Ref<string> Comment)>();
             Dictionary<string, string> type_name_conv_table = new Dictionary<string, string>();
             Dictionary<string, CStruct> struct_defs = new Dictionary<string, CStruct>();
@@ -308,6 +309,8 @@ namespace SoftEther.VPNServerRpc
                                 funcs[func_name] = (func_name, type_name, orig_func_name, new Ref<string>(""));
 
                                 type_name_conv_table[type_name] = type_name_orig;
+
+                                rpc_seqs.Add(func_name);
                             }
                         }
                     }
@@ -380,8 +383,14 @@ namespace SoftEther.VPNServerRpc
 
             HashSet<string> structs_exists = new HashSet<string>();
 
-            foreach (var item in funcs.Values)
+            StringWriter test_gen = new StringWriter();
+
+            StringWriter testcall_gen = new StringWriter();
+
+            foreach (string func_name in rpc_seqs)
             {
+                var item = funcs[func_name];
+
                 if (string.IsNullOrEmpty(item.Comment.Value) == false)
                     funcs_gen.WriteLine($"/// <summary>\r\n/// {item.Comment.Value} (Async mode)\r\n/// </summary>");
                 else
@@ -402,13 +411,36 @@ namespace SoftEther.VPNServerRpc
                     structs_exists.Add(st.OrigName);
                     structs_gen.WriteLine(st.ToString());
                 }
+
+                test_gen.WriteLine($"/// <summary>");
+                test_gen.WriteLine($"/// API test for '{func_name}', {(string.IsNullOrEmpty(item.Comment.Value) ? "TODO" : item.Comment.Value)}");
+                test_gen.WriteLine($"/// </summary>");
+                test_gen.WriteLine($"public void Test_{func_name}()");
+                test_gen.WriteLine("{");
+                test_gen.WriteLine($"    Console.WriteLine(\"Begin: Test_{func_name}\");");
+                test_gen.WriteLine($"    ");
+                test_gen.WriteLine($"    // {st.Name} in_{st.OrigName.ToLowerInvariant()} = new {st.Name}();");
+                test_gen.WriteLine($"    {st.Name} out_{st.OrigName.ToLowerInvariant()} = Rpc.{func_name}();");
+                test_gen.WriteLine($"    ");
+                test_gen.WriteLine($"    print_object(out_{st.OrigName.ToLowerInvariant()});");
+                test_gen.WriteLine("    ");
+                test_gen.WriteLine($"    Console.WriteLine(\"End: Test_{func_name}\");");
+                test_gen.WriteLine($"    Console.WriteLine(\"-----\");");
+                test_gen.WriteLine($"    Console.WriteLine();");
+                test_gen.WriteLine("}");
+                test_gen.WriteLine();
+
+                testcall_gen.WriteLine($"Test_{func_name}();");
             }
 
             string code_all_funcs = funcs_gen.ToString();
 
+            string test_all = test_gen.ToString();
+
             string code_used_structs = structs_gen.ToString();
 
             StringWriter structs_gen_all = new StringWriter();
+
 
             foreach (var st in struct_defs.Values)
             {
@@ -427,6 +459,8 @@ namespace SoftEther.VPNServerRpc
             File.WriteAllText(Path.Combine(dir, "code_all_funcs.cs"), code_all_funcs);
             File.WriteAllText(Path.Combine(dir, "code_used_structs.cs"), code_used_structs);
             File.WriteAllText(Path.Combine(dir, "code_all_structs.cs"), code_all_structs);
+            File.WriteAllText(Path.Combine(dir, "test.cs"), test_all);
+            File.WriteAllText(Path.Combine(dir, "testcall.cs"), testcall_gen.ToString());
         }
     }
 }

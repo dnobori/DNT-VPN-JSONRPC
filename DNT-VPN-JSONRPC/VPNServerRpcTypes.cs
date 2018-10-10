@@ -829,17 +829,12 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// List of listeners *
+    /// List of listeners item
     /// </summary>
-    public class VpnRpcListenerList
+    public class VpnRpcListenerListItem
     {
         /// <summary>
-        /// Number of ports
-        /// </summary>
-        public uint NumPort_u32;
-
-        /// <summary>
-        /// Port List
+        /// Port number
         /// </summary>
         public uint Ports_u32;
 
@@ -849,9 +844,20 @@ namespace SoftEther.VPNServerRpc
         public bool Enables_bool;
 
         /// <summary>
-        /// An error occurred
+        /// If error occurred
         /// </summary>
         public bool Errors_bool;
+    }
+
+    /// <summary>
+    /// List of listeners
+    /// </summary>
+    public class VpnRpcListenerList
+    {
+        /// <summary>
+        /// List of listener items
+        /// </summary>
+        public VpnRpcListenerListItem[] ListenerList;
     }
 
     /// <summary>
@@ -1403,7 +1409,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Type of server
         /// </summary>
-        public uint ServerType_u32;
+        public VpnRpcServerType ServerType_u32;
 
         /// <summary>
         /// Number of public ports
@@ -1413,12 +1419,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Public port list
         /// </summary>
-        public uint Ports_u32;
+        public uint[] Ports_u32;
 
         /// <summary>
         /// Public IP
         /// </summary>
-        public uint PublicIp_u32;
+        public string PublicIp_ip;
 
         /// <summary>
         /// Controller name
@@ -1433,7 +1439,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Member password
         /// </summary>
-        public byte[] MemberPassword_bin;
+        public string MemberPasswordPlaintext_str;
 
         /// <summary>
         /// Performance ratio
@@ -2276,7 +2282,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Type of server
         /// </summary>
-        public uint ServerType_u32;
+        public VpnRpcServerType ServerType_u32;
 
         /// <summary>
         /// Total number of TCP connections
@@ -2369,14 +2375,57 @@ namespace SoftEther.VPNServerRpc
         public uint AssignedClientLicensesTotal_u32;
 
         /// <summary>
-        /// Traffic information
+        /// Number of broadcast packets (Recv)
         /// </summary>
-        // TODO: TRAFFIC Traffic;
+        [JsonProperty("Recv.BroadcastBytes_u64")]
+        public ulong Recv_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Recv.BroadcastCount_u64")]
+        public ulong Recv_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast count (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastBytes_u64")]
+        public ulong Recv_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastCount_u64")]
+        public ulong Recv_UnicastCount_u64;
+
+        /// <summary>
+        /// Number of broadcast packets (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastBytes_u64")]
+        public ulong Send_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastCount_u64")]
+        public ulong Send_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastBytes_u64")]
+        public ulong Send_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastCount_u64")]
+        public ulong Send_UnicastCount_u64;
 
         /// <summary>
         /// Current time
         /// </summary>
-        public ulong CurrentTime_u64;
+        public DateTime CurrentTime_dt;
 
         /// <summary>
         /// Current tick
@@ -2386,12 +2435,37 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Start-up time
         /// </summary>
-        public ulong StartTime_u64;
+        public DateTime StartTime_dt;
 
         /// <summary>
-        /// Memory information
+        /// Memory information: Total Memory
         /// </summary>
-        // TODO: MEMINFO MemInfo;
+        public ulong TotalMemory_u64;
+
+        /// <summary>
+        /// Memory information: Used Memory
+        /// </summary>
+        public ulong UsedMemory_u64;
+
+        /// <summary>
+        /// Memory information: Free Memory
+        /// </summary>
+        public ulong FreeMemory_u64;
+
+        /// <summary>
+        /// Memory information: Total Phys
+        /// </summary>
+        public ulong TotalPhys_u64;
+
+        /// <summary>
+        /// Memory information: Used Phys
+        /// </summary>
+        public ulong UsedPhys_u64;
+
+        /// <summary>
+        /// Memory information: Free Phys
+        /// </summary>
+        public ulong FreePhys_u64;
     }
 
     /// <summary>
@@ -2602,9 +2676,9 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSetPassword
     {
         /// <summary>
-        /// Hashed password
+        /// Password
         /// </summary>
-        public byte[] HashedPassword_bin;
+        public string PlainTextPassword_str;
     }
 
 }

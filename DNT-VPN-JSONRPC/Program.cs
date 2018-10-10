@@ -8,11 +8,9 @@ namespace DNT_VPN_JSONRPC
     {
         static void Main(string[] args)
         {
-            VpnServerRpc r = new VpnServerRpc("127.0.0.1", 443, "", "");
+            VPNRPCTest test = new VPNRPCTest();
 
-            VpnRpcServerInfo a = r.GetServerInfo();
-
-            a.Print();
+            test.Test_All();
 
             //RpcServerInfo a = r.GetServerInfoAsync().Result;
 
@@ -21,7 +19,7 @@ namespace DNT_VPN_JSONRPC
             //Tools.GenCode1();
 
             //VpnRpcSetUser a = new VpnRpcSetUser(){
-            
+
         }
     }
 }
