@@ -151,12 +151,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get cluster member information (Async mode)
         /// </summary>
-        public async Task<VpnRpcFarmInfo> GetFarmInfoAsync() => await Call<VpnRpcFarmInfo>("GetFarmInfo", new VpnRpcFarmInfo());
+        public async Task<VpnRpcFarmInfo> GetFarmInfoAsync(VpnRpcFarmInfo t) => await Call<VpnRpcFarmInfo>("GetFarmInfo", t);
 
         /// <summary>
         /// Get cluster member information (Sync mode)
         /// </summary>
-        public VpnRpcFarmInfo GetFarmInfo() => GetFarmInfoAsync().Result;
+        public VpnRpcFarmInfo GetFarmInfo(VpnRpcFarmInfo t) => GetFarmInfoAsync(t).Result;
 
         /// <summary>
         /// Enumerate cluster members (Async mode)
@@ -181,12 +181,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Set the server certification (Async mode)
         /// </summary>
-        public async Task<VpnRpcKeyPair> SetServerCertAsync() => await Call<VpnRpcKeyPair>("SetServerCert", new VpnRpcKeyPair());
+        public async Task<VpnRpcKeyPair> SetServerCertAsync(VpnRpcKeyPair t) => await Call<VpnRpcKeyPair>("SetServerCert", t);
 
         /// <summary>
         /// Set the server certification (Sync mode)
         /// </summary>
-        public VpnRpcKeyPair SetServerCert() => SetServerCertAsync().Result;
+        public VpnRpcKeyPair SetServerCert(VpnRpcKeyPair t) => SetServerCertAsync(t).Result;
 
         /// <summary>
         /// Get the server certification (Async mode)

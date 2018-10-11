@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Diagnostics;
 using Newtonsoft.Json;
 using SoftEther.JsonRpc;
@@ -19,29 +20,45 @@ namespace DNT_VPN_JSONRPC
 
         public void Test_All()
         {
-            Test_Test();
+            if (false)
+            {
+                Test_Test();
 
-            Test_GetServerInfo();
-            Test_GetServerStatus();
+                Test_GetServerInfo();
+                Test_GetServerStatus();
 
-            uint new_listener_port = Test_CreateListener();
-            Test_EnableListener(new_listener_port, false);
-            Test_EnumListener();
-            Test_EnableListener(new_listener_port, true);
-            Test_EnumListener();
-            Test_DeleteListener(new_listener_port);
+                uint new_listener_port = Test_CreateListener();
+                Test_EnableListener(new_listener_port, false);
+                Test_EnumListener();
+                Test_EnableListener(new_listener_port, true);
+                Test_EnumListener();
+                Test_DeleteListener(new_listener_port);
 
-            Test_SetServerPassword();
+                Test_SetServerPassword();
 
-            Test_GetFarmSetting();
+                if (false)
+                {
+                    Test_GetFarmSetting();
 
-            Test_SetFarmSetting();
-            return;
-            Test_GetFarmInfo();
-            Test_EnumFarmMember();
-            Test_GetFarmConnectionStatus();
+                    Test_SetFarmSetting();
+
+                    VpnRpcEnumFarm farm_members = Test_EnumFarmMember();
+
+                    foreach (VpnRpcEnumFarmItem farm_member in farm_members.FarmMemberList)
+                    {
+                        Test_GetFarmInfo(farm_member.Id_u32);
+                    }
+
+                    Test_GetFarmConnectionStatus();
+                }
+
+                Test_GetServerCert();
+
+            }
+
             Test_SetServerCert();
-            Test_GetServerCert();
+
+            return;
             Test_GetServerCipher();
             Test_SetServerCipher();
             Test_CreateHub();
@@ -332,7 +349,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcFarm in_rpc_farm = new VpnRpcFarm()
             {
-                ServerType_u32 = VpnRpcServerType.FarmMember,
+                ServerType_u32 = VpnRpcServerType.FarmController,
                 NumPort_u32 = 2,
                 Ports_u32 = new uint[] { 443, 444, 445 },
                 PublicIp_ip = "1.2.3.4",
@@ -370,12 +387,12 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'GetFarmInfo', Get cluster member information
         /// </summary>
-        public void Test_GetFarmInfo()
+        public void Test_GetFarmInfo(uint id)
         {
             Console.WriteLine("Begin: Test_GetFarmInfo");
 
-            // VpnRpcFarmInfo in_rpc_farm_info = new VpnRpcFarmInfo();
-            VpnRpcFarmInfo out_rpc_farm_info = Rpc.GetFarmInfo();
+            VpnRpcFarmInfo in_rpc_farm_info = new VpnRpcFarmInfo() { Id_u32 = id };
+            VpnRpcFarmInfo out_rpc_farm_info = Rpc.GetFarmInfo(in_rpc_farm_info);
 
             print_object(out_rpc_farm_info);
 
@@ -387,11 +404,10 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumFarmMember', Enumerate cluster members
         /// </summary>
-        public void Test_EnumFarmMember()
+        public VpnRpcEnumFarm Test_EnumFarmMember()
         {
             Console.WriteLine("Begin: Test_EnumFarmMember");
 
-            // VpnRpcEnumFarm in_rpc_enum_farm = new VpnRpcEnumFarm();
             VpnRpcEnumFarm out_rpc_enum_farm = Rpc.EnumFarmMember();
 
             print_object(out_rpc_enum_farm);
@@ -399,6 +415,8 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumFarmMember");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_farm;
         }
 
         /// <summary>
@@ -408,7 +426,6 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetFarmConnectionStatus");
 
-            // VpnRpcFarmConnectionStatus in_rpc_farm_connection_status = new VpnRpcFarmConnectionStatus();
             VpnRpcFarmConnectionStatus out_rpc_farm_connection_status = Rpc.GetFarmConnectionStatus();
 
             print_object(out_rpc_farm_connection_status);
@@ -425,8 +442,13 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetServerCert");
 
-            // VpnRpcKeyPair in_rpc_key_pair = new VpnRpcKeyPair();
-            VpnRpcKeyPair out_rpc_key_pair = Rpc.SetServerCert();
+            VpnRpcKeyPair in_rpc_key_pair = new VpnRpcKeyPair()
+            {
+                Cert_bin = File.ReadAllBytes(@"c:\tmp\a.cer"),
+                Key_bin = File.ReadAllBytes(@"c:\tmp\a.key"),
+            };
+
+            VpnRpcKeyPair out_rpc_key_pair = Rpc.SetServerCert(in_rpc_key_pair);
 
             print_object(out_rpc_key_pair);
 
@@ -442,7 +464,6 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetServerCert");
 
-            // VpnRpcKeyPair in_rpc_key_pair = new VpnRpcKeyPair();
             VpnRpcKeyPair out_rpc_key_pair = Rpc.GetServerCert();
 
             print_object(out_rpc_key_pair);

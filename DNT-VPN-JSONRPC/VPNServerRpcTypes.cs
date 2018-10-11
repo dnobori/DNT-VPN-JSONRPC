@@ -678,7 +678,68 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Server farm member enumeration *
+    /// Server farm members enumeration items
+    /// </summary>
+    public class VpnRpcEnumFarmItem
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public uint Id_u32;
+
+        /// <summary>
+        /// Controller
+        /// </summary>
+        public bool Controller_bool;
+
+        /// <summary>
+        /// Connection time
+        /// </summary>
+        public DateTime ConnectedTime_dt;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string Ip_ip;
+
+        /// <summary>
+        /// Host name
+        /// </summary>
+        public string Hostname_str;
+
+        /// <summary>
+        /// Point
+        /// </summary>
+        public uint Point_u32;
+
+        /// <summary>
+        /// Number of sessions
+        /// </summary>
+        public uint NumSessions_u32;
+
+        /// <summary>
+        /// Number of TCP connections
+        /// </summary>
+        public uint NumTcpConnections_u32;
+
+        /// <summary>
+        /// Number of HUBs
+        /// </summary>
+        public uint NumHubs_u32;
+
+        /// <summary>
+        /// Number of assigned client licenses
+        /// </summary>
+        public uint AssignedClientLicense_u32;
+
+        /// <summary>
+        /// Number of assigned bridge licenses
+        /// </summary>
+        public uint AssignedBridgeLicense_u32;
+    }
+
+    /// <summary>
+    /// Server farm member enumeration 
     /// </summary>
     public class VpnRpcEnumFarm
     {
@@ -690,7 +751,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Farm member list
         /// </summary>
-        // TODO: RPC_ENUM_FARM_ITEM *Farms;
+        public VpnRpcEnumFarmItem[] FarmMemberList;
     }
 
     /// <summary>
@@ -1277,7 +1338,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// IP address
         /// </summary>
-        public uint Ip_u32;
+        public string Ip_ip;
 
         /// <summary>
         /// Port number
@@ -1297,17 +1358,17 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Connection start time
         /// </summary>
-        public ulong StartedTime_u64;
+        public DateTime StartedTime_dt;
 
         /// <summary>
         /// First connection time
         /// </summary>
-        public ulong FirstConnectedTime_u64;
+        public DateTime FirstConnectedTime_dt;
 
         /// <summary>
         /// Connection time of this time
         /// </summary>
-        public ulong CurrentConnectedTime_u64;
+        public DateTime CurrentConnectedTime_dt;
 
         /// <summary>
         /// Number of trials
@@ -1324,6 +1385,23 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         public uint NumFailed_u32;
     }
+
+    /// <summary>
+    /// HUB item of each farm member
+    /// </summary>
+    public class VpnRpcFarmHub
+    {
+        /// <summary>
+        /// HUB Name
+        /// </summary>
+        public string HubName_str;
+
+        /// <summary>
+        /// Dynamic HUB
+        /// </summary>
+        public bool DynamicHub_bool;
+    }
+
 
     /// <summary>
     /// Server farm member information acquisition *
@@ -1343,12 +1421,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Connection time
         /// </summary>
-        public ulong ConnectedTime_u64;
+        public DateTime ConnectedTime_dt;
 
         /// <summary>
         /// IP address
         /// </summary>
-        public uint Ip_u32;
+        public string Ip_ip;
 
         /// <summary>
         /// Host name
@@ -1368,12 +1446,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Port
         /// </summary>
-        public uint Ports_u32;
+        public uint[] Ports_u32;
 
         /// <summary>
         /// Server certificate
         /// </summary>
-        // TODO: X *ServerCert;
+        public byte[] ServerCert_bin;
 
         /// <summary>
         /// Number of farm HUB
@@ -1383,7 +1461,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Farm HUB
         /// </summary>
-        // TODO: RPC_FARM_HUB *FarmHubs;
+        public VpnRpcFarmHub[] HubsList;
 
         /// <summary>
         /// Number of sessions
@@ -1922,12 +2000,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Certificate
         /// </summary>
-        // TODO: X *Cert;
+        public byte[] Cert_bin;
 
         /// <summary>
         /// Secret key
         /// </summary>
-        // TODO: K *Key;
+        public byte[] Key_bin;
 
         /// <summary>
         /// Flag1
