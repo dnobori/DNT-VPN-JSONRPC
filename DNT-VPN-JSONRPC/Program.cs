@@ -12,11 +12,13 @@ namespace DNT_VPN_JSONRPC
 
             test.Test_All();
 
+            //Tools.GenCode1();
+
             //RpcServerInfo a = r.GetServerInfoAsync().Result;
 
             //a.Print();
 
-            //Tools.GenCode1();
+
 
             //VpnRpcSetUser a = new VpnRpcSetUser(){
 

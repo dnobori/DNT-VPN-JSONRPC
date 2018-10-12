@@ -13,6 +13,8 @@ namespace DNT_VPN_JSONRPC
 
         Random rand = new Random();
 
+        string hub_name;
+
         public VPNRPCTest()
         {
             Rpc = new VpnServerRpc("127.0.0.1", 443, "", "");
@@ -54,40 +56,55 @@ namespace DNT_VPN_JSONRPC
 
                 Test_GetServerCert();
 
+                Test_SetServerCert();
+
+                Test_GetServerCipher();
+
+                Test_SetServerCipher();
             }
 
-            Test_SetServerCert();
+            VpnRpcEnumConnection enum_connection = Test_EnumConnection();
+            //Test_DisconnectConnection();
+            foreach (VpnRpcEnumConnectionItem connecton in enum_connection.ConnectionList)
+            {
+                Test_GetConnectionInfo(connecton.Name_str);
+            }
 
-            return;
-            Test_GetServerCipher();
-            Test_SetServerCipher();
-            Test_CreateHub();
+            //hub_name = Test_CreateHub();
+            hub_name = "TEST";
+
             Test_SetHub();
             Test_GetHub();
             Test_EnumHub();
-            Test_DeleteHub();
-            Test_GetHubRadius();
+            //Test_DeleteHub();
             Test_SetHubRadius();
-            Test_EnumConnection();
-            Test_DisconnectConnection();
-            Test_GetConnectionInfo();
+            Test_GetHubRadius();
+
+            //return;
+
             Test_SetHubOnline();
             Test_GetHubStatus();
-            Test_SetHubLog();
-            Test_GetHubLog();
+
+            VpnRpcHubLog hub_log_settings = Test_GetHubLog();
+            Test_SetHubLog(hub_log_settings);
+
             Test_AddCa();
-            Test_EnumCa();
-            Test_GetCa();
-            Test_DeleteCa();
-            Test_SetLinkOnline();
-            Test_SetLinkOffline();
-            Test_DeleteLink();
-            Test_RenameLink();
+            VpnRpcHubEnumCA enum_ca = Test_EnumCa();
+            foreach (VpnRpcHubEnumCAItem ca in enum_ca.CAList)
+            {
+                Test_GetCa(ca.Key_u32);
+                Test_DeleteCa(ca.Key_u32);
+            }
+
             Test_CreateLink();
             Test_GetLink();
             Test_SetLink();
             Test_EnumLink();
             Test_GetLinkStatus();
+            Test_SetLinkOnline();
+            Test_SetLinkOffline();
+            Test_DeleteLink();
+            Test_RenameLink();
             Test_AddAccess();
             Test_DeleteAccess();
             Test_EnumAccess();
@@ -480,7 +497,6 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetServerCipher");
 
-            // VpnRpcStr in_rpc_str = new VpnRpcStr();
             VpnRpcStr out_rpc_str = Rpc.GetServerCipher();
 
             print_object(out_rpc_str);
@@ -497,8 +513,8 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetServerCipher");
 
-            // VpnRpcStr in_rpc_str = new VpnRpcStr();
-            VpnRpcStr out_rpc_str = Rpc.SetServerCipher();
+            VpnRpcStr in_rpc_str = new VpnRpcStr() { String_str = "RC4-MD5" };
+            VpnRpcStr out_rpc_str = Rpc.SetServerCipher(in_rpc_str);
 
             print_object(out_rpc_str);
 
@@ -510,18 +526,28 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'CreateHub', Create a hub
         /// </summary>
-        public void Test_CreateHub()
+        public string Test_CreateHub()
         {
+            string hub_name = $"Test_{rand.Next(100000, 999999)}";
             Console.WriteLine("Begin: Test_CreateHub");
 
-            // VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub();
-            VpnRpcCreateHub out_rpc_create_hub = Rpc.CreateHub();
+            VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub()
+            {
+                HubName_str = hub_name,
+                HubType_u32 = VpnRpcHubType.Standalone,
+                Online_bool = true,
+                AdminPasswordPlainText_str = "microsoft",
+            };
+
+            VpnRpcCreateHub out_rpc_create_hub = Rpc.CreateHub(in_rpc_create_hub);
 
             print_object(out_rpc_create_hub);
 
             Console.WriteLine("End: Test_CreateHub");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return hub_name;
         }
 
         /// <summary>
@@ -531,8 +557,17 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHub");
 
-            // VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub();
-            VpnRpcCreateHub out_rpc_create_hub = Rpc.SetHub();
+            VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub()
+            {
+                HubName_str = hub_name,
+                AdminPasswordPlainText_str = "aho",
+                HubType_u32 = VpnRpcHubType.Standalone,
+                NoEnum_bool = false,
+                MaxSession_u32 = 128,
+                Online_bool = true,
+            };
+
+            VpnRpcCreateHub out_rpc_create_hub = Rpc.SetHub(in_rpc_create_hub);
 
             print_object(out_rpc_create_hub);
 
@@ -548,8 +583,12 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHub");
 
-            // VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub();
-            VpnRpcCreateHub out_rpc_create_hub = Rpc.GetHub();
+            VpnRpcCreateHub in_rpc_create_hub = new VpnRpcCreateHub()
+            {
+                HubName_str = hub_name,
+            };
+
+            VpnRpcCreateHub out_rpc_create_hub = Rpc.GetHub(in_rpc_create_hub);
 
             print_object(out_rpc_create_hub);
 
@@ -565,7 +604,6 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumHub");
 
-            // VpnRpcEnumHub in_rpc_enum_hub = new VpnRpcEnumHub();
             VpnRpcEnumHub out_rpc_enum_hub = Rpc.EnumHub();
 
             print_object(out_rpc_enum_hub);
@@ -582,8 +620,11 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteHub");
 
-            // VpnRpcDeleteHub in_rpc_delete_hub = new VpnRpcDeleteHub();
-            VpnRpcDeleteHub out_rpc_delete_hub = Rpc.DeleteHub();
+            VpnRpcDeleteHub in_rpc_delete_hub = new VpnRpcDeleteHub()
+            {
+                HubName_str = hub_name,
+            };
+            VpnRpcDeleteHub out_rpc_delete_hub = Rpc.DeleteHub(in_rpc_delete_hub);
 
             print_object(out_rpc_delete_hub);
 
@@ -599,8 +640,11 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHubRadius");
 
-            // VpnRpcRadius in_rpc_radius = new VpnRpcRadius();
-            VpnRpcRadius out_rpc_radius = Rpc.GetHubRadius();
+            VpnRpcRadius in_rpc_radius = new VpnRpcRadius()
+            {
+                HubName_str = hub_name,
+            };
+            VpnRpcRadius out_rpc_radius = Rpc.GetHubRadius(in_rpc_radius);
 
             print_object(out_rpc_radius);
 
@@ -616,8 +660,15 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHubRadius");
 
-            // VpnRpcRadius in_rpc_radius = new VpnRpcRadius();
-            VpnRpcRadius out_rpc_radius = Rpc.SetHubRadius();
+            VpnRpcRadius in_rpc_radius = new VpnRpcRadius()
+            {
+                HubName_str = hub_name,
+                RadiusServerName_str = "1.2.3.4",
+                RadiusPort_u32 = 1234,
+                RadiusSecret_str = "microsoft",
+                RadiusRetryInterval_u32 = 1000,
+            };
+            VpnRpcRadius out_rpc_radius = Rpc.SetHubRadius(in_rpc_radius);
 
             print_object(out_rpc_radius);
 
@@ -629,11 +680,10 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumConnection', Enumerate connections
         /// </summary>
-        public void Test_EnumConnection()
+        public VpnRpcEnumConnection Test_EnumConnection()
         {
             Console.WriteLine("Begin: Test_EnumConnection");
 
-            // VpnRpcEnumConnection in_rpc_enum_connection = new VpnRpcEnumConnection();
             VpnRpcEnumConnection out_rpc_enum_connection = Rpc.EnumConnection();
 
             print_object(out_rpc_enum_connection);
@@ -641,6 +691,8 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumConnection");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_connection;
         }
 
         /// <summary>
@@ -650,8 +702,11 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DisconnectConnection");
 
-            // VpnRpcDisconnectConnection in_rpc_disconnect_connection = new VpnRpcDisconnectConnection();
-            VpnRpcDisconnectConnection out_rpc_disconnect_connection = Rpc.DisconnectConnection();
+            VpnRpcDisconnectConnection in_rpc_disconnect_connection = new VpnRpcDisconnectConnection()
+            {
+                Name_str = "CID-32-5791811E91",
+            };
+            VpnRpcDisconnectConnection out_rpc_disconnect_connection = Rpc.DisconnectConnection(in_rpc_disconnect_connection);
 
             print_object(out_rpc_disconnect_connection);
 
@@ -663,12 +718,15 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'GetConnectionInfo', Get connection information
         /// </summary>
-        public void Test_GetConnectionInfo()
+        public void Test_GetConnectionInfo(string name)
         {
             Console.WriteLine("Begin: Test_GetConnectionInfo");
 
-            // VpnRpcConnectionInfo in_rpc_connection_info = new VpnRpcConnectionInfo();
-            VpnRpcConnectionInfo out_rpc_connection_info = Rpc.GetConnectionInfo();
+            VpnRpcConnectionInfo in_rpc_connection_info = new VpnRpcConnectionInfo()
+            {
+                Name_str = name,
+            };
+            VpnRpcConnectionInfo out_rpc_connection_info = Rpc.GetConnectionInfo(in_rpc_connection_info);
 
             print_object(out_rpc_connection_info);
 
@@ -684,8 +742,12 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHubOnline");
 
-            // VpnRpcSetHubOnline in_rpc_set_hub_online = new VpnRpcSetHubOnline();
-            VpnRpcSetHubOnline out_rpc_set_hub_online = Rpc.SetHubOnline();
+            VpnRpcSetHubOnline in_rpc_set_hub_online = new VpnRpcSetHubOnline()
+            {
+                HubName_str = hub_name,
+                Online_bool = true,
+            };
+            VpnRpcSetHubOnline out_rpc_set_hub_online = Rpc.SetHubOnline(in_rpc_set_hub_online);
 
             print_object(out_rpc_set_hub_online);
 
@@ -701,8 +763,11 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHubStatus");
 
-            // VpnRpcHubStatus in_rpc_hub_status = new VpnRpcHubStatus();
-            VpnRpcHubStatus out_rpc_hub_status = Rpc.GetHubStatus();
+            VpnRpcHubStatus in_rpc_hub_status = new VpnRpcHubStatus()
+            {
+                HubName_str = hub_name,
+            };
+            VpnRpcHubStatus out_rpc_hub_status = Rpc.GetHubStatus(in_rpc_hub_status);
 
             print_object(out_rpc_hub_status);
 
@@ -714,12 +779,11 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'SetHubLog', Set logging configuration into the hub
         /// </summary>
-        public void Test_SetHubLog()
+        public void Test_SetHubLog(VpnRpcHubLog in_rpc_hub_log)
         {
             Console.WriteLine("Begin: Test_SetHubLog");
 
-            // VpnRpcHubLog in_rpc_hub_log = new VpnRpcHubLog();
-            VpnRpcHubLog out_rpc_hub_log = Rpc.SetHubLog();
+            VpnRpcHubLog out_rpc_hub_log = Rpc.SetHubLog(in_rpc_hub_log);
 
             print_object(out_rpc_hub_log);
 
@@ -731,18 +795,23 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'GetHubLog', Get logging configuration of the hub
         /// </summary>
-        public void Test_GetHubLog()
+        public VpnRpcHubLog Test_GetHubLog()
         {
             Console.WriteLine("Begin: Test_GetHubLog");
 
-            // VpnRpcHubLog in_rpc_hub_log = new VpnRpcHubLog();
-            VpnRpcHubLog out_rpc_hub_log = Rpc.GetHubLog();
+            VpnRpcHubLog in_rpc_hub_log = new VpnRpcHubLog()
+            {
+                HubName_str = hub_name,
+            };
+            VpnRpcHubLog out_rpc_hub_log = Rpc.GetHubLog(in_rpc_hub_log);
 
             print_object(out_rpc_hub_log);
 
             Console.WriteLine("End: Test_GetHubLog");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_hub_log;
         }
 
         /// <summary>
@@ -752,8 +821,12 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddCa");
 
-            // VpnRpcHubAddCA in_rpc_hub_add_ca = new VpnRpcHubAddCA();
-            VpnRpcHubAddCA out_rpc_hub_add_ca = Rpc.AddCa();
+            VpnRpcHubAddCA in_rpc_hub_add_ca = new VpnRpcHubAddCA()
+            {
+                HubName_str = hub_name,
+                Cert_bin = File.ReadAllBytes(@"c:\tmp\a.cer"),
+            };
+            VpnRpcHubAddCA out_rpc_hub_add_ca = Rpc.AddCa(in_rpc_hub_add_ca);
 
             print_object(out_rpc_hub_add_ca);
 
@@ -765,29 +838,38 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumCa', Enumerate CA(Certificate Authority) in the hub
         /// </summary>
-        public void Test_EnumCa()
+        public VpnRpcHubEnumCA Test_EnumCa()
         {
             Console.WriteLine("Begin: Test_EnumCa");
 
-            // VpnRpcHubEnumCA in_rpc_hub_enum_ca = new VpnRpcHubEnumCA();
-            VpnRpcHubEnumCA out_rpc_hub_enum_ca = Rpc.EnumCa();
+            VpnRpcHubEnumCA in_rpc_hub_enum_ca = new VpnRpcHubEnumCA()
+            {
+                HubName_str = hub_name,
+            };
+            VpnRpcHubEnumCA out_rpc_hub_enum_ca = Rpc.EnumCa(in_rpc_hub_enum_ca);
 
             print_object(out_rpc_hub_enum_ca);
 
             Console.WriteLine("End: Test_EnumCa");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_hub_enum_ca;
         }
 
         /// <summary>
         /// API test for 'GetCa', Get CA(Certificate Authority) setting from the hub
         /// </summary>
-        public void Test_GetCa()
+        public void Test_GetCa(uint key)
         {
             Console.WriteLine("Begin: Test_GetCa");
 
-            // VpnRpcHubGetCA in_rpc_hub_get_ca = new VpnRpcHubGetCA();
-            VpnRpcHubGetCA out_rpc_hub_get_ca = Rpc.GetCa();
+            VpnRpcHubGetCA in_rpc_hub_get_ca = new VpnRpcHubGetCA()
+            {
+                HubName_str = hub_name,
+                Key_u32 = key,
+            };
+            VpnRpcHubGetCA out_rpc_hub_get_ca = Rpc.GetCa(in_rpc_hub_get_ca);
 
             print_object(out_rpc_hub_get_ca);
 
@@ -799,12 +881,16 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'DeleteCa', Delete a CA(Certificate Authority) setting from the hub
         /// </summary>
-        public void Test_DeleteCa()
+        public void Test_DeleteCa(uint key)
         {
             Console.WriteLine("Begin: Test_DeleteCa");
 
-            // VpnRpcHubDeleteCA in_rpc_hub_delete_ca = new VpnRpcHubDeleteCA();
-            VpnRpcHubDeleteCA out_rpc_hub_delete_ca = Rpc.DeleteCa();
+            VpnRpcHubDeleteCA in_rpc_hub_delete_ca = new VpnRpcHubDeleteCA()
+            {
+                HubName_str = hub_name,
+                Key_u32 = key,
+            };
+            VpnRpcHubDeleteCA out_rpc_hub_delete_ca = Rpc.DeleteCa(in_rpc_hub_delete_ca);
 
             print_object(out_rpc_hub_delete_ca);
 
@@ -820,8 +906,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetLinkOnline");
 
-            // VpnRpcLink in_rpc_link = new VpnRpcLink();
-            VpnRpcLink out_rpc_link = Rpc.SetLinkOnline();
+            VpnRpcLink in_rpc_link = new VpnRpcLink()
+            {
+            };
+            VpnRpcLink out_rpc_link = Rpc.SetLinkOnline(in_rpc_link);
 
             print_object(out_rpc_link);
 
@@ -837,8 +925,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetLinkOffline");
 
-            // VpnRpcLink in_rpc_link = new VpnRpcLink();
-            VpnRpcLink out_rpc_link = Rpc.SetLinkOffline();
+            VpnRpcLink in_rpc_link = new VpnRpcLink()
+            {
+            };
+            VpnRpcLink out_rpc_link = Rpc.SetLinkOffline(in_rpc_link);
 
             print_object(out_rpc_link);
 
@@ -854,8 +944,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteLink");
 
-            // VpnRpcLink in_rpc_link = new VpnRpcLink();
-            VpnRpcLink out_rpc_link = Rpc.DeleteLink();
+            VpnRpcLink in_rpc_link = new VpnRpcLink()
+            {
+            };
+            VpnRpcLink out_rpc_link = Rpc.DeleteLink(in_rpc_link);
 
             print_object(out_rpc_link);
 
@@ -871,8 +963,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_RenameLink");
 
-            // VpnRpcRenameLink in_rpc_rename_link = new VpnRpcRenameLink();
-            VpnRpcRenameLink out_rpc_rename_link = Rpc.RenameLink();
+            VpnRpcRenameLink in_rpc_rename_link = new VpnRpcRenameLink()
+            {
+            };
+            VpnRpcRenameLink out_rpc_rename_link = Rpc.RenameLink(in_rpc_rename_link);
 
             print_object(out_rpc_rename_link);
 
@@ -888,8 +982,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_CreateLink");
 
-            // VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink();
-            VpnRpcCreateLink out_rpc_create_link = Rpc.CreateLink();
+            VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
+            {
+            };
+            VpnRpcCreateLink out_rpc_create_link = Rpc.CreateLink(in_rpc_create_link);
 
             print_object(out_rpc_create_link);
 
@@ -905,8 +1001,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetLink");
 
-            // VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink();
-            VpnRpcCreateLink out_rpc_create_link = Rpc.GetLink();
+            VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
+            {
+            };
+            VpnRpcCreateLink out_rpc_create_link = Rpc.GetLink(in_rpc_create_link);
 
             print_object(out_rpc_create_link);
 
@@ -922,8 +1020,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetLink");
 
-            // VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink();
-            VpnRpcCreateLink out_rpc_create_link = Rpc.SetLink();
+            VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
+            {
+            };
+            VpnRpcCreateLink out_rpc_create_link = Rpc.SetLink(in_rpc_create_link);
 
             print_object(out_rpc_create_link);
 
@@ -939,8 +1039,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumLink");
 
-            // VpnRpcEnumLink in_rpc_enum_link = new VpnRpcEnumLink();
-            VpnRpcEnumLink out_rpc_enum_link = Rpc.EnumLink();
+            VpnRpcEnumLink in_rpc_enum_link = new VpnRpcEnumLink()
+            {
+            };
+            VpnRpcEnumLink out_rpc_enum_link = Rpc.EnumLink(in_rpc_enum_link);
 
             print_object(out_rpc_enum_link);
 
@@ -956,8 +1058,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetLinkStatus");
 
-            // VpnRpcLinkStatus in_rpc_link_status = new VpnRpcLinkStatus();
-            VpnRpcLinkStatus out_rpc_link_status = Rpc.GetLinkStatus();
+            VpnRpcLinkStatus in_rpc_link_status = new VpnRpcLinkStatus()
+            {
+            };
+            VpnRpcLinkStatus out_rpc_link_status = Rpc.GetLinkStatus(in_rpc_link_status);
 
             print_object(out_rpc_link_status);
 
@@ -973,8 +1077,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddAccess");
 
-            // VpnRpcAddAccess in_rpc_add_access = new VpnRpcAddAccess();
-            VpnRpcAddAccess out_rpc_add_access = Rpc.AddAccess();
+            VpnRpcAddAccess in_rpc_add_access = new VpnRpcAddAccess()
+            {
+            };
+            VpnRpcAddAccess out_rpc_add_access = Rpc.AddAccess(in_rpc_add_access);
 
             print_object(out_rpc_add_access);
 
@@ -990,8 +1096,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteAccess");
 
-            // VpnRpcDeleteAccess in_rpc_delete_access = new VpnRpcDeleteAccess();
-            VpnRpcDeleteAccess out_rpc_delete_access = Rpc.DeleteAccess();
+            VpnRpcDeleteAccess in_rpc_delete_access = new VpnRpcDeleteAccess()
+            {
+            };
+            VpnRpcDeleteAccess out_rpc_delete_access = Rpc.DeleteAccess(in_rpc_delete_access);
 
             print_object(out_rpc_delete_access);
 
@@ -1007,8 +1115,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumAccess");
 
-            // VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList();
-            VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.EnumAccess();
+            VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList()
+            {
+            };
+            VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.EnumAccess(in_rpc_enum_access_list);
 
             print_object(out_rpc_enum_access_list);
 
@@ -1024,8 +1134,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetAccessList");
 
-            // VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList();
-            VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.SetAccessList();
+            VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList()
+            {
+            };
+            VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.SetAccessList(in_rpc_enum_access_list);
 
             print_object(out_rpc_enum_access_list);
 
@@ -1041,8 +1153,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_CreateUser");
 
-            // VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser();
-            VpnRpcSetUser out_rpc_set_user = Rpc.CreateUser();
+            VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
+            {
+            };
+            VpnRpcSetUser out_rpc_set_user = Rpc.CreateUser(in_rpc_set_user);
 
             print_object(out_rpc_set_user);
 
@@ -1058,8 +1172,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetUser");
 
-            // VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser();
-            VpnRpcSetUser out_rpc_set_user = Rpc.SetUser();
+            VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
+            {
+            };
+            VpnRpcSetUser out_rpc_set_user = Rpc.SetUser(in_rpc_set_user);
 
             print_object(out_rpc_set_user);
 
@@ -1075,8 +1191,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetUser");
 
-            // VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser();
-            VpnRpcSetUser out_rpc_set_user = Rpc.GetUser();
+            VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
+            {
+            };
+            VpnRpcSetUser out_rpc_set_user = Rpc.GetUser(in_rpc_set_user);
 
             print_object(out_rpc_set_user);
 
@@ -1092,8 +1210,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteUser");
 
-            // VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser();
-            VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteUser();
+            VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser()
+            {
+            };
+            VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteUser(in_rpc_delete_user);
 
             print_object(out_rpc_delete_user);
 
@@ -1109,8 +1229,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumUser");
 
-            // VpnRpcEnumUser in_rpc_enum_user = new VpnRpcEnumUser();
-            VpnRpcEnumUser out_rpc_enum_user = Rpc.EnumUser();
+            VpnRpcEnumUser in_rpc_enum_user = new VpnRpcEnumUser()
+            {
+            };
+            VpnRpcEnumUser out_rpc_enum_user = Rpc.EnumUser(in_rpc_enum_user);
 
             print_object(out_rpc_enum_user);
 
@@ -1126,8 +1248,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_CreateGroup");
 
-            // VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup();
-            VpnRpcSetGroup out_rpc_set_group = Rpc.CreateGroup();
+            VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
+            {
+            };
+            VpnRpcSetGroup out_rpc_set_group = Rpc.CreateGroup(in_rpc_set_group);
 
             print_object(out_rpc_set_group);
 
@@ -1143,8 +1267,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetGroup");
 
-            // VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup();
-            VpnRpcSetGroup out_rpc_set_group = Rpc.SetGroup();
+            VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
+            {
+            };
+            VpnRpcSetGroup out_rpc_set_group = Rpc.SetGroup(in_rpc_set_group);
 
             print_object(out_rpc_set_group);
 
@@ -1160,8 +1286,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetGroup");
 
-            // VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup();
-            VpnRpcSetGroup out_rpc_set_group = Rpc.GetGroup();
+            VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
+            {
+            };
+            VpnRpcSetGroup out_rpc_set_group = Rpc.GetGroup(in_rpc_set_group);
 
             print_object(out_rpc_set_group);
 
@@ -1177,8 +1305,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteGroup");
 
-            // VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser();
-            VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteGroup();
+            VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser()
+            {
+            };
+            VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteGroup(in_rpc_delete_user);
 
             print_object(out_rpc_delete_user);
 
@@ -1194,8 +1324,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumGroup");
 
-            // VpnRpcEnumGroup in_rpc_enum_group = new VpnRpcEnumGroup();
-            VpnRpcEnumGroup out_rpc_enum_group = Rpc.EnumGroup();
+            VpnRpcEnumGroup in_rpc_enum_group = new VpnRpcEnumGroup()
+            {
+            };
+            VpnRpcEnumGroup out_rpc_enum_group = Rpc.EnumGroup(in_rpc_enum_group);
 
             print_object(out_rpc_enum_group);
 
@@ -1211,8 +1343,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumSession");
 
-            // VpnRpcEnumSession in_rpc_enum_session = new VpnRpcEnumSession();
-            VpnRpcEnumSession out_rpc_enum_session = Rpc.EnumSession();
+            VpnRpcEnumSession in_rpc_enum_session = new VpnRpcEnumSession()
+            {
+            };
+            VpnRpcEnumSession out_rpc_enum_session = Rpc.EnumSession(in_rpc_enum_session);
 
             print_object(out_rpc_enum_session);
 
@@ -1228,8 +1362,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetSessionStatus");
 
-            // VpnRpcSessionStatus in_rpc_session_status = new VpnRpcSessionStatus();
-            VpnRpcSessionStatus out_rpc_session_status = Rpc.GetSessionStatus();
+            VpnRpcSessionStatus in_rpc_session_status = new VpnRpcSessionStatus()
+            {
+            };
+            VpnRpcSessionStatus out_rpc_session_status = Rpc.GetSessionStatus(in_rpc_session_status);
 
             print_object(out_rpc_session_status);
 
@@ -1245,8 +1381,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteSession");
 
-            // VpnRpcDeleteSession in_rpc_delete_session = new VpnRpcDeleteSession();
-            VpnRpcDeleteSession out_rpc_delete_session = Rpc.DeleteSession();
+            VpnRpcDeleteSession in_rpc_delete_session = new VpnRpcDeleteSession()
+            {
+            };
+            VpnRpcDeleteSession out_rpc_delete_session = Rpc.DeleteSession(in_rpc_delete_session);
 
             print_object(out_rpc_delete_session);
 
@@ -1262,8 +1400,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumMacTable");
 
-            // VpnRpcEnumMacTable in_rpc_enum_mac_table = new VpnRpcEnumMacTable();
-            VpnRpcEnumMacTable out_rpc_enum_mac_table = Rpc.EnumMacTable();
+            VpnRpcEnumMacTable in_rpc_enum_mac_table = new VpnRpcEnumMacTable()
+            {
+            };
+            VpnRpcEnumMacTable out_rpc_enum_mac_table = Rpc.EnumMacTable(in_rpc_enum_mac_table);
 
             print_object(out_rpc_enum_mac_table);
 
@@ -1279,8 +1419,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteMacTable");
 
-            // VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable();
-            VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteMacTable();
+            VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable()
+            {
+            };
+            VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteMacTable(in_rpc_delete_table);
 
             print_object(out_rpc_delete_table);
 
@@ -1296,8 +1438,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumIpTable");
 
-            // VpnRpcEnumIpTable in_rpc_enum_ip_table = new VpnRpcEnumIpTable();
-            VpnRpcEnumIpTable out_rpc_enum_ip_table = Rpc.EnumIpTable();
+            VpnRpcEnumIpTable in_rpc_enum_ip_table = new VpnRpcEnumIpTable()
+            {
+            };
+            VpnRpcEnumIpTable out_rpc_enum_ip_table = Rpc.EnumIpTable(in_rpc_enum_ip_table);
 
             print_object(out_rpc_enum_ip_table);
 
@@ -1313,8 +1457,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteIpTable");
 
-            // VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable();
-            VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteIpTable();
+            VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable()
+            {
+            };
+            VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteIpTable(in_rpc_delete_table);
 
             print_object(out_rpc_delete_table);
 
@@ -1330,8 +1476,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetKeep");
 
-            // VpnRpcKeep in_rpc_keep = new VpnRpcKeep();
-            VpnRpcKeep out_rpc_keep = Rpc.SetKeep();
+            VpnRpcKeep in_rpc_keep = new VpnRpcKeep()
+            {
+            };
+            VpnRpcKeep out_rpc_keep = Rpc.SetKeep(in_rpc_keep);
 
             print_object(out_rpc_keep);
 
@@ -1347,8 +1495,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetKeep");
 
-            // VpnRpcKeep in_rpc_keep = new VpnRpcKeep();
-            VpnRpcKeep out_rpc_keep = Rpc.GetKeep();
+            VpnRpcKeep in_rpc_keep = new VpnRpcKeep()
+            {
+            };
+            VpnRpcKeep out_rpc_keep = Rpc.GetKeep(in_rpc_keep);
 
             print_object(out_rpc_keep);
 
@@ -1364,8 +1514,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnableSecureNAT");
 
-            // VpnRpcHub in_rpc_hub = new VpnRpcHub();
-            VpnRpcHub out_rpc_hub = Rpc.EnableSecureNAT();
+            VpnRpcHub in_rpc_hub = new VpnRpcHub()
+            {
+            };
+            VpnRpcHub out_rpc_hub = Rpc.EnableSecureNAT(in_rpc_hub);
 
             print_object(out_rpc_hub);
 
@@ -1381,8 +1533,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DisableSecureNAT");
 
-            // VpnRpcHub in_rpc_hub = new VpnRpcHub();
-            VpnRpcHub out_rpc_hub = Rpc.DisableSecureNAT();
+            VpnRpcHub in_rpc_hub = new VpnRpcHub()
+            {
+            };
+            VpnRpcHub out_rpc_hub = Rpc.DisableSecureNAT(in_rpc_hub);
 
             print_object(out_rpc_hub);
 
@@ -1398,8 +1552,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetSecureNATOption");
 
-            // VpnVhOption in_vh_option = new VpnVhOption();
-            VpnVhOption out_vh_option = Rpc.SetSecureNATOption();
+            VpnVhOption in_vh_option = new VpnVhOption()
+            {
+            };
+            VpnVhOption out_vh_option = Rpc.SetSecureNATOption(in_vh_option);
 
             print_object(out_vh_option);
 
@@ -1415,8 +1571,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetSecureNATOption");
 
-            // VpnVhOption in_vh_option = new VpnVhOption();
-            VpnVhOption out_vh_option = Rpc.GetSecureNATOption();
+            VpnVhOption in_vh_option = new VpnVhOption()
+            {
+            };
+            VpnVhOption out_vh_option = Rpc.GetSecureNATOption(in_vh_option);
 
             print_object(out_vh_option);
 
@@ -1432,8 +1590,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumNAT");
 
-            // VpnRpcEnumNat in_rpc_enum_nat = new VpnRpcEnumNat();
-            VpnRpcEnumNat out_rpc_enum_nat = Rpc.EnumNAT();
+            VpnRpcEnumNat in_rpc_enum_nat = new VpnRpcEnumNat()
+            {
+            };
+            VpnRpcEnumNat out_rpc_enum_nat = Rpc.EnumNAT(in_rpc_enum_nat);
 
             print_object(out_rpc_enum_nat);
 
@@ -1449,8 +1609,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumDHCP");
 
-            // VpnRpcEnumDhcp in_rpc_enum_dhcp = new VpnRpcEnumDhcp();
-            VpnRpcEnumDhcp out_rpc_enum_dhcp = Rpc.EnumDHCP();
+            VpnRpcEnumDhcp in_rpc_enum_dhcp = new VpnRpcEnumDhcp()
+            {
+            };
+            VpnRpcEnumDhcp out_rpc_enum_dhcp = Rpc.EnumDHCP(in_rpc_enum_dhcp);
 
             print_object(out_rpc_enum_dhcp);
 
@@ -1466,8 +1628,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetSecureNATStatus");
 
-            // VpnRpcNatStatus in_rpc_nat_status = new VpnRpcNatStatus();
-            VpnRpcNatStatus out_rpc_nat_status = Rpc.GetSecureNATStatus();
+            VpnRpcNatStatus in_rpc_nat_status = new VpnRpcNatStatus()
+            {
+            };
+            VpnRpcNatStatus out_rpc_nat_status = Rpc.GetSecureNATStatus(in_rpc_nat_status);
 
             print_object(out_rpc_nat_status);
 
@@ -1483,8 +1647,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumEthernet");
 
-            // VpnRpcEnumEth in_rpc_enum_eth = new VpnRpcEnumEth();
-            VpnRpcEnumEth out_rpc_enum_eth = Rpc.EnumEthernet();
+            VpnRpcEnumEth in_rpc_enum_eth = new VpnRpcEnumEth()
+            {
+            };
+            VpnRpcEnumEth out_rpc_enum_eth = Rpc.EnumEthernet(in_rpc_enum_eth);
 
             print_object(out_rpc_enum_eth);
 
@@ -1500,8 +1666,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddLocalBridge");
 
-            // VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge();
-            VpnRpcLocalBridge out_rpc_localbridge = Rpc.AddLocalBridge();
+            VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
+            {
+            };
+            VpnRpcLocalBridge out_rpc_localbridge = Rpc.AddLocalBridge(in_rpc_localbridge);
 
             print_object(out_rpc_localbridge);
 
@@ -1517,8 +1685,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteLocalBridge");
 
-            // VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge();
-            VpnRpcLocalBridge out_rpc_localbridge = Rpc.DeleteLocalBridge();
+            VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
+            {
+            };
+            VpnRpcLocalBridge out_rpc_localbridge = Rpc.DeleteLocalBridge(in_rpc_localbridge);
 
             print_object(out_rpc_localbridge);
 
@@ -1534,8 +1704,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumLocalBridge");
 
-            // VpnRpcEnumLocalBridge in_rpc_enum_localbridge = new VpnRpcEnumLocalBridge();
-            VpnRpcEnumLocalBridge out_rpc_enum_localbridge = Rpc.EnumLocalBridge();
+            VpnRpcEnumLocalBridge in_rpc_enum_localbridge = new VpnRpcEnumLocalBridge()
+            {
+            };
+            VpnRpcEnumLocalBridge out_rpc_enum_localbridge = Rpc.EnumLocalBridge(in_rpc_enum_localbridge);
 
             print_object(out_rpc_enum_localbridge);
 
@@ -1551,8 +1723,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetBridgeSupport");
 
-            // VpnRpcBridgeSupport in_rpc_bridge_support = new VpnRpcBridgeSupport();
-            VpnRpcBridgeSupport out_rpc_bridge_support = Rpc.GetBridgeSupport();
+            VpnRpcBridgeSupport in_rpc_bridge_support = new VpnRpcBridgeSupport()
+            {
+            };
+            VpnRpcBridgeSupport out_rpc_bridge_support = Rpc.GetBridgeSupport(in_rpc_bridge_support);
 
             print_object(out_rpc_bridge_support);
 
@@ -1568,8 +1742,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_RebootServer");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.RebootServer();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.RebootServer(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -1585,8 +1761,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetCaps");
 
-            // VpnCapslist in_capslist = new VpnCapslist();
-            VpnCapslist out_capslist = Rpc.GetCaps();
+            VpnCapslist in_capslist = new VpnCapslist()
+            {
+            };
+            VpnCapslist out_capslist = Rpc.GetCaps(in_capslist);
 
             print_object(out_capslist);
 
@@ -1602,8 +1780,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetConfig");
 
-            // VpnRpcConfig in_rpc_config = new VpnRpcConfig();
-            VpnRpcConfig out_rpc_config = Rpc.GetConfig();
+            VpnRpcConfig in_rpc_config = new VpnRpcConfig()
+            {
+            };
+            VpnRpcConfig out_rpc_config = Rpc.GetConfig(in_rpc_config);
 
             print_object(out_rpc_config);
 
@@ -1619,8 +1799,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetConfig");
 
-            // VpnRpcConfig in_rpc_config = new VpnRpcConfig();
-            VpnRpcConfig out_rpc_config = Rpc.SetConfig();
+            VpnRpcConfig in_rpc_config = new VpnRpcConfig()
+            {
+            };
+            VpnRpcConfig out_rpc_config = Rpc.SetConfig(in_rpc_config);
 
             print_object(out_rpc_config);
 
@@ -1636,8 +1818,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetDefaultHubAdminOptions");
 
-            // VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption();
-            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetDefaultHubAdminOptions();
+            VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
+            {
+            };
+            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetDefaultHubAdminOptions(in_rpc_admin_option);
 
             print_object(out_rpc_admin_option);
 
@@ -1653,8 +1837,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHubAdminOptions");
 
-            // VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption();
-            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubAdminOptions();
+            VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
+            {
+            };
+            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubAdminOptions(in_rpc_admin_option);
 
             print_object(out_rpc_admin_option);
 
@@ -1670,8 +1856,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHubAdminOptions");
 
-            // VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption();
-            VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubAdminOptions();
+            VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
+            {
+            };
+            VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubAdminOptions(in_rpc_admin_option);
 
             print_object(out_rpc_admin_option);
 
@@ -1687,8 +1875,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHubExtOptions");
 
-            // VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption();
-            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubExtOptions();
+            VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
+            {
+            };
+            VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubExtOptions(in_rpc_admin_option);
 
             print_object(out_rpc_admin_option);
 
@@ -1704,8 +1894,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHubExtOptions");
 
-            // VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption();
-            VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubExtOptions();
+            VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
+            {
+            };
+            VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubExtOptions(in_rpc_admin_option);
 
             print_object(out_rpc_admin_option);
 
@@ -1721,8 +1913,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddL3Switch");
 
-            // VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw();
-            VpnRpcL3Sw out_rpc_l3sw = Rpc.AddL3Switch();
+            VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
+            {
+            };
+            VpnRpcL3Sw out_rpc_l3sw = Rpc.AddL3Switch(in_rpc_l3sw);
 
             print_object(out_rpc_l3sw);
 
@@ -1738,8 +1932,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DelL3Switch");
 
-            // VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw();
-            VpnRpcL3Sw out_rpc_l3sw = Rpc.DelL3Switch();
+            VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
+            {
+            };
+            VpnRpcL3Sw out_rpc_l3sw = Rpc.DelL3Switch(in_rpc_l3sw);
 
             print_object(out_rpc_l3sw);
 
@@ -1755,8 +1951,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumL3Switch");
 
-            // VpnRpcEnumL3Sw in_rpc_enum_l3sw = new VpnRpcEnumL3Sw();
-            VpnRpcEnumL3Sw out_rpc_enum_l3sw = Rpc.EnumL3Switch();
+            VpnRpcEnumL3Sw in_rpc_enum_l3sw = new VpnRpcEnumL3Sw()
+            {
+            };
+            VpnRpcEnumL3Sw out_rpc_enum_l3sw = Rpc.EnumL3Switch(in_rpc_enum_l3sw);
 
             print_object(out_rpc_enum_l3sw);
 
@@ -1772,8 +1970,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_StartL3Switch");
 
-            // VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw();
-            VpnRpcL3Sw out_rpc_l3sw = Rpc.StartL3Switch();
+            VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
+            {
+            };
+            VpnRpcL3Sw out_rpc_l3sw = Rpc.StartL3Switch(in_rpc_l3sw);
 
             print_object(out_rpc_l3sw);
 
@@ -1789,8 +1989,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_StopL3Switch");
 
-            // VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw();
-            VpnRpcL3Sw out_rpc_l3sw = Rpc.StopL3Switch();
+            VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
+            {
+            };
+            VpnRpcL3Sw out_rpc_l3sw = Rpc.StopL3Switch(in_rpc_l3sw);
 
             print_object(out_rpc_l3sw);
 
@@ -1806,8 +2008,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddL3If");
 
-            // VpnRpcL3If in_rpc_l3if = new VpnRpcL3If();
-            VpnRpcL3If out_rpc_l3if = Rpc.AddL3If();
+            VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
+            {
+            };
+            VpnRpcL3If out_rpc_l3if = Rpc.AddL3If(in_rpc_l3if);
 
             print_object(out_rpc_l3if);
 
@@ -1823,8 +2027,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DelL3If");
 
-            // VpnRpcL3If in_rpc_l3if = new VpnRpcL3If();
-            VpnRpcL3If out_rpc_l3if = Rpc.DelL3If();
+            VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
+            {
+            };
+            VpnRpcL3If out_rpc_l3if = Rpc.DelL3If(in_rpc_l3if);
 
             print_object(out_rpc_l3if);
 
@@ -1840,8 +2046,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumL3If");
 
-            // VpnRpcEnumL3If in_rpc_enum_l3if = new VpnRpcEnumL3If();
-            VpnRpcEnumL3If out_rpc_enum_l3if = Rpc.EnumL3If();
+            VpnRpcEnumL3If in_rpc_enum_l3if = new VpnRpcEnumL3If()
+            {
+            };
+            VpnRpcEnumL3If out_rpc_enum_l3if = Rpc.EnumL3If(in_rpc_enum_l3if);
 
             print_object(out_rpc_enum_l3if);
 
@@ -1857,8 +2065,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddL3Table");
 
-            // VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table();
-            VpnRpcL3Table out_rpc_l3table = Rpc.AddL3Table();
+            VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table()
+            {
+            };
+            VpnRpcL3Table out_rpc_l3table = Rpc.AddL3Table(in_rpc_l3table);
 
             print_object(out_rpc_l3table);
 
@@ -1874,8 +2084,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DelL3Table");
 
-            // VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table();
-            VpnRpcL3Table out_rpc_l3table = Rpc.DelL3Table();
+            VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table()
+            {
+            };
+            VpnRpcL3Table out_rpc_l3table = Rpc.DelL3Table(in_rpc_l3table);
 
             print_object(out_rpc_l3table);
 
@@ -1891,8 +2103,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumL3Table");
 
-            // VpnRpcEnumL3Table in_rpc_enum_l3table = new VpnRpcEnumL3Table();
-            VpnRpcEnumL3Table out_rpc_enum_l3table = Rpc.EnumL3Table();
+            VpnRpcEnumL3Table in_rpc_enum_l3table = new VpnRpcEnumL3Table()
+            {
+            };
+            VpnRpcEnumL3Table out_rpc_enum_l3table = Rpc.EnumL3Table(in_rpc_enum_l3table);
 
             print_object(out_rpc_enum_l3table);
 
@@ -1908,8 +2122,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumCrl");
 
-            // VpnRpcEnumCrl in_rpc_enum_crl = new VpnRpcEnumCrl();
-            VpnRpcEnumCrl out_rpc_enum_crl = Rpc.EnumCrl();
+            VpnRpcEnumCrl in_rpc_enum_crl = new VpnRpcEnumCrl()
+            {
+            };
+            VpnRpcEnumCrl out_rpc_enum_crl = Rpc.EnumCrl(in_rpc_enum_crl);
 
             print_object(out_rpc_enum_crl);
 
@@ -1925,8 +2141,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddCrl");
 
-            // VpnRpcCrl in_rpc_crl = new VpnRpcCrl();
-            VpnRpcCrl out_rpc_crl = Rpc.AddCrl();
+            VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
+            {
+            };
+            VpnRpcCrl out_rpc_crl = Rpc.AddCrl(in_rpc_crl);
 
             print_object(out_rpc_crl);
 
@@ -1942,8 +2160,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DelCrl");
 
-            // VpnRpcCrl in_rpc_crl = new VpnRpcCrl();
-            VpnRpcCrl out_rpc_crl = Rpc.DelCrl();
+            VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
+            {
+            };
+            VpnRpcCrl out_rpc_crl = Rpc.DelCrl(in_rpc_crl);
 
             print_object(out_rpc_crl);
 
@@ -1959,8 +2179,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetCrl");
 
-            // VpnRpcCrl in_rpc_crl = new VpnRpcCrl();
-            VpnRpcCrl out_rpc_crl = Rpc.GetCrl();
+            VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
+            {
+            };
+            VpnRpcCrl out_rpc_crl = Rpc.GetCrl(in_rpc_crl);
 
             print_object(out_rpc_crl);
 
@@ -1976,8 +2198,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetCrl");
 
-            // VpnRpcCrl in_rpc_crl = new VpnRpcCrl();
-            VpnRpcCrl out_rpc_crl = Rpc.SetCrl();
+            VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
+            {
+            };
+            VpnRpcCrl out_rpc_crl = Rpc.SetCrl(in_rpc_crl);
 
             print_object(out_rpc_crl);
 
@@ -1993,8 +2217,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetAcList");
 
-            // VpnRpcAcList in_rpc_ac_list = new VpnRpcAcList();
-            VpnRpcAcList out_rpc_ac_list = Rpc.SetAcList();
+            VpnRpcAcList in_rpc_ac_list = new VpnRpcAcList()
+            {
+            };
+            VpnRpcAcList out_rpc_ac_list = Rpc.SetAcList(in_rpc_ac_list);
 
             print_object(out_rpc_ac_list);
 
@@ -2010,8 +2236,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetAcList");
 
-            // VpnRpcAcList in_rpc_ac_list = new VpnRpcAcList();
-            VpnRpcAcList out_rpc_ac_list = Rpc.GetAcList();
+            VpnRpcAcList in_rpc_ac_list = new VpnRpcAcList()
+            {
+            };
+            VpnRpcAcList out_rpc_ac_list = Rpc.GetAcList(in_rpc_ac_list);
 
             print_object(out_rpc_ac_list);
 
@@ -2027,8 +2255,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumLogFile");
 
-            // VpnRpcEnumLogFile in_rpc_enum_log_file = new VpnRpcEnumLogFile();
-            VpnRpcEnumLogFile out_rpc_enum_log_file = Rpc.EnumLogFile();
+            VpnRpcEnumLogFile in_rpc_enum_log_file = new VpnRpcEnumLogFile()
+            {
+            };
+            VpnRpcEnumLogFile out_rpc_enum_log_file = Rpc.EnumLogFile(in_rpc_enum_log_file);
 
             print_object(out_rpc_enum_log_file);
 
@@ -2044,8 +2274,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_ReadLogFile");
 
-            // VpnRpcReadLogFile in_rpc_read_log_file = new VpnRpcReadLogFile();
-            VpnRpcReadLogFile out_rpc_read_log_file = Rpc.ReadLogFile();
+            VpnRpcReadLogFile in_rpc_read_log_file = new VpnRpcReadLogFile()
+            {
+            };
+            VpnRpcReadLogFile out_rpc_read_log_file = Rpc.ReadLogFile(in_rpc_read_log_file);
 
             print_object(out_rpc_read_log_file);
 
@@ -2061,8 +2293,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddLicenseKey");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.AddLicenseKey();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.AddLicenseKey(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2078,8 +2312,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DelLicenseKey");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.DelLicenseKey();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.DelLicenseKey(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2095,8 +2331,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumLicenseKey");
 
-            // VpnRpcEnumLicenseKey in_rpc_enum_license_key = new VpnRpcEnumLicenseKey();
-            VpnRpcEnumLicenseKey out_rpc_enum_license_key = Rpc.EnumLicenseKey();
+            VpnRpcEnumLicenseKey in_rpc_enum_license_key = new VpnRpcEnumLicenseKey()
+            {
+            };
+            VpnRpcEnumLicenseKey out_rpc_enum_license_key = Rpc.EnumLicenseKey(in_rpc_enum_license_key);
 
             print_object(out_rpc_enum_license_key);
 
@@ -2112,8 +2350,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetLicenseStatus");
 
-            // VpnRpcLicenseStatus in_rpc_license_status = new VpnRpcLicenseStatus();
-            VpnRpcLicenseStatus out_rpc_license_status = Rpc.GetLicenseStatus();
+            VpnRpcLicenseStatus in_rpc_license_status = new VpnRpcLicenseStatus()
+            {
+            };
+            VpnRpcLicenseStatus out_rpc_license_status = Rpc.GetLicenseStatus(in_rpc_license_status);
 
             print_object(out_rpc_license_status);
 
@@ -2129,8 +2369,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetSysLog");
 
-            // VpnSyslogSetting in_syslog_setting = new VpnSyslogSetting();
-            VpnSyslogSetting out_syslog_setting = Rpc.SetSysLog();
+            VpnSyslogSetting in_syslog_setting = new VpnSyslogSetting()
+            {
+            };
+            VpnSyslogSetting out_syslog_setting = Rpc.SetSysLog(in_syslog_setting);
 
             print_object(out_syslog_setting);
 
@@ -2146,8 +2388,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetSysLog");
 
-            // VpnSyslogSetting in_syslog_setting = new VpnSyslogSetting();
-            VpnSyslogSetting out_syslog_setting = Rpc.GetSysLog();
+            VpnSyslogSetting in_syslog_setting = new VpnSyslogSetting()
+            {
+            };
+            VpnSyslogSetting out_syslog_setting = Rpc.GetSysLog(in_syslog_setting);
 
             print_object(out_syslog_setting);
 
@@ -2163,8 +2407,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumEthVLan");
 
-            // VpnRpcEnumEthVlan in_rpc_enum_eth_vlan = new VpnRpcEnumEthVlan();
-            VpnRpcEnumEthVlan out_rpc_enum_eth_vlan = Rpc.EnumEthVLan();
+            VpnRpcEnumEthVlan in_rpc_enum_eth_vlan = new VpnRpcEnumEthVlan()
+            {
+            };
+            VpnRpcEnumEthVlan out_rpc_enum_eth_vlan = Rpc.EnumEthVLan(in_rpc_enum_eth_vlan);
 
             print_object(out_rpc_enum_eth_vlan);
 
@@ -2180,8 +2426,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetEnableEthVLan");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.SetEnableEthVLan();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.SetEnableEthVLan(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2197,8 +2445,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetHubMsg");
 
-            // VpnRpcMsg in_rpc_msg = new VpnRpcMsg();
-            VpnRpcMsg out_rpc_msg = Rpc.SetHubMsg();
+            VpnRpcMsg in_rpc_msg = new VpnRpcMsg()
+            {
+            };
+            VpnRpcMsg out_rpc_msg = Rpc.SetHubMsg(in_rpc_msg);
 
             print_object(out_rpc_msg);
 
@@ -2214,8 +2464,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetHubMsg");
 
-            // VpnRpcMsg in_rpc_msg = new VpnRpcMsg();
-            VpnRpcMsg out_rpc_msg = Rpc.GetHubMsg();
+            VpnRpcMsg in_rpc_msg = new VpnRpcMsg()
+            {
+            };
+            VpnRpcMsg out_rpc_msg = Rpc.GetHubMsg(in_rpc_msg);
 
             print_object(out_rpc_msg);
 
@@ -2231,8 +2483,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_Crash");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.Crash();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.Crash(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2248,8 +2502,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetAdminMsg");
 
-            // VpnRpcMsg in_rpc_msg = new VpnRpcMsg();
-            VpnRpcMsg out_rpc_msg = Rpc.GetAdminMsg();
+            VpnRpcMsg in_rpc_msg = new VpnRpcMsg()
+            {
+            };
+            VpnRpcMsg out_rpc_msg = Rpc.GetAdminMsg(in_rpc_msg);
 
             print_object(out_rpc_msg);
 
@@ -2265,8 +2521,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_Flush");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.Flush();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.Flush(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2282,8 +2540,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_Debug");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.Debug();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.Debug(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2299,8 +2559,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetIPsecServices");
 
-            // VpnIPsecServices in_ipsec_services = new VpnIPsecServices();
-            VpnIPsecServices out_ipsec_services = Rpc.SetIPsecServices();
+            VpnIPsecServices in_ipsec_services = new VpnIPsecServices()
+            {
+            };
+            VpnIPsecServices out_ipsec_services = Rpc.SetIPsecServices(in_ipsec_services);
 
             print_object(out_ipsec_services);
 
@@ -2316,8 +2578,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetIPsecServices");
 
-            // VpnIPsecServices in_ipsec_services = new VpnIPsecServices();
-            VpnIPsecServices out_ipsec_services = Rpc.GetIPsecServices();
+            VpnIPsecServices in_ipsec_services = new VpnIPsecServices()
+            {
+            };
+            VpnIPsecServices out_ipsec_services = Rpc.GetIPsecServices(in_ipsec_services);
 
             print_object(out_ipsec_services);
 
@@ -2333,8 +2597,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddEtherIpId");
 
-            // VpnEtherIpId in_etherip_id = new VpnEtherIpId();
-            VpnEtherIpId out_etherip_id = Rpc.AddEtherIpId();
+            VpnEtherIpId in_etherip_id = new VpnEtherIpId()
+            {
+            };
+            VpnEtherIpId out_etherip_id = Rpc.AddEtherIpId(in_etherip_id);
 
             print_object(out_etherip_id);
 
@@ -2350,8 +2616,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetEtherIpId");
 
-            // VpnEtherIpId in_etherip_id = new VpnEtherIpId();
-            VpnEtherIpId out_etherip_id = Rpc.GetEtherIpId();
+            VpnEtherIpId in_etherip_id = new VpnEtherIpId()
+            {
+            };
+            VpnEtherIpId out_etherip_id = Rpc.GetEtherIpId(in_etherip_id);
 
             print_object(out_etherip_id);
 
@@ -2367,8 +2635,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_DeleteEtherIpId");
 
-            // VpnEtherIpId in_etherip_id = new VpnEtherIpId();
-            VpnEtherIpId out_etherip_id = Rpc.DeleteEtherIpId();
+            VpnEtherIpId in_etherip_id = new VpnEtherIpId()
+            {
+            };
+            VpnEtherIpId out_etherip_id = Rpc.DeleteEtherIpId(in_etherip_id);
 
             print_object(out_etherip_id);
 
@@ -2384,8 +2654,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumEtherIpId");
 
-            // VpnRpcEnumEtherIpId in_rpc_enum_etherip_id = new VpnRpcEnumEtherIpId();
-            VpnRpcEnumEtherIpId out_rpc_enum_etherip_id = Rpc.EnumEtherIpId();
+            VpnRpcEnumEtherIpId in_rpc_enum_etherip_id = new VpnRpcEnumEtherIpId()
+            {
+            };
+            VpnRpcEnumEtherIpId out_rpc_enum_etherip_id = Rpc.EnumEtherIpId(in_rpc_enum_etherip_id);
 
             print_object(out_rpc_enum_etherip_id);
 
@@ -2401,8 +2673,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetOpenVpnSstpConfig");
 
-            // VpnOpenVpnSstpConfig in_openvpn_sstp_config = new VpnOpenVpnSstpConfig();
-            VpnOpenVpnSstpConfig out_openvpn_sstp_config = Rpc.SetOpenVpnSstpConfig();
+            VpnOpenVpnSstpConfig in_openvpn_sstp_config = new VpnOpenVpnSstpConfig()
+            {
+            };
+            VpnOpenVpnSstpConfig out_openvpn_sstp_config = Rpc.SetOpenVpnSstpConfig(in_openvpn_sstp_config);
 
             print_object(out_openvpn_sstp_config);
 
@@ -2418,8 +2692,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetOpenVpnSstpConfig");
 
-            // VpnOpenVpnSstpConfig in_openvpn_sstp_config = new VpnOpenVpnSstpConfig();
-            VpnOpenVpnSstpConfig out_openvpn_sstp_config = Rpc.GetOpenVpnSstpConfig();
+            VpnOpenVpnSstpConfig in_openvpn_sstp_config = new VpnOpenVpnSstpConfig()
+            {
+            };
+            VpnOpenVpnSstpConfig out_openvpn_sstp_config = Rpc.GetOpenVpnSstpConfig(in_openvpn_sstp_config);
 
             print_object(out_openvpn_sstp_config);
 
@@ -2435,8 +2711,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetDDnsClientStatus");
 
-            // VpnDDnsClientStatus in_ddns_client_status = new VpnDDnsClientStatus();
-            VpnDDnsClientStatus out_ddns_client_status = Rpc.GetDDnsClientStatus();
+            VpnDDnsClientStatus in_ddns_client_status = new VpnDDnsClientStatus()
+            {
+            };
+            VpnDDnsClientStatus out_ddns_client_status = Rpc.GetDDnsClientStatus(in_ddns_client_status);
 
             print_object(out_ddns_client_status);
 
@@ -2452,8 +2730,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_ChangeDDnsClientHostname");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.ChangeDDnsClientHostname();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.ChangeDDnsClientHostname(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2469,8 +2749,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_RegenerateServerCert");
 
-            // VpnRpcTest in_rpc_test = new VpnRpcTest();
-            VpnRpcTest out_rpc_test = Rpc.RegenerateServerCert();
+            VpnRpcTest in_rpc_test = new VpnRpcTest()
+            {
+            };
+            VpnRpcTest out_rpc_test = Rpc.RegenerateServerCert(in_rpc_test);
 
             print_object(out_rpc_test);
 
@@ -2486,8 +2768,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_MakeOpenVpnConfigFile");
 
-            // VpnRpcReadLogFile in_rpc_read_log_file = new VpnRpcReadLogFile();
-            VpnRpcReadLogFile out_rpc_read_log_file = Rpc.MakeOpenVpnConfigFile();
+            VpnRpcReadLogFile in_rpc_read_log_file = new VpnRpcReadLogFile()
+            {
+            };
+            VpnRpcReadLogFile out_rpc_read_log_file = Rpc.MakeOpenVpnConfigFile(in_rpc_read_log_file);
 
             print_object(out_rpc_read_log_file);
 
@@ -2503,8 +2787,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetSpecialListener");
 
-            // VpnRpcSpecialListener in_rpc_special_listener = new VpnRpcSpecialListener();
-            VpnRpcSpecialListener out_rpc_special_listener = Rpc.SetSpecialListener();
+            VpnRpcSpecialListener in_rpc_special_listener = new VpnRpcSpecialListener()
+            {
+            };
+            VpnRpcSpecialListener out_rpc_special_listener = Rpc.SetSpecialListener(in_rpc_special_listener);
 
             print_object(out_rpc_special_listener);
 
@@ -2520,8 +2806,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetSpecialListener");
 
-            // VpnRpcSpecialListener in_rpc_special_listener = new VpnRpcSpecialListener();
-            VpnRpcSpecialListener out_rpc_special_listener = Rpc.GetSpecialListener();
+            VpnRpcSpecialListener in_rpc_special_listener = new VpnRpcSpecialListener()
+            {
+            };
+            VpnRpcSpecialListener out_rpc_special_listener = Rpc.GetSpecialListener(in_rpc_special_listener);
 
             print_object(out_rpc_special_listener);
 
@@ -2537,8 +2825,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetAzureStatus");
 
-            // VpnRpcAzureStatus in_rpc_azure_status = new VpnRpcAzureStatus();
-            VpnRpcAzureStatus out_rpc_azure_status = Rpc.GetAzureStatus();
+            VpnRpcAzureStatus in_rpc_azure_status = new VpnRpcAzureStatus()
+            {
+            };
+            VpnRpcAzureStatus out_rpc_azure_status = Rpc.GetAzureStatus(in_rpc_azure_status);
 
             print_object(out_rpc_azure_status);
 
@@ -2554,8 +2844,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetAzureStatus");
 
-            // VpnRpcAzureStatus in_rpc_azure_status = new VpnRpcAzureStatus();
-            VpnRpcAzureStatus out_rpc_azure_status = Rpc.SetAzureStatus();
+            VpnRpcAzureStatus in_rpc_azure_status = new VpnRpcAzureStatus()
+            {
+            };
+            VpnRpcAzureStatus out_rpc_azure_status = Rpc.SetAzureStatus(in_rpc_azure_status);
 
             print_object(out_rpc_azure_status);
 
@@ -2571,8 +2863,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetDDnsInternetSettng");
 
-            // VpnInternetSetting in_internet_setting = new VpnInternetSetting();
-            VpnInternetSetting out_internet_setting = Rpc.GetDDnsInternetSettng();
+            VpnInternetSetting in_internet_setting = new VpnInternetSetting()
+            {
+            };
+            VpnInternetSetting out_internet_setting = Rpc.GetDDnsInternetSettng(in_internet_setting);
 
             print_object(out_internet_setting);
 
@@ -2588,8 +2882,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetDDnsInternetSettng");
 
-            // VpnInternetSetting in_internet_setting = new VpnInternetSetting();
-            VpnInternetSetting out_internet_setting = Rpc.SetDDnsInternetSettng();
+            VpnInternetSetting in_internet_setting = new VpnInternetSetting()
+            {
+            };
+            VpnInternetSetting out_internet_setting = Rpc.SetDDnsInternetSettng(in_internet_setting);
 
             print_object(out_internet_setting);
 
@@ -2605,8 +2901,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_SetVgsConfig");
 
-            // VpnVgsConfig in_vgs_config = new VpnVgsConfig();
-            VpnVgsConfig out_vgs_config = Rpc.SetVgsConfig();
+            VpnVgsConfig in_vgs_config = new VpnVgsConfig()
+            {
+            };
+            VpnVgsConfig out_vgs_config = Rpc.SetVgsConfig(in_vgs_config);
 
             print_object(out_vgs_config);
 
@@ -2622,8 +2920,10 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetVgsConfig");
 
-            // VpnVgsConfig in_vgs_config = new VpnVgsConfig();
-            VpnVgsConfig out_vgs_config = Rpc.GetVgsConfig();
+            VpnVgsConfig in_vgs_config = new VpnVgsConfig()
+            {
+            };
+            VpnVgsConfig out_vgs_config = Rpc.GetVgsConfig(in_vgs_config);
 
             print_object(out_vgs_config);
 
@@ -2631,6 +2931,7 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("-----");
             Console.WriteLine();
         }
+
 
         void print_object(object obj)
         {

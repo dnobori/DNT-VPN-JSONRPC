@@ -395,13 +395,13 @@ namespace SoftEther.VPNServerRpc
                     funcs_gen.WriteLine($"/// <summary>\r\n/// {item.Comment.Value} (Async mode)\r\n/// </summary>");
                 else
                     funcs_gen.WriteLine($"/// <summary>\r\n/// TODO (Async mode)\r\n/// </summary>");
-                funcs_gen.WriteLine($"public async Task<{item.TypeName}> {item.FuncName}Async() => await Call<{item.TypeName}>(\"{item.FuncName}\", new {item.TypeName}());");
+                funcs_gen.WriteLine($"public async Task<{item.TypeName}> {item.FuncName}Async({item.TypeName} input_param) => await Call<{item.TypeName}>(\"{item.FuncName}\", input_param);");
                 funcs_gen.WriteLine();
                 if (string.IsNullOrEmpty(item.Comment.Value) == false)
                     funcs_gen.WriteLine($"/// <summary>\r\n/// {item.Comment.Value} (Sync mode)\r\n/// </summary>");
                 else
                     funcs_gen.WriteLine($"/// <summary>\r\n/// TODO (Sync mode)\r\n/// </summary>");
-                funcs_gen.WriteLine($"public {item.TypeName} {item.FuncName}() => {item.FuncName}Async().Result;");
+                funcs_gen.WriteLine($"public {item.TypeName} {item.FuncName}({item.TypeName} input_param) => {item.FuncName}Async(input_param).Result;");
                 funcs_gen.WriteLine();
 
                 var st = struct_defs[item.TypeName];
@@ -419,8 +419,10 @@ namespace SoftEther.VPNServerRpc
                 test_gen.WriteLine("{");
                 test_gen.WriteLine($"    Console.WriteLine(\"Begin: Test_{func_name}\");");
                 test_gen.WriteLine($"    ");
-                test_gen.WriteLine($"    // {st.Name} in_{st.OrigName.ToLowerInvariant()} = new {st.Name}();");
-                test_gen.WriteLine($"    {st.Name} out_{st.OrigName.ToLowerInvariant()} = Rpc.{func_name}();");
+                test_gen.WriteLine($"    {st.Name} in_{st.OrigName.ToLowerInvariant()} = new {st.Name}()");
+                test_gen.WriteLine("    {");
+                test_gen.WriteLine("    };");
+                test_gen.WriteLine($"    {st.Name} out_{st.OrigName.ToLowerInvariant()} = Rpc.{func_name}(in_{st.OrigName.ToLowerInvariant()});");
                 test_gen.WriteLine($"    ");
                 test_gen.WriteLine($"    print_object(out_{st.OrigName.ToLowerInvariant()});");
                 test_gen.WriteLine("    ");

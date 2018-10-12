@@ -43,7 +43,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Certificate
         /// </summary>
-        // TODO: X *Cert;
+        public byte[] Cert_bin;
     }
 
     /// <summary>
@@ -243,6 +243,27 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Hub types
+    /// </summary>
+    public enum VpnRpcHubType
+    {
+        /// <summary>
+        /// Stand-alone HUB
+        /// </summary>
+        Standalone = 0,
+
+        /// <summary>
+        /// Static HUB
+        /// </summary>
+        FarmStatic = 1,
+
+        /// <summary>
+        /// Dynamic HUB
+        /// </summary>
+        FarmDynamic = 2,
+    }
+
+    /// <summary>
     /// Create a HUB
     /// </summary>
     public class VpnRpcCreateHub
@@ -255,12 +276,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Administrative password
         /// </summary>
-        public byte[] HashedPassword_bin;
-
-        /// <summary>
-        /// Administrator password
-        /// </summary>
-        public byte[] SecurePassword_bin;
+        public string AdminPasswordPlainText_str;
 
         /// <summary>
         /// Online flag
@@ -268,14 +284,47 @@ namespace SoftEther.VPNServerRpc
         public bool Online_bool;
 
         /// <summary>
-        /// HUB options
+        /// Maximum number of sessions
         /// </summary>
-        // TODO: RPC_HUB_OPTION HubOption;
+        public uint MaxSession_u32;
+
+        /// <summary>
+        /// Not listed
+        /// </summary>
+        public bool NoEnum_bool;
 
         /// <summary>
         /// Type of HUB
         /// </summary>
-        public uint HubType_u32;
+        public VpnRpcHubType HubType_u32;
+    }
+
+    public enum VpnRpcClientAuthType
+    {
+        /// <summary>
+        /// Anonymous authentication
+        /// </summary>
+        Anonymous = 0,
+
+        /// <summary>
+        /// SHA-0 hashed password authentication
+        /// </summary>
+        SHA0_Hashed_Password = 1,
+
+        /// <summary>
+        /// Plain password authentication
+        /// </summary>
+        PlainPassword = 2,
+
+        /// <summary>
+        /// Certificate authentication
+        /// </summary>
+        Cert = 3,
+
+        /// <summary>
+        /// Security token devices authentication
+        /// </summary>
+        Secure = 4,
     }
 
     /// <summary>
@@ -286,27 +335,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// HUB Name
         /// </summary>
-        public string HubName_str;
+        public string HubName_Ex_str;
 
         /// <summary>
         /// Online flag
         /// </summary>
         public bool Online_bool;
-
-        /// <summary>
-        /// Client Option
-        /// </summary>
-        // TODO: CLIENT_OPTION *ClientOption;
-
-        /// <summary>
-        /// Client authentication data
-        /// </summary>
-        // TODO: CLIENT_AUTH *ClientAuth;
-
-        /// <summary>
-        /// Policy
-        /// </summary>
-        // TODO: POLICY Policy;
 
         /// <summary>
         /// Validate the server certificate
@@ -316,7 +350,449 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Server certificate
         /// </summary>
-        // TODO: X *ServerCert;
+        public byte[] ServerCert_bin;
+
+        // ---- Start of Client Option Parameters ---
+        /// <summary>
+        /// Client Option Parameters: Connection setting name
+        /// </summary>
+        [JsonProperty("AccountName_utf")]
+        public string ClientOption_AccountName_utf;
+
+        /// <summary>
+        /// Client Option Parameters: Host name
+        /// </summary>
+        [JsonProperty("Hostname_str")]
+        public string ClientOption_Hostname_str;
+
+        /// <summary>
+        /// Client Option Parameters: Port number
+        /// </summary>
+        [JsonProperty("Port_u32")]
+        public uint ClientOption_Port_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Type of proxy
+        /// </summary>
+        [JsonProperty("ProxyType_u32")]
+        public uint ClientOption_ProxyType_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Proxy server name
+        /// </summary>
+        [JsonProperty("ProxyName_str")]
+        public string ClientOption_ProxyName_str;
+
+        /// <summary>
+        /// Client Option Parameters: Port number of the proxy server
+        /// </summary>
+        [JsonProperty("ProxyPort_u32")]
+        public uint ClientOption_ProxyPort_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Maximum user name length
+        /// </summary>
+        [JsonProperty("ProxyUsername_str")]
+        public string ClientOption_ProxyUsername_str;
+
+        /// <summary>
+        /// Client Option Parameters: Maximum password length
+        /// </summary>
+        [JsonProperty("ProxyPassword_str")]
+        public string ClientOption_ProxyPassword_str;
+
+        /// <summary>
+        /// Client Option Parameters: Automatic retries
+        /// </summary>
+        [JsonProperty("NumRetry_u32")]
+        public uint ClientOption_NumRetry_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Retry interval
+        /// </summary>
+        [JsonProperty("RetryInterval_u32")]
+        public uint ClientOption_RetryInterval_u32;
+
+        /// <summary>
+        /// Client Option Parameters: HUB name
+        /// </summary>
+        [JsonProperty("HubName_str")]
+        public string ClientOption_HubName_str;
+
+        /// <summary>
+        /// Client Option Parameters: Maximum number of concurrent TCP connections
+        /// </summary>
+        [JsonProperty("MaxConnection_u32")]
+        public uint ClientOption_MaxConnection_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Use encrypted communication
+        /// </summary>
+        [JsonProperty("UseEncrypt_bool")]
+        public bool ClientOption_UseEncrypt_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Use data compression
+        /// </summary>
+        [JsonProperty("UseCompress_bool")]
+        public bool ClientOption_UseCompress_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Use half connection in TCP
+        /// </summary>
+        [JsonProperty("HalfConnection_bool")]
+        public bool ClientOption_HalfConnection_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Disable the routing tracking
+        /// </summary>
+        [JsonProperty("NoRoutingTracking_bool")]
+        public bool ClientOption_NoRoutingTracking_bool;
+
+        /// <summary>
+        /// Client Option Parameters: VLAN device name
+        /// </summary>
+        //public string DeviceName_str;
+
+        /// <summary>
+        /// Client Option Parameters: Connection attempt interval when additional connection establish
+        /// </summary>
+        [JsonProperty("AdditionalConnectionInterval_u32")]
+        public uint ClientOption_AdditionalConnectionInterval_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Disconnection interval
+        /// </summary>
+        [JsonProperty("ConnectionDisconnectSpan_u32")]
+        public uint ClientOption_ConnectionDisconnectSpan_u32;
+
+        /// <summary>
+        /// Client Option Parameters: Hide the status window
+        /// </summary>
+        [JsonProperty("HideStatusWindow_bool")]
+        public bool ClientOption_HideStatusWindow_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Hide the NIC status window
+        /// </summary>
+        [JsonProperty("HideNicInfoWindow_bool")]
+        public bool ClientOption_HideNicInfoWindow_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Monitor port mode
+        /// </summary>
+        [JsonProperty("RequireMonitorMode_bool")]
+        public bool ClientOption_RequireMonitorMode_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Bridge or routing mode
+        /// </summary>
+        [JsonProperty("RequireBridgeRoutingMode_bool")]
+        public bool ClientOption_RequireBridgeRoutingMode_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Disable the VoIP / QoS function
+        /// </summary>
+        [JsonProperty("DisableQoS_bool")]
+        public bool ClientOption_DisableQoS_bool;
+
+        /// <summary>
+        /// Client Option Parameters: For Administration Pack
+        /// </summary>
+        [JsonProperty("FromAdminPack_bool")]
+        public bool ClientOption_FromAdminPack_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Do not use TLS 1.0
+        /// </summary>
+        [JsonProperty("NoTls1_bool")]
+        public bool ClientOption_NoTls1_bool;
+
+        /// <summary>
+        /// Client Option Parameters: Do not use UDP acceleration mode
+        /// </summary>
+        [JsonProperty("NoUdpAcceleration_bool")]
+        public bool ClientOption_NoUdpAcceleration_bool;
+        // ---- End of Client Option ---
+
+        // ---- Start of Client Auth Parameters ---
+        /// <summary>
+        /// Authentication type
+        /// </summary>
+        public VpnRpcClientAuthType AuthType_u32;
+
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string Username_str;
+
+        /// <summary>
+        /// SHA-0 Hashed password
+        /// </summary>
+        public byte[] HashedPassword_bin;
+
+        /// <summary>
+        /// Plaintext Password
+        /// </summary>
+        public string PlainPassword_str;
+
+        /// <summary>
+        /// Client certificate
+        /// </summary>
+        public byte[] ClientX_bin;
+
+        /// <summary>
+        /// Client private key
+        /// </summary>
+        public byte[] ClientK_bin;
+
+        /// <summary>
+        /// Secure device certificate name
+        /// </summary>
+        //public string SecurePublicCertName_str;
+
+        /// <summary>
+        /// Secure device secret key name
+        /// </summary>
+        //public string SecurePrivateKeyName_str;
+
+        // ---- End of Client Auth Parameters ---
+
+        // ---- Start of Security policy ---
+        /// <summary>
+        /// Security policy: Grant access
+        /// </summary>
+        [JsonProperty("policy:Access_bool")]
+        public bool SecPol_Access_bool;
+
+        /// <summary>
+        /// Security policy: Filter DHCP packets (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPFilter_bool")]
+        public bool SecPol_DHCPFilter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the behavior of the DHCP server (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPNoServer_bool")]
+        public bool SecPol_DHCPNoServer_bool;
+
+        /// <summary>
+        /// Security policy: Force DHCP-assigned IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPForce_bool")]
+        public bool SecPol_DHCPForce_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the bridge behavior
+        /// </summary>
+        [JsonProperty("policy:NoBridge_bool")]
+        public bool SecPol_NoBridge_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the router behavior (IPv4)
+        /// </summary>
+        [JsonProperty("policy:NoRouting_bool")]
+        public bool SecPol_NoRouting_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the duplicate MAC address
+        /// </summary>
+        [JsonProperty("policy:CheckMac_bool")]
+        public bool SecPol_CheckMac_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit a duplicate IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:CheckIP_bool")]
+        public bool SecPol_CheckIP_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the broadcast other than ARP, DHCP, ICMPv6
+        /// </summary>
+        [JsonProperty("policy:ArpDhcpOnly_bool")]
+        public bool SecPol_ArpDhcpOnly_bool;
+
+        /// <summary>
+        /// Security policy: Privacy filter mode
+        /// </summary>
+        [JsonProperty("policy:PrivacyFilter_bool")]
+        public bool SecPol_PrivacyFilter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit to operate as a TCP/IP server (IPv4)
+        /// </summary>
+        [JsonProperty("policy:NoServer_bool")]
+        public bool SecPol_NoServer_bool;
+
+        /// <summary>
+        /// Security policy: Not to limit the number of broadcast
+        /// </summary>
+        [JsonProperty("policy:NoBroadcastLimiter_bool")]
+        public bool SecPol_NoBroadcastLimiter_bool;
+
+        /// <summary>
+        /// Security policy: Allow monitoring mode
+        /// </summary>
+        [JsonProperty("policy:MonitorPort_bool")]
+        public bool SecPol_MonitorPort_bool;
+
+        /// <summary>
+        /// Security policy: Maximum number of TCP connections
+        /// </summary>
+        [JsonProperty("policy:MaxConnection_u32")]
+        public uint SecPol_MaxConnection_u32;
+
+        /// <summary>
+        /// Security policy: Communication time-out period
+        /// </summary>
+        [JsonProperty("policy:TimeOut_u32")]
+        public uint SecPol_TimeOut_u32;
+
+        /// <summary>
+        /// Security policy: Maximum number of MAC address
+        /// </summary>
+        [JsonProperty("policy:MaxMac_u32")]
+        public uint SecPol_MaxMac_u32;
+
+        /// <summary>
+        /// Security policy: Maximum number of IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:MaxIP_u32")]
+        public uint SecPol_MaxIP_u32;
+
+        /// <summary>
+        /// Security policy: Upload bandwidth
+        /// </summary>
+        [JsonProperty("policy:MaxUpload_u32")]
+        public uint SecPol_MaxUpload_u32;
+
+        /// <summary>
+        /// Security policy: Download bandwidth
+        /// </summary>
+        [JsonProperty("policy:MaxDownload_u32")]
+        public uint SecPol_MaxDownload_u32;
+
+        /// <summary>
+        /// Security policy: User can not change password
+        /// </summary>
+        [JsonProperty("policy:FixPassword_bool")]
+        public bool SecPol_FixPassword_bool;
+
+        /// <summary>
+        /// Security policy: Multiple logins limit
+        /// </summary>
+        [JsonProperty("policy:MultiLogins_u32")]
+        public uint SecPol_MultiLogins_u32;
+
+        /// <summary>
+        /// Security policy: Prohibit the use of VoIP / QoS features
+        /// </summary>
+        [JsonProperty("policy:NoQoS_bool")]
+        public bool SecPol_NoQoS_bool;
+
+        /// <summary>
+        /// Security policy: Filter the Router Solicitation / Advertising packet (IPv6)
+        /// </summary>
+        [JsonProperty("policy:RSandRAFilter_bool")]
+        public bool SecPol_RSandRAFilter_bool;
+
+        /// <summary>
+        /// Security policy: Filter the router advertisement packet (IPv6)
+        /// </summary>
+        [JsonProperty("policy:RAFilter_bool")]
+        public bool SecPol_RAFilter_bool;
+
+        /// <summary>
+        /// Security policy: Filter DHCP packets (IPv6)
+        /// </summary>
+        [JsonProperty("policy:DHCPv6Filter_bool")]
+        public bool SecPol_DHCPv6Filter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the behavior of the DHCP server (IPv6)
+        /// </summary>
+        [JsonProperty("policy:DHCPv6NoServer_bool")]
+        public bool SecPol_DHCPv6NoServer_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the router behavior (IPv6)
+        /// </summary>
+        [JsonProperty("policy:NoRoutingV6_bool")]
+        public bool SecPol_NoRoutingV6_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the duplicate IP address (IPv6)
+        /// </summary>
+        [JsonProperty("policy:CheckIPv6_bool")]
+        public bool SecPol_CheckIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit to operate as a TCP/IP server (IPv6)
+        /// </summary>
+        [JsonProperty("policy:NoServerV6_bool")]
+        public bool SecPol_NoServerV6_bool;
+
+        /// <summary>
+        /// Security policy: Maximum number of IP address (IPv6)
+        /// </summary>
+        [JsonProperty("policy:MaxIPv6_u32")]
+        public uint SecPol_MaxIPv6_u32;
+
+        /// <summary>
+        /// Security policy: Prohibit to save the password in the VPN Client
+        /// </summary>
+        [JsonProperty("policy:NoSavePassword_bool")]
+        public bool SecPol_NoSavePassword_bool;
+
+        /// <summary>
+        /// Security policy: Disconnect the VPN Client automatically at a certain period of time
+        /// </summary>
+        [JsonProperty("policy:AutoDisconnect_u32")]
+        public uint SecPol_AutoDisconnect_u32;
+
+        /// <summary>
+        /// Security policy: Filter all IPv4 packets
+        /// </summary>
+        [JsonProperty("policy:FilterIPv4_bool")]
+        public bool SecPol_FilterIPv4_bool;
+
+        /// <summary>
+        /// Security policy: Filter all IPv6 packets
+        /// </summary>
+        [JsonProperty("policy:FilterIPv6_bool")]
+        public bool SecPol_FilterIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Filter all non-IP packets
+        /// </summary>
+        [JsonProperty("policy:FilterNonIP_bool")]
+        public bool SecPol_FilterNonIP_bool;
+
+        /// <summary>
+        /// Security policy: Delete the default router specification from the IPv6 router advertisement
+        /// </summary>
+        [JsonProperty("policy:NoIPv6DefaultRouterInRA_bool")]
+        public bool SecPol_NoIPv6DefaultRouterInRA_bool;
+
+        /// <summary>
+        /// Security policy: Delete the default router specification from the IPv6 router advertisement (Enable IPv6 connection)
+        /// </summary>
+        [JsonProperty("policy:NoIPv6DefaultRouterInRAWhenIPv6_bool")]
+        public bool SecPol_NoIPv6DefaultRouterInRAWhenIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Specify the VLAN ID
+        /// </summary>
+        [JsonProperty("policy:VLanId_u32")]
+        public uint SecPol_VLanId_u32;
+
+        /// <summary>
+        /// Security policy: Whether version 3.0
+        /// </summary>
+        [JsonProperty("policy:Ver3_bool")]
+        public bool SecPol_Ver3_bool;
+        // ---- End of Security policy ---
     }
 
     /// <summary>
@@ -557,6 +1033,32 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// CA enumeration items of HUB
+    /// </summary>
+    public class VpnRpcHubEnumCAItem
+    {
+        /// <summary>
+        /// Certificate key
+        /// </summary>
+        public uint Key_u32;
+
+        /// <summary>
+        /// Issued to
+        /// </summary>
+        public string SubjectName_utf;
+
+        /// <summary>
+        /// Issuer
+        /// </summary>
+        public string IssuerName_utf;
+
+        /// <summary>
+        /// Expiration date
+        /// </summary>
+        public DateTime Expires_dt;
+    }
+
+    /// <summary>
     /// CA enumeration of HUB *
     /// </summary>
     public class VpnRpcHubEnumCA
@@ -567,14 +1069,101 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// CA number
-        /// </summary>
-        public uint NumCa_u32;
-
-        /// <summary>
         /// CA
         /// </summary>
-        // TODO: RPC_HUB_ENUM_CA_ITEM *Ca;
+        public VpnRpcHubEnumCAItem[] CAList;
+    }
+
+    /// <summary>
+    /// Type of connection
+    /// </summary>
+    public enum VpnRpcConnectionType
+    {
+        /// <summary>
+        ///  VPN Client
+        /// </summary>
+        Client = 0,
+
+        /// <summary>
+        /// During initialization
+        /// </summary>
+        Init = 1,
+
+        /// <summary>
+        /// Login connection
+        /// </summary>
+        Login = 2,
+
+        /// <summary>
+        /// Additional connection
+        /// </summary>
+        Additional = 3,
+
+        /// <summary>
+        /// RPC for server farm
+        /// </summary>
+        FarmRpc = 4,
+
+        /// <summary>
+        /// RPC for Management
+        /// </summary>
+        AdminRpc = 5,
+
+        /// <summary>
+        /// HUB enumeration
+        /// </summary>
+        EnumHub = 6,
+
+        /// <summary>
+        /// Password change
+        /// </summary>
+        Password = 7,
+
+        /// <summary>
+        /// SSTP
+        /// </summary>
+        SSTP = 8,
+
+        /// <summary>
+        /// OpenVPN
+        /// </summary>
+        OpenVPN = 9,
+    }
+
+    /// <summary>
+    /// Connection enumeration items
+    /// </summary>
+    public class VpnRpcEnumConnectionItem
+    {
+        /// <summary>
+        /// Connection name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Host name
+        /// </summary>
+        public string Hostname_str;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string Ip_ip;
+
+        /// <summary>
+        /// Port number
+        /// </summary>
+        public uint Port_u32;
+
+        /// <summary>
+        /// Connected time
+        /// </summary>
+        public DateTime ConnectedTime_dt;
+
+        /// <summary>
+        /// Type
+        /// </summary>
+        public VpnRpcConnectionType Type_u32;
     }
 
     /// <summary>
@@ -590,7 +1179,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Connection list
         /// </summary>
-        // TODO: RPC_ENUM_CONNECTION_ITEM *Connections;
+        public VpnRpcEnumConnectionItem[] ConnectionList;
     }
 
     /// <summary>
@@ -776,6 +1365,125 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Enumeration items of HUB
+    /// </summary>
+    public class VpnRpcEnumHubItem
+    {
+        /// <summary>
+        /// HUB Name
+        /// </summary>
+        public string HubName_str;
+
+        /// <summary>
+        /// Online
+        /// </summary>
+        public bool Online_bool;
+
+        /// <summary>
+        /// Type of HUB
+        /// </summary>
+        public VpnRpcHubType HubType_u32;
+
+        /// <summary>
+        /// Number of users
+        /// </summary>
+        public uint NumUsers_u32;
+
+        /// <summary>
+        /// Number of groups
+        /// </summary>
+        public uint NumGroups_u32;
+
+        /// <summary>
+        /// Number of sessions
+        /// </summary>
+        public uint NumSessions_u32;
+
+        /// <summary>
+        /// Number of MAC table entries
+        /// </summary>
+        public uint NumMacTables_u32;
+
+        /// <summary>
+        /// Number of IP table entries
+        /// </summary>
+        public uint NumIpTables_u32;
+
+        /// <summary>
+        /// Last communication date and time
+        /// </summary>
+        public DateTime LastCommTime_dt;
+
+        /// <summary>
+        /// Last login date and time
+        /// </summary>
+        public DateTime LastLoginTime_dt;
+
+        /// <summary>
+        /// Creation date and time
+        /// </summary>
+        public DateTime CreatedTime_dt;
+
+        /// <summary>
+        /// Number of logins
+        /// </summary>
+        public uint NumLogin_u32;
+
+        /// <summary>
+        /// Whether the traffic information exists
+        /// </summary>
+        public bool IsTrafficFilled_bool;
+
+        /// <summary>
+        /// Number of broadcast packets (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.BroadcastBytes_u64")]
+        public ulong Recv_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.BroadcastCount_u64")]
+        public ulong Recv_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast count (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.UnicastBytes_u64")]
+        public ulong Recv_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.UnicastCount_u64")]
+        public ulong Recv_UnicastCount_u64;
+
+        /// <summary>
+        /// Number of broadcast packets (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.BroadcastBytes_u64")]
+        public ulong Send_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.BroadcastCount_u64")]
+        public ulong Send_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.UnicastBytes_u64")]
+        public ulong Send_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.UnicastCount_u64")]
+        public ulong Send_UnicastCount_u64;
+    }
+
+    /// <summary>
     /// Enumeration of HUB
     /// </summary>
     public class VpnRpcEnumHub
@@ -788,7 +1496,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// HUB
         /// </summary>
-        // TODO: RPC_ENUM_HUB_ITEM *Hubs;
+        public VpnRpcEnumHubItem[] HubList;
     }
 
     /// <summary>
@@ -1121,7 +1829,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Certificate
         /// </summary>
-        // TODO: X *Cert;
+        public byte[] Cert_bin;
     }
 
     /// <summary>
@@ -1164,7 +1872,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Type
         /// </summary>
-        public uint Type_u32;
+        public VpnRpcConnectionType Type_u32;
 
         /// <summary>
         /// Host name
@@ -1174,7 +1882,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// IP address
         /// </summary>
-        public uint Ip_u32;
+        public string Ip_ip;
 
         /// <summary>
         /// Port number
@@ -1184,7 +1892,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Connected time
         /// </summary>
-        public ulong ConnectedTime_u64;
+        public DateTime ConnectedTime_dt;
 
         /// <summary>
         /// Server string
@@ -1531,6 +2239,109 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Log switch type
+    /// </summary>
+    public enum VpnRpcLogSwitchType
+    {
+        /// <summary>
+        /// No switching
+        /// </summary>
+        No = 0,
+
+        /// <summary>
+        /// Secondly basis
+        /// </summary>
+        Second = 1,
+
+        /// <summary>
+        /// Minutely basis
+        /// </summary>
+        Minute = 2,
+
+        /// <summary>
+        /// Hourly basis
+        /// </summary>
+        Hour = 3,
+
+        /// <summary>
+        /// Daily basis
+        /// </summary>
+        Day = 4,
+
+        /// <summary>
+        /// Monthly basis
+        /// </summary>
+        Month = 5,
+    }
+
+    /// <summary>
+    /// Packet log settings
+    /// </summary>
+    public enum VpnRpcPacketLogSetting
+    {
+        /// <summary>
+        /// Not save
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Only header
+        /// </summary>
+        Header = 1,
+
+        /// <summary>
+        /// All payloads
+        /// </summary>
+        All = 2,
+    }
+
+    /// <summary>
+    /// Packet log settings array index
+    /// </summary>
+    public enum VpnRpcPacketLogSettingIndex
+    {
+        /// <summary>
+        /// TCP connection log
+        /// </summary>
+        TcpConnection = 0,
+
+        /// <summary>
+        /// TCP packet log
+        /// </summary>
+        TcpAll = 1,
+
+        /// <summary>
+        /// DHCP Log
+        /// </summary>
+        Dhcp = 2,
+
+        /// <summary>
+        /// UDP log
+        /// </summary>
+        Udp = 3,
+
+        /// <summary>
+        /// ICMP log
+        /// </summary>
+        Icmp = 4,
+
+        /// <summary>
+        /// IP log
+        /// </summary>
+        Ip = 5,
+
+        /// <summary>
+        ///  ARP log
+        /// </summary>
+        Arp = 6,
+
+        /// <summary>
+        /// Ethernet log
+        /// </summary>
+        Ethernet = 7,
+    }
+
+    /// <summary>
     /// HUB log settings
     /// </summary>
     public class VpnRpcHubLog
@@ -1541,9 +2352,29 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Log Settings
+        /// To save the security log
         /// </summary>
-        // TODO: HUB_LOG LogSetting;
+        public bool SaveSecurityLog_bool;
+
+        /// <summary>
+        /// Switching type of security log
+        /// </summary>
+        public VpnRpcLogSwitchType SecurityLogSwitchType_u32;
+
+        /// <summary>
+        /// To save the packet log
+        /// </summary>
+        public bool SavePacketLog_bool;
+
+        /// <summary>
+        /// Switching type of packet log
+        /// </summary>
+        public VpnRpcLogSwitchType PacketLogSwitchType_u32;
+
+        /// <summary>
+        /// Packet log settings (uint * 16 array)
+        /// </summary>
+        public VpnRpcPacketLogSetting[] PacketLogConfig_u32 = new VpnRpcPacketLogSetting[16];
     }
 
     /// <summary>
@@ -1595,7 +2426,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Type of HUB
         /// </summary>
-        public uint HubType_u32;
+        public VpnRpcHubType HubType_u32;
 
         /// <summary>
         /// Number of sessions
@@ -1638,9 +2469,52 @@ namespace SoftEther.VPNServerRpc
         public uint NumIpTables_u32;
 
         /// <summary>
-        /// Traffic
+        /// Number of broadcast packets (Recv)
         /// </summary>
-        // TODO: TRAFFIC Traffic;
+        [JsonProperty("Recv.BroadcastBytes_u64")]
+        public ulong Recv_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Recv.BroadcastCount_u64")]
+        public ulong Recv_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast count (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastBytes_u64")]
+        public ulong Recv_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastCount_u64")]
+        public ulong Recv_UnicastCount_u64;
+
+        /// <summary>
+        /// Number of broadcast packets (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastBytes_u64")]
+        public ulong Send_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastCount_u64")]
+        public ulong Send_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastBytes_u64")]
+        public ulong Send_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastCount_u64")]
+        public ulong Send_UnicastCount_u64;
 
         /// <summary>
         /// Whether SecureNAT is enabled
@@ -1650,17 +2524,17 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Last communication date and time
         /// </summary>
-        public ulong LastCommTime_u64;
+        public DateTime LastCommTime_dt;
 
         /// <summary>
         /// Last login date and time
         /// </summary>
-        public ulong LastLoginTime_u64;
+        public DateTime LastLoginTime_dt;
 
         /// <summary>
         /// Creation date and time
         /// </summary>
-        public ulong CreatedTime_u64;
+        public DateTime CreatedTime_dt;
 
         /// <summary>
         /// Number of logins
