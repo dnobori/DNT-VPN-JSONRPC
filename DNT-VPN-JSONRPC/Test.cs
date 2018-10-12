@@ -98,19 +98,30 @@ namespace DNT_VPN_JSONRPC
                 }
             }
 
-            //Test_CreateLink();
-            Test_GetLink();
-            Test_SetLink();
-            Test_EnumLink();
-            Test_GetLinkStatus();
-            Test_SetLinkOnline();
-            Test_SetLinkOffline();
-            Test_DeleteLink();
-            Test_RenameLink();
-            Test_AddAccess();
-            Test_DeleteAccess();
-            Test_EnumAccess();
-            Test_SetAccessList();
+            if (false)
+            {
+                Test_CreateLink();
+                Test_GetLink();
+                Test_SetLink();
+                Test_SetLinkOffline();
+                Test_SetLinkOnline();
+                VpnRpcEnumLink enum_link = Test_EnumLink();
+                foreach (var link in enum_link.LinkList)
+                {
+                    Test_GetLinkStatus(link.AccountName_utf);
+                }
+                Test_RenameLink();
+                Test_DeleteLink();
+            }
+
+            if (false)
+            {
+                Test_AddAccess();
+                Test_EnumAccess();
+                Test_DeleteAccess();
+                Test_SetAccessList();
+            }
+
             Test_CreateUser();
             Test_SetUser();
             Test_GetUser();
@@ -910,6 +921,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcLink in_rpc_link = new VpnRpcLink()
             {
+                HubName_str = hub_name,
+                AccountName_utf = "linktest",
             };
             VpnRpcLink out_rpc_link = Rpc.SetLinkOnline(in_rpc_link);
 
@@ -929,6 +942,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcLink in_rpc_link = new VpnRpcLink()
             {
+                HubName_str = hub_name,
+                AccountName_utf = "linktest",
             };
             VpnRpcLink out_rpc_link = Rpc.SetLinkOffline(in_rpc_link);
 
@@ -948,6 +963,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcLink in_rpc_link = new VpnRpcLink()
             {
+                HubName_str = hub_name,
+                AccountName_utf = "linktest2",
             };
             VpnRpcLink out_rpc_link = Rpc.DeleteLink(in_rpc_link);
 
@@ -967,6 +984,9 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcRenameLink in_rpc_rename_link = new VpnRpcRenameLink()
             {
+                HubName_str = hub_name,
+                OldAccountName_utf = "linktest",
+                NewAccountName_utf = "linktest2",
             };
             VpnRpcRenameLink out_rpc_rename_link = Rpc.RenameLink(in_rpc_rename_link);
 
@@ -1004,8 +1024,8 @@ namespace DNT_VPN_JSONRPC
                 ClientOption_ConnectionDisconnectSpan_u32 = 24,
 
                 ClientAuth_AuthType_u32 = VpnRpcClientAuthType.PlainPassword,
-                ClientAuth_Username_str = "zzz",
-                ClientAuth_PlainPassword_str = "zzz",
+                ClientAuth_Username_str = "181012",
+                ClientAuth_PlainPassword_str = "microsoft",
 
                 SecPol_DHCPFilter_bool = true,
                 SecPol_DHCPNoServer_bool = true,
@@ -1072,6 +1092,52 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
             {
+                HubName_Ex_str = hub_name,
+                CheckServerCert_bool = false,
+
+                ClientOption_AccountName_utf = "linktest",
+                ClientOption_Hostname_str = "vpn1.sehosts.com",
+                ClientOption_Port_u32 = 443,
+                ClientOption_ProxyType_u32 = 0,
+                ClientOption_NumRetry_u32 = uint.MaxValue,
+                ClientOption_RetryInterval_u32 = 5,
+                ClientOption_HubName_str = "SoftEther Network",
+                ClientOption_MaxConnection_u32 = 16,
+                ClientOption_UseEncrypt_bool = true,
+                ClientOption_UseCompress_bool = false,
+                ClientOption_HalfConnection_bool = true,
+                ClientOption_AdditionalConnectionInterval_u32 = 2,
+                ClientOption_ConnectionDisconnectSpan_u32 = 24,
+
+                ClientAuth_AuthType_u32 = VpnRpcClientAuthType.PlainPassword,
+                ClientAuth_Username_str = "181012",
+                ClientAuth_PlainPassword_str = "microsoft",
+
+                SecPol_DHCPFilter_bool = true,
+                SecPol_DHCPNoServer_bool = true,
+                SecPol_DHCPForce_bool = true,
+                SecPol_CheckMac_bool = true,
+                SecPol_CheckIP_bool = true,
+                SecPol_ArpDhcpOnly_bool = true,
+                SecPol_PrivacyFilter_bool = true,
+                SecPol_NoServer_bool = true,
+                SecPol_NoBroadcastLimiter_bool = true,
+                SecPol_MaxMac_u32 = 32,
+                SecPol_MaxIP_u32 = 64,
+                SecPol_MaxUpload_u32 = 960000,
+                SecPol_MaxDownload_u32 = 1280000,
+                SecPol_RSandRAFilter_bool = true,
+                SecPol_RAFilter_bool = true,
+                SecPol_DHCPv6Filter_bool = true,
+                SecPol_DHCPv6NoServer_bool = true,
+                SecPol_CheckIPv6_bool = true,
+                SecPol_NoServerV6_bool = true,
+                SecPol_MaxIPv6_u32 = 127,
+                SecPol_FilterIPv4_bool = true,
+                SecPol_FilterIPv6_bool = true,
+                SecPol_FilterNonIP_bool = true,
+                SecPol_NoIPv6DefaultRouterInRA_bool = true,
+                SecPol_VLanId_u32 = 123,
             };
             VpnRpcCreateLink out_rpc_create_link = Rpc.SetLink(in_rpc_create_link);
 
@@ -1085,12 +1151,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumLink', Enumerate links
         /// </summary>
-        public void Test_EnumLink()
+        public VpnRpcEnumLink Test_EnumLink()
         {
             Console.WriteLine("Begin: Test_EnumLink");
 
             VpnRpcEnumLink in_rpc_enum_link = new VpnRpcEnumLink()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumLink out_rpc_enum_link = Rpc.EnumLink(in_rpc_enum_link);
 
@@ -1099,17 +1166,21 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumLink");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_link;
         }
 
         /// <summary>
         /// API test for 'GetLinkStatus', Get link status
         /// </summary>
-        public void Test_GetLinkStatus()
+        public void Test_GetLinkStatus(string name)
         {
             Console.WriteLine("Begin: Test_GetLinkStatus");
 
             VpnRpcLinkStatus in_rpc_link_status = new VpnRpcLinkStatus()
             {
+                HubName_Ex_str = hub_name,
+                AccountName_utf = name,
             };
             VpnRpcLinkStatus out_rpc_link_status = Rpc.GetLinkStatus(in_rpc_link_status);
 
@@ -1127,12 +1198,79 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_AddAccess");
 
-            VpnRpcAddAccess in_rpc_add_access = new VpnRpcAddAccess()
+            VpnRpcAddAccess in_rpc_add_access_ipv4 = new VpnRpcAddAccess()
             {
-            };
-            VpnRpcAddAccess out_rpc_add_access = Rpc.AddAccess(in_rpc_add_access);
+                HubName_str = hub_name,
 
-            print_object(out_rpc_add_access);
+                AccessListSingle = new VpnAccess[1]
+                {
+                    new VpnAccess()
+                    {
+                        Note_utf = "IPv4 Test",
+                        Active_bool = true,
+                        Priority_u32 = 100,
+                        Discard_bool = true,
+                        IsIPv6_bool = false,
+                        SrcIpAddress_ip = "192.168.0.0",
+                        SrcSubnetMask_ip = "255.255.255.0",
+                        DestIpAddress_ip = "10.0.0.0",
+                        DestSubnetMask_ip = "255.255.0.0",
+                        Protocol_u32 = VpnIpProtocolNumber.TCP,
+                        SrcPortStart_u32 = 123,
+                        SrcPortEnd_u32 = 456,
+                        DestPortStart_u32 = 555,
+                        DestPortEnd_u32 = 666,
+                        SrcUsername_str = "dnobori",
+                        DestUsername_str = "nekosan",
+                        CheckSrcMac_bool = true,
+                        SrcMacAddress_bin = new byte[] { 1, 2, 3, 0, 0, 0 },
+                        SrcMacMask_bin = new byte[] { 255, 255, 255, 0, 0, 0 },
+                        CheckTcpState_bool = true,
+                        Established_bool = true,
+                        Delay_u32 = 10,
+                        Jitter_u32 = 20,
+                        Loss_u32 = 30,
+                        RedirectUrl_str = "aho",
+                    },
+                },
+            };
+            VpnRpcAddAccess out_rpc_add_access_ipv4 = Rpc.AddAccess(in_rpc_add_access_ipv4);
+
+            VpnRpcAddAccess in_rpc_add_access_ipv6 = new VpnRpcAddAccess()
+            {
+                HubName_str = hub_name,
+
+                AccessListSingle = new VpnAccess[1]
+                {
+                    new VpnAccess()
+                    {
+                        Note_utf = "IPv6 Test",
+                        Active_bool = true,
+                        Priority_u32 = 100,
+                        Discard_bool = true,
+                        IsIPv6_bool = true,
+                        SrcIpAddress6_bin = new byte[] { 0x20, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                        SrcSubnetMask6_bin = new byte[] { 0xff, 0xff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                        Protocol_u32 = VpnIpProtocolNumber.UDP,
+                        SrcPortStart_u32 = 123,
+                        SrcPortEnd_u32 = 456,
+                        DestPortStart_u32 = 555,
+                        DestPortEnd_u32 = 666,
+                        SrcUsername_str = "dnobori",
+                        DestUsername_str = "nekosan",
+                        CheckSrcMac_bool = true,
+                        SrcMacAddress_bin = new byte[] { 1, 2, 3, 0, 0, 0 },
+                        SrcMacMask_bin = new byte[] { 255, 255, 255, 0, 0, 0 },
+                        CheckTcpState_bool = true,
+                        Established_bool = true,
+                        Delay_u32 = 10,
+                        Jitter_u32 = 20,
+                        Loss_u32 = 30,
+                        RedirectUrl_str = "aho",
+                    },
+                },
+            };
+            VpnRpcAddAccess out_rpc_add_access_ipv6 = Rpc.AddAccess(in_rpc_add_access_ipv6);
 
             Console.WriteLine("End: Test_AddAccess");
             Console.WriteLine("-----");
@@ -1148,6 +1286,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcDeleteAccess in_rpc_delete_access = new VpnRpcDeleteAccess()
             {
+                HubName_str = hub_name,
+                Id_u32 = 1,
             };
             VpnRpcDeleteAccess out_rpc_delete_access = Rpc.DeleteAccess(in_rpc_delete_access);
 
@@ -1167,6 +1307,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.EnumAccess(in_rpc_enum_access_list);
 
@@ -1186,6 +1327,64 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumAccessList in_rpc_enum_access_list = new VpnRpcEnumAccessList()
             {
+                HubName_str = hub_name,
+                AccessList = new VpnAccess[]
+                {
+                    new VpnAccess()
+                    {
+                        Note_utf = "IPv4 Test 2",
+                        Active_bool = true,
+                        Priority_u32 = 100,
+                        Discard_bool = true,
+                        IsIPv6_bool = false,
+                        SrcIpAddress_ip = "192.168.0.0",
+                        SrcSubnetMask_ip = "255.255.255.0",
+                        DestIpAddress_ip = "10.0.0.0",
+                        DestSubnetMask_ip = "255.255.0.0",
+                        Protocol_u32 = VpnIpProtocolNumber.TCP,
+                        SrcPortStart_u32 = 123,
+                        SrcPortEnd_u32 = 456,
+                        DestPortStart_u32 = 555,
+                        DestPortEnd_u32 = 666,
+                        SrcUsername_str = "dnobori",
+                        DestUsername_str = "nekosan",
+                        CheckSrcMac_bool = true,
+                        SrcMacAddress_bin = new byte[] { 1, 2, 3, 0, 0, 0 },
+                        SrcMacMask_bin = new byte[] { 255, 255, 255, 0, 0, 0 },
+                        CheckTcpState_bool = true,
+                        Established_bool = true,
+                        Delay_u32 = 10,
+                        Jitter_u32 = 20,
+                        Loss_u32 = 30,
+                        RedirectUrl_str = "aho",
+                    },
+                    new VpnAccess()
+                    {
+                        Note_utf = "IPv6 Test 2",
+                        Active_bool = true,
+                        Priority_u32 = 100,
+                        Discard_bool = true,
+                        IsIPv6_bool = true,
+                        SrcIpAddress6_bin = new byte[] { 0x20, 0x01, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                        SrcSubnetMask6_bin = new byte[] { 0xff, 0xff, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
+                        Protocol_u32 = VpnIpProtocolNumber.UDP,
+                        SrcPortStart_u32 = 123,
+                        SrcPortEnd_u32 = 456,
+                        DestPortStart_u32 = 555,
+                        DestPortEnd_u32 = 666,
+                        SrcUsername_str = "dnobori",
+                        DestUsername_str = "nekosan",
+                        CheckSrcMac_bool = true,
+                        SrcMacAddress_bin = new byte[] { 1, 2, 3, 0, 0, 0 },
+                        SrcMacMask_bin = new byte[] { 255, 255, 255, 0, 0, 0 },
+                        CheckTcpState_bool = true,
+                        Established_bool = true,
+                        Delay_u32 = 10,
+                        Jitter_u32 = 20,
+                        Loss_u32 = 30,
+                        RedirectUrl_str = "aho",
+                    },
+                }
             };
             VpnRpcEnumAccessList out_rpc_enum_access_list = Rpc.SetAccessList(in_rpc_enum_access_list);
 
@@ -1205,10 +1404,18 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
             {
+                HubName_str = hub_name,
+                Name_str = "test1",
+                Realname_utf = "ねこさん",
+                Note_utf = "こらっ！",
+                AuthType_u32 = VpnRpcUserAuthType.RootCert,
+                ExpireTime_dt = new DateTime(2019,1,1),
+                UsePolicy_bool = true,
+                SecPol_Access_bool = true,
+                SecPol_DHCPNoServer_bool = true,
+                SecPol_MaxMac_u32 = 32,
             };
             VpnRpcSetUser out_rpc_set_user = Rpc.CreateUser(in_rpc_set_user);
-
-            print_object(out_rpc_set_user);
 
             Console.WriteLine("End: Test_CreateUser");
             Console.WriteLine("-----");
