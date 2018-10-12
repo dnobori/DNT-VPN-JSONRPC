@@ -211,7 +211,7 @@ namespace SoftEther.JsonRpc
                 ret_string = await streamReader.ReadToEndAsync();
             }
 
-            //Console.WriteLine($"ret: {ret_string}");
+            Console.WriteLine($"ret: {ret_string}");
 
             JsonRpcResponse <TResult> ret = ret_string.JsonToObject<JsonRpcResponse<TResult>>();
 

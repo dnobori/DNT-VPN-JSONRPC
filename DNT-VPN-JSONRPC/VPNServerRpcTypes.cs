@@ -446,8 +446,8 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Client Option Parameters: Disable the routing tracking
         /// </summary>
-        [JsonProperty("NoRoutingTracking_bool")]
-        public bool ClientOption_NoRoutingTracking_bool;
+        //[JsonProperty("NoRoutingTracking_bool")]
+        //public bool ClientOption_NoRoutingTracking_bool;
 
         /// <summary>
         /// Client Option Parameters: VLAN device name
@@ -469,26 +469,26 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Client Option Parameters: Hide the status window
         /// </summary>
-        [JsonProperty("HideStatusWindow_bool")]
-        public bool ClientOption_HideStatusWindow_bool;
+        //[JsonProperty("HideStatusWindow_bool")]
+        //public bool ClientOption_HideStatusWindow_bool;
 
         /// <summary>
         /// Client Option Parameters: Hide the NIC status window
         /// </summary>
-        [JsonProperty("HideNicInfoWindow_bool")]
-        public bool ClientOption_HideNicInfoWindow_bool;
+        //[JsonProperty("HideNicInfoWindow_bool")]
+        //public bool ClientOption_HideNicInfoWindow_bool;
 
         /// <summary>
         /// Client Option Parameters: Monitor port mode
         /// </summary>
-        [JsonProperty("RequireMonitorMode_bool")]
-        public bool ClientOption_RequireMonitorMode_bool;
+        //[JsonProperty("RequireMonitorMode_bool")]
+        //public bool ClientOption_RequireMonitorMode_bool;
 
         /// <summary>
         /// Client Option Parameters: Bridge or routing mode
         /// </summary>
-        [JsonProperty("RequireBridgeRoutingMode_bool")]
-        public bool ClientOption_RequireBridgeRoutingMode_bool;
+        //[JsonProperty("RequireBridgeRoutingMode_bool")]
+        //public bool ClientOption_RequireBridgeRoutingMode_bool;
 
         /// <summary>
         /// Client Option Parameters: Disable the VoIP / QoS function
@@ -497,13 +497,7 @@ namespace SoftEther.VPNServerRpc
         public bool ClientOption_DisableQoS_bool;
 
         /// <summary>
-        /// Client Option Parameters: For Administration Pack
-        /// </summary>
-        [JsonProperty("FromAdminPack_bool")]
-        public bool ClientOption_FromAdminPack_bool;
-
-        /// <summary>
-        /// Client Option Parameters: Do not use TLS 1.0
+        /// Client Option Parameters: Do not use TLS 1.x
         /// </summary>
         [JsonProperty("NoTls1_bool")]
         public bool ClientOption_NoTls1_bool;
@@ -519,32 +513,38 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Authentication type
         /// </summary>
-        public VpnRpcClientAuthType AuthType_u32;
+        [JsonProperty("AuthType_u32")]
+        public VpnRpcClientAuthType ClientAuth_AuthType_u32;
 
         /// <summary>
         /// User name
         /// </summary>
-        public string Username_str;
+        [JsonProperty("Username_str")]
+        public string ClientAuth_Username_str;
 
         /// <summary>
         /// SHA-0 Hashed password
         /// </summary>
-        public byte[] HashedPassword_bin;
+        [JsonProperty("HashedPassword_bin")]
+        public byte[] ClientAuth_HashedPassword_bin;
 
         /// <summary>
         /// Plaintext Password
         /// </summary>
-        public string PlainPassword_str;
+        [JsonProperty("PlainPassword_str")]
+        public string ClientAuth_PlainPassword_str;
 
         /// <summary>
         /// Client certificate
         /// </summary>
-        public byte[] ClientX_bin;
+        [JsonProperty("ClientX_bin")]
+        public byte[] ClientAuth_ClientX_bin;
 
         /// <summary>
         /// Client private key
         /// </summary>
-        public byte[] ClientK_bin;
+        [JsonProperty("ClientK_bin")]
+        public byte[] ClientAuth_ClientK_bin;
 
         /// <summary>
         /// Secure device certificate name
@@ -562,8 +562,8 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Grant access
         /// </summary>
-        [JsonProperty("policy:Access_bool")]
-        public bool SecPol_Access_bool;
+        //[JsonProperty("policy:Access_bool")]
+        //public bool SecPol_Access_bool;
 
         /// <summary>
         /// Security policy: Filter DHCP packets (IPv4)
@@ -586,14 +586,14 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Prohibit the bridge behavior
         /// </summary>
-        [JsonProperty("policy:NoBridge_bool")]
-        public bool SecPol_NoBridge_bool;
+        //[JsonProperty("policy:NoBridge_bool")]
+        //public bool SecPol_NoBridge_bool;
 
         /// <summary>
         /// Security policy: Prohibit the router behavior (IPv4)
         /// </summary>
-        [JsonProperty("policy:NoRouting_bool")]
-        public bool SecPol_NoRouting_bool;
+        //[JsonProperty("policy:NoRouting_bool")]
+        //public bool SecPol_NoRouting_bool;
 
         /// <summary>
         /// Security policy: Prohibit the duplicate MAC address
@@ -634,20 +634,20 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Allow monitoring mode
         /// </summary>
-        [JsonProperty("policy:MonitorPort_bool")]
-        public bool SecPol_MonitorPort_bool;
+        //[JsonProperty("policy:MonitorPort_bool")]
+        //public bool SecPol_MonitorPort_bool;
 
         /// <summary>
         /// Security policy: Maximum number of TCP connections
         /// </summary>
-        [JsonProperty("policy:MaxConnection_u32")]
-        public uint SecPol_MaxConnection_u32;
+        //[JsonProperty("policy:MaxConnection_u32")]
+        //public uint SecPol_MaxConnection_u32;
 
         /// <summary>
         /// Security policy: Communication time-out period
         /// </summary>
-        [JsonProperty("policy:TimeOut_u32")]
-        public uint SecPol_TimeOut_u32;
+        //[JsonProperty("policy:TimeOut_u32")]
+        //public uint SecPol_TimeOut_u32;
 
         /// <summary>
         /// Security policy: Maximum number of MAC address
@@ -676,20 +676,20 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: User can not change password
         /// </summary>
-        [JsonProperty("policy:FixPassword_bool")]
-        public bool SecPol_FixPassword_bool;
+        //[JsonProperty("policy:FixPassword_bool")]
+        //public bool SecPol_FixPassword_bool;
 
         /// <summary>
         /// Security policy: Multiple logins limit
         /// </summary>
-        [JsonProperty("policy:MultiLogins_u32")]
-        public uint SecPol_MultiLogins_u32;
+        //[JsonProperty("policy:MultiLogins_u32")]
+        //public uint SecPol_MultiLogins_u32;
 
         /// <summary>
         /// Security policy: Prohibit the use of VoIP / QoS features
         /// </summary>
-        [JsonProperty("policy:NoQoS_bool")]
-        public bool SecPol_NoQoS_bool;
+        //[JsonProperty("policy:NoQoS_bool")]
+        //public bool SecPol_NoQoS_bool;
 
         /// <summary>
         /// Security policy: Filter the Router Solicitation / Advertising packet (IPv6)
@@ -718,8 +718,8 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Prohibit the router behavior (IPv6)
         /// </summary>
-        [JsonProperty("policy:NoRoutingV6_bool")]
-        public bool SecPol_NoRoutingV6_bool;
+        //[JsonProperty("policy:NoRoutingV6_bool")]
+        //public bool SecPol_NoRoutingV6_bool;
 
         /// <summary>
         /// Security policy: Prohibit the duplicate IP address (IPv6)
@@ -742,14 +742,14 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Prohibit to save the password in the VPN Client
         /// </summary>
-        [JsonProperty("policy:NoSavePassword_bool")]
-        public bool SecPol_NoSavePassword_bool;
+        //[JsonProperty("policy:NoSavePassword_bool")]
+        //public bool SecPol_NoSavePassword_bool;
 
         /// <summary>
         /// Security policy: Disconnect the VPN Client automatically at a certain period of time
         /// </summary>
-        [JsonProperty("policy:AutoDisconnect_u32")]
-        public uint SecPol_AutoDisconnect_u32;
+        //[JsonProperty("policy:AutoDisconnect_u32")]
+        //public uint SecPol_AutoDisconnect_u32;
 
         /// <summary>
         /// Security policy: Filter all IPv4 packets
@@ -778,8 +778,8 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Security policy: Delete the default router specification from the IPv6 router advertisement (Enable IPv6 connection)
         /// </summary>
-        [JsonProperty("policy:NoIPv6DefaultRouterInRAWhenIPv6_bool")]
-        public bool SecPol_NoIPv6DefaultRouterInRAWhenIPv6_bool;
+        //[JsonProperty("policy:NoIPv6DefaultRouterInRAWhenIPv6_bool")]
+        //public bool SecPol_NoIPv6DefaultRouterInRAWhenIPv6_bool;
 
         /// <summary>
         /// Security policy: Specify the VLAN ID
@@ -791,7 +791,7 @@ namespace SoftEther.VPNServerRpc
         /// Security policy: Whether version 3.0
         /// </summary>
         [JsonProperty("policy:Ver3_bool")]
-        public bool SecPol_Ver3_bool;
+        public bool SecPol_Ver3_bool = true;
         // ---- End of Security policy ---
     }
 

@@ -22,6 +22,8 @@ namespace DNT_VPN_JSONRPC
 
         public void Test_All()
         {
+            hub_name = "TEST";
+
             if (false)
             {
                 Test_Test();
@@ -61,42 +63,42 @@ namespace DNT_VPN_JSONRPC
                 Test_GetServerCipher();
 
                 Test_SetServerCipher();
+
+                VpnRpcEnumConnection enum_connection = Test_EnumConnection();
+                //Test_DisconnectConnection();
+                foreach (VpnRpcEnumConnectionItem connecton in enum_connection.ConnectionList)
+                {
+                    Test_GetConnectionInfo(connecton.Name_str);
+                }
+
+                //hub_name = Test_CreateHub();
+                
+
+                Test_SetHub();
+                Test_GetHub();
+                Test_EnumHub();
+                //Test_DeleteHub();
+                Test_SetHubRadius();
+                Test_GetHubRadius();
+
+                //return;
+
+                Test_SetHubOnline();
+                Test_GetHubStatus();
+
+                VpnRpcHubLog hub_log_settings = Test_GetHubLog();
+                Test_SetHubLog(hub_log_settings);
+
+                Test_AddCa();
+                VpnRpcHubEnumCA enum_ca = Test_EnumCa();
+                foreach (VpnRpcHubEnumCAItem ca in enum_ca.CAList)
+                {
+                    Test_GetCa(ca.Key_u32);
+                    Test_DeleteCa(ca.Key_u32);
+                }
             }
 
-            VpnRpcEnumConnection enum_connection = Test_EnumConnection();
-            //Test_DisconnectConnection();
-            foreach (VpnRpcEnumConnectionItem connecton in enum_connection.ConnectionList)
-            {
-                Test_GetConnectionInfo(connecton.Name_str);
-            }
-
-            //hub_name = Test_CreateHub();
-            hub_name = "TEST";
-
-            Test_SetHub();
-            Test_GetHub();
-            Test_EnumHub();
-            //Test_DeleteHub();
-            Test_SetHubRadius();
-            Test_GetHubRadius();
-
-            //return;
-
-            Test_SetHubOnline();
-            Test_GetHubStatus();
-
-            VpnRpcHubLog hub_log_settings = Test_GetHubLog();
-            Test_SetHubLog(hub_log_settings);
-
-            Test_AddCa();
-            VpnRpcHubEnumCA enum_ca = Test_EnumCa();
-            foreach (VpnRpcHubEnumCAItem ca in enum_ca.CAList)
-            {
-                Test_GetCa(ca.Key_u32);
-                Test_DeleteCa(ca.Key_u32);
-            }
-
-            Test_CreateLink();
+            //Test_CreateLink();
             Test_GetLink();
             Test_SetLink();
             Test_EnumLink();
@@ -984,6 +986,52 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
             {
+                HubName_Ex_str = hub_name,
+                CheckServerCert_bool = false,
+
+                ClientOption_AccountName_utf = "linktest",
+                ClientOption_Hostname_str = "vpn1.sehosts.com",
+                ClientOption_Port_u32 = 443,
+                ClientOption_ProxyType_u32 = 0,
+                ClientOption_NumRetry_u32 = uint.MaxValue,
+                ClientOption_RetryInterval_u32 = 5,
+                ClientOption_HubName_str = "SoftEther Network",
+                ClientOption_MaxConnection_u32 = 16,
+                ClientOption_UseEncrypt_bool = true,
+                ClientOption_UseCompress_bool = false,
+                ClientOption_HalfConnection_bool = true,
+                ClientOption_AdditionalConnectionInterval_u32 = 2,
+                ClientOption_ConnectionDisconnectSpan_u32 = 24,
+
+                ClientAuth_AuthType_u32 = VpnRpcClientAuthType.PlainPassword,
+                ClientAuth_Username_str = "zzz",
+                ClientAuth_PlainPassword_str = "zzz",
+
+                SecPol_DHCPFilter_bool = true,
+                SecPol_DHCPNoServer_bool = true,
+                SecPol_DHCPForce_bool = true,
+                SecPol_CheckMac_bool = true,
+                SecPol_CheckIP_bool = true,
+                SecPol_ArpDhcpOnly_bool = true,
+                SecPol_PrivacyFilter_bool = true,
+                SecPol_NoServer_bool = true,
+                SecPol_NoBroadcastLimiter_bool = true,
+                SecPol_MaxMac_u32 = 32,
+                SecPol_MaxIP_u32 = 64,
+                SecPol_MaxUpload_u32 = 960000,
+                SecPol_MaxDownload_u32 = 1280000,
+                SecPol_RSandRAFilter_bool = true,
+                SecPol_RAFilter_bool = true,
+                SecPol_DHCPv6Filter_bool = true,
+                SecPol_DHCPv6NoServer_bool = true,
+                SecPol_CheckIPv6_bool = true,
+                SecPol_NoServerV6_bool = true,
+                SecPol_MaxIPv6_u32 = 127,
+                SecPol_FilterIPv4_bool = true,
+                SecPol_FilterIPv6_bool = true,
+                SecPol_FilterNonIP_bool = true,
+                SecPol_NoIPv6DefaultRouterInRA_bool = true,
+                SecPol_VLanId_u32 = 123,
             };
             VpnRpcCreateLink out_rpc_create_link = Rpc.CreateLink(in_rpc_create_link);
 
@@ -1003,6 +1051,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcCreateLink in_rpc_create_link = new VpnRpcCreateLink()
             {
+                HubName_Ex_str = hub_name,
+                ClientOption_AccountName_utf = "linktest",
             };
             VpnRpcCreateLink out_rpc_create_link = Rpc.GetLink(in_rpc_create_link);
 
