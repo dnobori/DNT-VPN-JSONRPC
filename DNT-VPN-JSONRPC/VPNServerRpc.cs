@@ -48,6 +48,13 @@ namespace SoftEther.VPNServerRpc
             return response;
         }
 
+        public async Task<string> CallInternal<T>(string method_name, T request)
+        {
+            string response = await rpc_client.CallInternal<T>(method_name, request);
+
+            return response;
+        }
+
         /// <summary>
         /// test RPC function (Async mode)
         /// </summary>

@@ -384,7 +384,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// HUB Name
         /// </summary>
-        public string HubName_str;
+        public string HubNameLB_str;
 
         /// <summary>
         /// Online flag
@@ -2605,14 +2605,9 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumLocalBridge
     {
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// Item
         /// </summary>
-        // TODO: RPC_LOCALBRIDGE *Items;
+        public VpnRpcLocalBridge[] LocalBridgeList;
     }
 
     /// <summary>
@@ -3169,6 +3164,22 @@ namespace SoftEther.VPNServerRpc
         /// Certificate
         /// </summary>
         public byte[] Cert_bin;
+    }
+
+    /// <summary>
+    /// Caps related
+    /// </summary>
+    public class VpnCaps
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Value
+        /// </summary>
+        public uint Value_u32;
     }
 
     /// <summary>

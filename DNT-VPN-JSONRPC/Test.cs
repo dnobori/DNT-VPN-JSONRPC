@@ -24,9 +24,10 @@ namespace DNT_VPN_JSONRPC
         {
             hub_name = "TEST";
 
+            Test_Test();
+
             if (false)
             {
-                Test_Test();
 
                 Test_GetServerInfo();
                 Test_GetServerStatus();
@@ -122,69 +123,77 @@ namespace DNT_VPN_JSONRPC
                 Test_SetAccessList();
             }
 
-            Test_CreateGroup();
-            Test_SetGroup();
-            Test_GetGroup();
-
-            Test_CreateUser();
-            Test_SetUser();
-            Test_GetUser();
-            Test_EnumUser();
-            Test_EnumGroup();
-
-            Test_DeleteUser();
-            Test_DeleteGroup();
-   
-            VpnRpcEnumSession enum_session = Test_EnumSession();
-
-            if (enum_session.SessionList != null)
+            if (false)
             {
-                foreach (VpnRpcEnumSessionItem session in enum_session.SessionList)
-                {
-                    Test_GetSessionStatus(session.Name_str);
+                Test_CreateGroup();
+                Test_SetGroup();
+                Test_GetGroup();
 
-                    //Test_DeleteSession(session.Name_str);
+                Test_CreateUser();
+                Test_SetUser();
+                Test_GetUser();
+                Test_EnumUser();
+                Test_EnumGroup();
+
+                Test_DeleteUser();
+                Test_DeleteGroup();
+
+                VpnRpcEnumSession enum_session = Test_EnumSession();
+
+                if (enum_session.SessionList != null)
+                {
+                    foreach (VpnRpcEnumSessionItem session in enum_session.SessionList)
+                    {
+                        Test_GetSessionStatus(session.Name_str);
+
+                        //Test_DeleteSession(session.Name_str);
+                    }
                 }
+
+                VpnRpcEnumMacTable enum_mac = Test_EnumMacTable();
+
+                if (enum_mac.MacTable != null)
+                {
+                    foreach (VpnRpcEnumMacTableItem mac in enum_mac.MacTable)
+                    {
+                        Test_DeleteMacTable(mac.Key_u32);
+                    }
+                }
+
+                VpnRpcEnumIpTable enum_ip = Test_EnumIpTable();
+
+                if (enum_ip.IpTable != null)
+                {
+                    foreach (VpnRpcEnumIpTableItem ip in enum_ip.IpTable)
+                    {
+                        Test_DeleteIpTable(ip.Key_u32);
+                    }
+                }
+
+                Test_SetKeep();
+                Test_GetKeep();
+
+                Test_EnableSecureNAT();
+                Test_GetSecureNATOption();
+                Test_SetSecureNATOption();
+                Test_EnumNAT();
+                Test_EnumDHCP();
+                Test_GetSecureNATStatus();
+                Test_DisableSecureNAT();
             }
 
-            VpnRpcEnumMacTable enum_mac = Test_EnumMacTable();
-
-            if (enum_mac.MacTable != null)
+            if (false)
             {
-                foreach (VpnRpcEnumMacTableItem mac in enum_mac.MacTable)
-                {
-                    Test_DeleteMacTable(mac.Key_u32);
-                }
+                Test_EnumEthernet();
+                Test_AddLocalBridge();
+                Test_EnumLocalBridge();
+                Test_DeleteLocalBridge();
+                Test_GetBridgeSupport();
             }
 
-            VpnRpcEnumIpTable enum_ip = Test_EnumIpTable();
-
-            if (enum_ip.IpTable != null)
-            {
-                foreach (VpnRpcEnumIpTableItem ip in enum_ip.IpTable)
-                {
-                    Test_DeleteIpTable(ip.Key_u32);
-                }
-            }
-
-            Test_SetKeep();
-            Test_GetKeep();
-
-            Test_EnableSecureNAT();
-            Test_GetSecureNATOption();
-            Test_SetSecureNATOption();
-            Test_EnumNAT();
-            Test_EnumDHCP();
-            Test_GetSecureNATStatus();
-            Test_DisableSecureNAT();
-
-            Test_EnumEthernet();
-            Test_AddLocalBridge();
-            Test_DeleteLocalBridge();
-            Test_EnumLocalBridge();
-            Test_GetBridgeSupport();
-            Test_RebootServer();
+            //Test_RebootServer();
             Test_GetCaps();
+            return;
             Test_GetConfig();
             Test_SetConfig();
             Test_GetDefaultHubAdminOptions();
@@ -2028,6 +2037,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
             {
+                DeviceName_str = "Intel(R) Ethernet Connection (2) I219-V (ID=3632031273)",
+                HubNameLB_str = "test",
             };
             VpnRpcLocalBridge out_rpc_localbridge = Rpc.AddLocalBridge(in_rpc_localbridge);
 
@@ -2047,6 +2058,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
             {
+                DeviceName_str = "Intel(R) Ethernet Connection (2) I219-V (ID=3632031273)",
+                HubNameLB_str = "test",
             };
             VpnRpcLocalBridge out_rpc_localbridge = Rpc.DeleteLocalBridge(in_rpc_localbridge);
 
@@ -2120,6 +2133,7 @@ namespace DNT_VPN_JSONRPC
         public void Test_GetCaps()
         {
             Console.WriteLine("Begin: Test_GetCaps");
+
 
             VpnCapslist in_capslist = new VpnCapslist()
             {
