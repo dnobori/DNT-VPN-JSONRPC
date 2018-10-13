@@ -3174,12 +3174,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Name
         /// </summary>
-        public string Name_str;
+        public string CapsName_str;
 
         /// <summary>
         /// Value
         /// </summary>
-        public uint Value_u32;
+        public uint CapsValue_u32;
     }
 
     /// <summary>
@@ -3190,7 +3190,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Caps list
         /// </summary>
-        // TODO: LIST *CapsList;
+        public VpnCaps[] CapsList;
     }
 
     /// <summary>

@@ -798,12 +798,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Enumerate Ethernet devices (Async mode)
         /// </summary>
-        public async Task<VpnRpcEnumEth> EnumEthernetAsync(VpnRpcEnumEth input_param) => await Call<VpnRpcEnumEth>("EnumEthernet", input_param);
+        public async Task<VpnRpcEnumEth> EnumEthernetAsync() => await Call<VpnRpcEnumEth>("EnumEthernet", new VpnRpcEnumEth());
 
         /// <summary>
         /// Enumerate Ethernet devices (Sync mode)
         /// </summary>
-        public VpnRpcEnumEth EnumEthernet(VpnRpcEnumEth input_param) => EnumEthernetAsync(input_param).Result;
+        public VpnRpcEnumEth EnumEthernet() => EnumEthernetAsync().Result;
 
         /// <summary>
         /// Add a new local bridge (Async mode)
@@ -828,22 +828,22 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Enumerate local bridges (Async mode)
         /// </summary>
-        public async Task<VpnRpcEnumLocalBridge> EnumLocalBridgeAsync(VpnRpcEnumLocalBridge input_param) => await Call<VpnRpcEnumLocalBridge>("EnumLocalBridge", input_param);
+        public async Task<VpnRpcEnumLocalBridge> EnumLocalBridgeAsync() => await Call<VpnRpcEnumLocalBridge>("EnumLocalBridge", new VpnRpcEnumLocalBridge());
 
         /// <summary>
         /// Enumerate local bridges (Sync mode)
         /// </summary>
-        public VpnRpcEnumLocalBridge EnumLocalBridge(VpnRpcEnumLocalBridge input_param) => EnumLocalBridgeAsync(input_param).Result;
+        public VpnRpcEnumLocalBridge EnumLocalBridge() => EnumLocalBridgeAsync().Result;
 
         /// <summary>
         /// Get availability to localbridge function (Async mode)
         /// </summary>
-        public async Task<VpnRpcBridgeSupport> GetBridgeSupportAsync(VpnRpcBridgeSupport input_param) => await Call<VpnRpcBridgeSupport>("GetBridgeSupport", input_param);
+        public async Task<VpnRpcBridgeSupport> GetBridgeSupportAsync() => await Call<VpnRpcBridgeSupport>("GetBridgeSupport", new VpnRpcBridgeSupport());
 
         /// <summary>
         /// Get availability to localbridge function (Sync mode)
         /// </summary>
-        public VpnRpcBridgeSupport GetBridgeSupport(VpnRpcBridgeSupport input_param) => GetBridgeSupportAsync(input_param).Result;
+        public VpnRpcBridgeSupport GetBridgeSupport() => GetBridgeSupportAsync().Result;
 
         /// <summary>
         /// Reboot server itself (Async mode)
@@ -858,12 +858,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get capabilities (Async mode)
         /// </summary>
-        public async Task<VpnCapslist> GetCapsAsync(VpnCapslist input_param) => await Call<VpnCapslist>("GetCaps", input_param);
+        public async Task<VpnCapslist> GetCapsAsync() => await Call<VpnCapslist>("GetCaps", new VpnCapslist());
 
         /// <summary>
         /// Get capabilities (Sync mode)
         /// </summary>
-        public VpnCapslist GetCaps(VpnCapslist input_param) => GetCapsAsync(input_param).Result;
+        public VpnCapslist GetCaps() => GetCapsAsync().Result;
 
         /// <summary>
         /// Get configuration file stream (Async mode)

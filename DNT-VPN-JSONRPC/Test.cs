@@ -2016,10 +2016,7 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumEthernet");
 
-            VpnRpcEnumEth in_rpc_enum_eth = new VpnRpcEnumEth()
-            {
-            };
-            VpnRpcEnumEth out_rpc_enum_eth = Rpc.EnumEthernet(in_rpc_enum_eth);
+            VpnRpcEnumEth out_rpc_enum_eth = Rpc.EnumEthernet();
 
             print_object(out_rpc_enum_eth);
 
@@ -2077,10 +2074,7 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumLocalBridge");
 
-            VpnRpcEnumLocalBridge in_rpc_enum_localbridge = new VpnRpcEnumLocalBridge()
-            {
-            };
-            VpnRpcEnumLocalBridge out_rpc_enum_localbridge = Rpc.EnumLocalBridge(in_rpc_enum_localbridge);
+            VpnRpcEnumLocalBridge out_rpc_enum_localbridge = Rpc.EnumLocalBridge();
 
             print_object(out_rpc_enum_localbridge);
 
@@ -2096,10 +2090,7 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetBridgeSupport");
 
-            VpnRpcBridgeSupport in_rpc_bridge_support = new VpnRpcBridgeSupport()
-            {
-            };
-            VpnRpcBridgeSupport out_rpc_bridge_support = Rpc.GetBridgeSupport(in_rpc_bridge_support);
+            VpnRpcBridgeSupport out_rpc_bridge_support = Rpc.GetBridgeSupport();
 
             print_object(out_rpc_bridge_support);
 
@@ -2134,11 +2125,7 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetCaps");
 
-
-            VpnCapslist in_capslist = new VpnCapslist()
-            {
-            };
-            VpnCapslist out_capslist = Rpc.GetCaps(in_capslist);
+            VpnCapslist out_capslist = Rpc.GetCaps();
 
             print_object(out_capslist);
 
