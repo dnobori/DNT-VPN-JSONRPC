@@ -191,32 +191,57 @@ namespace DNT_VPN_JSONRPC
                 Test_GetBridgeSupport();
             }
 
-            //Test_RebootServer();
-            Test_GetCaps();
-            return;
-            Test_GetConfig();
-            Test_SetConfig();
-            Test_GetDefaultHubAdminOptions();
-            Test_GetHubAdminOptions();
-            Test_SetHubAdminOptions();
-            Test_GetHubExtOptions();
-            Test_SetHubExtOptions();
+            if (false)
+            {
+                Test_RebootServer();
+                Test_GetCaps();
+                Test_GetConfig();
+                Test_SetConfig();
+            }
+
+            if (false)
+            {
+                Test_GetDefaultHubAdminOptions();
+                //Test_GetHubAdminOptions();
+                //Test_SetHubAdminOptions();
+                Test_GetHubExtOptions();
+                Test_SetHubExtOptions();
+            }
+
             Test_AddL3Switch();
-            Test_DelL3Switch();
-            Test_EnumL3Switch();
-            Test_StartL3Switch();
-            Test_StopL3Switch();
             Test_AddL3If();
-            Test_DelL3If();
+            Test_EnumL3Switch();
             Test_EnumL3If();
             Test_AddL3Table();
-            Test_DelL3Table();
             Test_EnumL3Table();
-            Test_EnumCrl();
+            Test_DelL3Table();
+            Test_StartL3Switch();
+            Test_StopL3Switch();
+            Test_DelL3If();
+            Test_DelL3Switch();
+
             Test_AddCrl();
-            Test_DelCrl();
-            Test_GetCrl();
-            Test_SetCrl();
+            VpnRpcEnumCrl enum_crl = Test_EnumCrl();
+            if (enum_crl.CRLList != null)
+            {
+                foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
+                {
+                    VpnRpcCrl got_crl = Test_GetCrl(crl.Key_u32);
+
+                    got_crl.CommonName_utf = got_crl.CommonName_utf + "_a";
+                    Test_SetCrl(got_crl);
+                }
+            }
+
+            enum_crl = Test_EnumCrl();
+            if (enum_crl.CRLList != null)
+            {
+                foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
+                {
+                    Test_DelCrl(crl.Key_u32);
+                }
+            }
+
             Test_SetAcList();
             Test_GetAcList();
             Test_EnumLogFile();
@@ -2141,12 +2166,11 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_GetConfig");
 
-            VpnRpcConfig in_rpc_config = new VpnRpcConfig()
-            {
-            };
-            VpnRpcConfig out_rpc_config = Rpc.GetConfig(in_rpc_config);
+            VpnRpcConfig out_rpc_config = Rpc.GetConfig();
 
             print_object(out_rpc_config);
+
+            File.WriteAllBytes(@"c:\tmp\test.config", out_rpc_config.FileData_bin);
 
             Console.WriteLine("End: Test_GetConfig");
             Console.WriteLine("-----");
@@ -2162,10 +2186,9 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcConfig in_rpc_config = new VpnRpcConfig()
             {
+                FileData_bin = File.ReadAllBytes(@"c:\tmp\test.config"),
             };
             VpnRpcConfig out_rpc_config = Rpc.SetConfig(in_rpc_config);
-
-            print_object(out_rpc_config);
 
             Console.WriteLine("End: Test_SetConfig");
             Console.WriteLine("-----");
@@ -2181,6 +2204,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
             {
+                HubName_str = hub_name,
             };
             VpnRpcAdminOption out_rpc_admin_option = Rpc.GetDefaultHubAdminOptions(in_rpc_admin_option);
 
@@ -2200,6 +2224,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
             {
+                HubName_str = hub_name,
             };
             VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubAdminOptions(in_rpc_admin_option);
 
@@ -2219,6 +2244,15 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
             {
+                HubName_str = hub_name,
+                AdminOptionList = new VpnAdminOption[]
+                {
+                    new VpnAdminOption()
+                    {
+                        Name_str = "no_securenat_enablenat",
+                        Value_u32 = 1,
+                    }
+                }
             };
             VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubAdminOptions(in_rpc_admin_option);
 
@@ -2238,6 +2272,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
             {
+                HubName_str = hub_name,
             };
             VpnRpcAdminOption out_rpc_admin_option = Rpc.GetHubExtOptions(in_rpc_admin_option);
 
@@ -2257,6 +2292,15 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcAdminOption in_rpc_admin_option = new VpnRpcAdminOption()
             {
+                HubName_str = hub_name,
+                AdminOptionList = new VpnAdminOption[]
+                {
+                    new VpnAdminOption()
+                    {
+                        Name_str = "SecureNAT_RandomizeAssignIp",
+                        Value_u32 = 1,
+                    }
+                }
             };
             VpnRpcAdminOption out_rpc_admin_option = Rpc.SetHubExtOptions(in_rpc_admin_option);
 
@@ -2276,6 +2320,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcL3Sw out_rpc_l3sw = Rpc.AddL3Switch(in_rpc_l3sw);
 
@@ -2295,6 +2340,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcL3Sw out_rpc_l3sw = Rpc.DelL3Switch(in_rpc_l3sw);
 
@@ -2312,10 +2358,7 @@ namespace DNT_VPN_JSONRPC
         {
             Console.WriteLine("Begin: Test_EnumL3Switch");
 
-            VpnRpcEnumL3Sw in_rpc_enum_l3sw = new VpnRpcEnumL3Sw()
-            {
-            };
-            VpnRpcEnumL3Sw out_rpc_enum_l3sw = Rpc.EnumL3Switch(in_rpc_enum_l3sw);
+            VpnRpcEnumL3Sw out_rpc_enum_l3sw = Rpc.EnumL3Switch();
 
             print_object(out_rpc_enum_l3sw);
 
@@ -2333,6 +2376,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcL3Sw out_rpc_l3sw = Rpc.StartL3Switch(in_rpc_l3sw);
 
@@ -2352,6 +2396,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Sw in_rpc_l3sw = new VpnRpcL3Sw()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcL3Sw out_rpc_l3sw = Rpc.StopL3Switch(in_rpc_l3sw);
 
@@ -2371,6 +2416,10 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
             {
+                Name_str = "L3SW1",
+                HubName_str = "TEST",
+                IpAddress_ip = "192.168.0.1",
+                SubnetMask_ip = "255.255.255.0",
             };
             VpnRpcL3If out_rpc_l3if = Rpc.AddL3If(in_rpc_l3if);
 
@@ -2390,6 +2439,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
             {
+                Name_str = "L3SW1",
+                HubName_str = "TEST",
             };
             VpnRpcL3If out_rpc_l3if = Rpc.DelL3If(in_rpc_l3if);
 
@@ -2409,6 +2460,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumL3If in_rpc_enum_l3if = new VpnRpcEnumL3If()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcEnumL3If out_rpc_enum_l3if = Rpc.EnumL3If(in_rpc_enum_l3if);
 
@@ -2428,6 +2480,11 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table()
             {
+                Name_str = "L3SW1",
+                NetworkAddress_ip = "10.0.0.0",
+                SubnetMask_ip = "255.0.0.0",
+                GatewayAddress_ip = "192.168.7.1",
+                Metric_u32 = 10,
             };
             VpnRpcL3Table out_rpc_l3table = Rpc.AddL3Table(in_rpc_l3table);
 
@@ -2447,6 +2504,11 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcL3Table in_rpc_l3table = new VpnRpcL3Table()
             {
+                Name_str = "L3SW1",
+                NetworkAddress_ip = "10.0.0.0",
+                SubnetMask_ip = "255.0.0.0",
+                GatewayAddress_ip = "192.168.7.1",
+                Metric_u32 = 10,
             };
             VpnRpcL3Table out_rpc_l3table = Rpc.DelL3Table(in_rpc_l3table);
 
@@ -2466,6 +2528,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumL3Table in_rpc_enum_l3table = new VpnRpcEnumL3Table()
             {
+                Name_str = "L3SW1",
             };
             VpnRpcEnumL3Table out_rpc_enum_l3table = Rpc.EnumL3Table(in_rpc_enum_l3table);
 
@@ -2479,12 +2542,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumCrl', Get CRL (Certificate Revocation List) index
         /// </summary>
-        public void Test_EnumCrl()
+        public VpnRpcEnumCrl Test_EnumCrl()
         {
             Console.WriteLine("Begin: Test_EnumCrl");
 
             VpnRpcEnumCrl in_rpc_enum_crl = new VpnRpcEnumCrl()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumCrl out_rpc_enum_crl = Rpc.EnumCrl(in_rpc_enum_crl);
 
@@ -2493,6 +2557,8 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumCrl");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_crl;
         }
 
         /// <summary>
@@ -2504,6 +2570,16 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
             {
+                HubName_str = hub_name,
+                CommonName_utf = "CN",
+                Organization_utf = "Org",
+                Unit_utf = "ICSCOE",
+                Country_utf = "JP",
+                State_utf = "Ibaraki",
+                Local_utf = "Tsukuba",
+                Serial_bin = new byte[] { 1, 2, 3, 4, 5 },
+                DigestMD5_bin = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+                DigestSHA1_bin = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
             };
             VpnRpcCrl out_rpc_crl = Rpc.AddCrl(in_rpc_crl);
 
@@ -2517,12 +2593,14 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'DelCrl', Delete CRL (Certificate Revocation List) entry
         /// </summary>
-        public void Test_DelCrl()
+        public void Test_DelCrl(uint key)
         {
             Console.WriteLine("Begin: Test_DelCrl");
 
             VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
             {
+                HubName_str = hub_name,
+                Key_u32 = key,
             };
             VpnRpcCrl out_rpc_crl = Rpc.DelCrl(in_rpc_crl);
 
@@ -2536,12 +2614,14 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'GetCrl', Get CRL (Certificate Revocation List) entry
         /// </summary>
-        public void Test_GetCrl()
+        public VpnRpcCrl Test_GetCrl(uint key)
         {
             Console.WriteLine("Begin: Test_GetCrl");
 
             VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
             {
+                HubName_str = hub_name,
+                Key_u32 = key,
             };
             VpnRpcCrl out_rpc_crl = Rpc.GetCrl(in_rpc_crl);
 
@@ -2550,19 +2630,18 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_GetCrl");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_crl;
         }
 
         /// <summary>
         /// API test for 'SetCrl', Set CRL (Certificate Revocation List) entry
         /// </summary>
-        public void Test_SetCrl()
+        public void Test_SetCrl(VpnRpcCrl crl)
         {
             Console.WriteLine("Begin: Test_SetCrl");
 
-            VpnRpcCrl in_rpc_crl = new VpnRpcCrl()
-            {
-            };
-            VpnRpcCrl out_rpc_crl = Rpc.SetCrl(in_rpc_crl);
+            VpnRpcCrl out_rpc_crl = Rpc.SetCrl(crl);
 
             print_object(out_rpc_crl);
 

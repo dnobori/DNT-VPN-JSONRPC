@@ -868,12 +868,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get configuration file stream (Async mode)
         /// </summary>
-        public async Task<VpnRpcConfig> GetConfigAsync(VpnRpcConfig input_param) => await Call<VpnRpcConfig>("GetConfig", input_param);
+        public async Task<VpnRpcConfig> GetConfigAsync() => await Call<VpnRpcConfig>("GetConfig", new VpnRpcConfig());
 
         /// <summary>
         /// Get configuration file stream (Sync mode)
         /// </summary>
-        public VpnRpcConfig GetConfig(VpnRpcConfig input_param) => GetConfigAsync(input_param).Result;
+        public VpnRpcConfig GetConfig() => GetConfigAsync().Result;
 
         /// <summary>
         /// Overwrite configuration file by specified data (Async mode)
@@ -958,12 +958,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Enumerate virtual layer-3 switches (Async mode)
         /// </summary>
-        public async Task<VpnRpcEnumL3Sw> EnumL3SwitchAsync(VpnRpcEnumL3Sw input_param) => await Call<VpnRpcEnumL3Sw>("EnumL3Switch", input_param);
+        public async Task<VpnRpcEnumL3Sw> EnumL3SwitchAsync() => await Call<VpnRpcEnumL3Sw>("EnumL3Switch", new VpnRpcEnumL3Sw());
 
         /// <summary>
         /// Enumerate virtual layer-3 switches (Sync mode)
         /// </summary>
-        public VpnRpcEnumL3Sw EnumL3Switch(VpnRpcEnumL3Sw input_param) => EnumL3SwitchAsync(input_param).Result;
+        public VpnRpcEnumL3Sw EnumL3Switch() => EnumL3SwitchAsync().Result;
 
         /// <summary>
         /// Start a virtual layer-3 switch (Async mode)

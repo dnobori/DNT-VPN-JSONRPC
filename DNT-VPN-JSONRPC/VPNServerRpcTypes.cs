@@ -258,9 +258,49 @@ namespace SoftEther.VPNServerRpc
         public uint Key_u32;
 
         /// <summary>
-        /// CRL body
+        /// CN
         /// </summary>
-        // TODO: CRL *Crl;
+        public string CommonName_utf;
+
+        /// <summary>
+        /// O
+        /// </summary>
+        public string Organization_utf;
+
+        /// <summary>
+        /// OU
+        /// </summary>
+        public string Unit_utf;
+
+        /// <summary>
+        /// C
+        /// </summary>
+        public string Country_utf;
+
+        /// <summary>
+        /// ST
+        /// </summary>
+        public string State_utf;
+
+        /// <summary>
+        /// L
+        /// </summary>
+        public string Local_utf;
+
+        /// <summary>
+        /// Serial
+        /// </summary>
+        public byte[] Serial_bin;
+
+        /// <summary>
+        /// MD5 Digest
+        /// </summary>
+        public byte[] DigestMD5_bin;
+
+        /// <summary>
+        /// SHA1 Digest
+        /// </summary>
+        public byte[] DigestSHA1_bin;
     }
 
     /// <summary>
@@ -307,12 +347,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// IP address
         /// </summary>
-        public uint IpAddress_u32;
+        public string IpAddress_ip;
 
         /// <summary>
         /// Subnet mask
         /// </summary>
-        public uint SubnetMask_u32;
+        public string SubnetMask_ip;
     }
 
     /// <summary>
@@ -339,17 +379,17 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Network address
         /// </summary>
-        public uint NetworkAddress_u32;
+        public string NetworkAddress_ip;
 
         /// <summary>
         /// Subnet mask
         /// </summary>
-        public uint SubnetMask_u32;
+        public string SubnetMask_ip;
 
         /// <summary>
         /// Gateway address
         /// </summary>
-        public uint GatewayAddress_u32;
+        public string GatewayAddress_ip;
 
         /// <summary>
         /// Metric
@@ -1998,7 +2038,23 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// TODO
+    /// Enum CRL Item
+    /// </summary>
+    public class VpnRpcEnumCrlItem
+    {
+        /// <summary>
+        /// Key
+        /// </summary>
+        public uint Key_u32;
+
+        /// <summary>
+        /// Information
+        /// </summary>
+        public string CrlInfo_utf;
+    }
+
+    /// <summary>
+    /// Enum CRL
     ///</summary>
     public class VpnRpcEnumCrl
     {
@@ -2008,14 +2064,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// List
         /// </summary>
-        // TODO: RPC_ENUM_CRL_ITEM *Items;
+        public VpnRpcEnumCrlItem[] CRLList;
     }
 
     /// <summary>
@@ -2459,19 +2510,49 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         public string Name_str;
 
-        public uint NumItem_u32;
-
-        // TODO: RPC_L3IF *Items;
+        public VpnRpcL3If[] L3IFList;
     }
 
     /// <summary>
-    /// TODO
-    ///</summary>
+    /// Layer-3 switch enumeration item
+    /// </summary>
+    public class VpnRpcEnumL3SwItem
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Number of interfaces
+        /// </summary>
+        public uint NumInterfaces_u32;
+
+        /// <summary>
+        /// Routing table number
+        /// </summary>
+        public uint NumTables_u32;
+
+        /// <summary>
+        /// In operation
+        /// </summary>
+        public bool Active_bool;
+
+        /// <summary>
+        /// Online
+        /// </summary>
+        public bool Online_bool;
+    }
+
+    /// <summary>
+    /// Layer-3 switch enumeration
+    /// </summary>
     public class VpnRpcEnumL3Sw
     {
-        public uint NumItem_u32;
-
-        // TODO: RPC_ENUM_L3SW_ITEM *Items;
+        /// <summary>
+        /// Items
+        /// </summary>
+        public VpnRpcEnumL3SwItem[] L3SWList;
     }
 
     /// <summary>
@@ -2484,9 +2565,10 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         public string Name_str;
 
-        public uint NumItem_u32;
-
-        // TODO: RPC_L3TABLE *Items;
+        /// <summary>
+        /// Items
+        /// </summary>
+        public VpnRpcL3Table[] L3Table;
     }
 
     /// <summary>
@@ -3180,6 +3262,11 @@ namespace SoftEther.VPNServerRpc
         /// Value
         /// </summary>
         public uint CapsValue_u32;
+
+        /// <summary>
+        /// Descrption
+        /// </summary>
+        public string CapsDescrption_utf;
     }
 
     /// <summary>
@@ -3206,7 +3293,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// File data
         /// </summary>
-        public string FileData_str;
+        public byte[] FileData_bin;
     }
 
     /// <summary>
@@ -3368,6 +3455,27 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Administration options
+    /// </summary>
+    public class VpnAdminOption
+    {
+        /// <summary>
+        /// Name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Data
+        /// </summary>
+        public uint Value_u32;
+
+        /// <summary>
+        /// Descrption
+        /// </summary>
+        public string Descrption_utf;
+    }
+
+    /// <summary>
     /// Administration options list
     /// </summary>
     public class VpnRpcAdminOption
@@ -3378,14 +3486,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Count
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// Data
         /// </summary>
-        // TODO: ADMIN_OPTION *Items;
+        public VpnAdminOption[] AdminOptionList;
     }
 
     /// <summary>
