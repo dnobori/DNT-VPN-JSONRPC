@@ -428,14 +428,293 @@ namespace SoftEther.VPNServerRpc
         public string Note_utf;
 
         /// <summary>
-        /// Traffic data
+        /// Number of broadcast packets (Recv)
         /// </summary>
-        // TODO: TRAFFIC Traffic;
+        [JsonProperty("Recv.BroadcastBytes_u64")]
+        public ulong Recv_BroadcastBytes_u64;
 
         /// <summary>
-        /// Policy
+        /// Broadcast bytes (Recv)
         /// </summary>
-        // TODO: POLICY *Policy;
+        [JsonProperty("Recv.BroadcastCount_u64")]
+        public ulong Recv_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast count (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastBytes_u64")]
+        public ulong Recv_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Recv.UnicastCount_u64")]
+        public ulong Recv_UnicastCount_u64;
+
+        /// <summary>
+        /// Number of broadcast packets (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastBytes_u64")]
+        public ulong Send_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.BroadcastCount_u64")]
+        public ulong Send_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastBytes_u64")]
+        public ulong Send_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Send.UnicastCount_u64")]
+        public ulong Send_UnicastCount_u64;
+
+        /// <summary>
+        /// The flag whether to use security policy
+        /// </summary>
+        public bool UsePolicy_bool;
+
+        // ---- Start of Security policy ---
+        /// <summary>
+        /// Security policy: Grant access
+        /// </summary>
+        [JsonProperty("policy:Access_bool")]
+        public bool SecPol_Access_bool;
+
+        /// <summary>
+        /// Security policy: Filter DHCP packets (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPFilter_bool")]
+        public bool SecPol_DHCPFilter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the behavior of the DHCP server (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPNoServer_bool")]
+        public bool SecPol_DHCPNoServer_bool;
+
+        /// <summary>
+        /// Security policy: Force DHCP-assigned IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:DHCPForce_bool")]
+        public bool SecPol_DHCPForce_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the bridge behavior
+        /// </summary>
+        [JsonProperty("policy:NoBridge_bool")]
+        public bool SecPol_NoBridge_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the router behavior (IPv4)
+        /// </summary>
+        [JsonProperty("policy:NoRouting_bool")]
+        public bool SecPol_NoRouting_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the duplicate MAC address
+        /// </summary>
+        [JsonProperty("policy:CheckMac_bool")]
+        public bool SecPol_CheckMac_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit a duplicate IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:CheckIP_bool")]
+        public bool SecPol_CheckIP_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the broadcast other than ARP, DHCP, ICMPv6
+        /// </summary>
+        [JsonProperty("policy:ArpDhcpOnly_bool")]
+        public bool SecPol_ArpDhcpOnly_bool;
+
+        /// <summary>
+        /// Security policy: Privacy filter mode
+        /// </summary>
+        [JsonProperty("policy:PrivacyFilter_bool")]
+        public bool SecPol_PrivacyFilter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit to operate as a TCP/IP server (IPv4)
+        /// </summary>
+        [JsonProperty("policy:NoServer_bool")]
+        public bool SecPol_NoServer_bool;
+
+        /// <summary>
+        /// Security policy: Not to limit the number of broadcast
+        /// </summary>
+        [JsonProperty("policy:NoBroadcastLimiter_bool")]
+        public bool SecPol_NoBroadcastLimiter_bool;
+
+        /// <summary>
+        /// Security policy: Allow monitoring mode
+        /// </summary>
+        [JsonProperty("policy:MonitorPort_bool")]
+        public bool SecPol_MonitorPort_bool;
+
+        /// <summary>
+        /// Security policy: Maximum number of TCP connections
+        /// </summary>
+        [JsonProperty("policy:MaxConnection_u32")]
+        public uint SecPol_MaxConnection_u32;
+
+        /// <summary>
+        /// Security policy: Communication time-out period
+        /// </summary>
+        [JsonProperty("policy:TimeOut_u32")]
+        public uint SecPol_TimeOut_u32;
+
+        /// <summary>
+        /// Security policy: Maximum number of MAC address
+        /// </summary>
+        [JsonProperty("policy:MaxMac_u32")]
+        public uint SecPol_MaxMac_u32;
+
+        /// <summary>
+        /// Security policy: Maximum number of IP address (IPv4)
+        /// </summary>
+        [JsonProperty("policy:MaxIP_u32")]
+        public uint SecPol_MaxIP_u32;
+
+        /// <summary>
+        /// Security policy: Upload bandwidth
+        /// </summary>
+        [JsonProperty("policy:MaxUpload_u32")]
+        public uint SecPol_MaxUpload_u32;
+
+        /// <summary>
+        /// Security policy: Download bandwidth
+        /// </summary>
+        [JsonProperty("policy:MaxDownload_u32")]
+        public uint SecPol_MaxDownload_u32;
+
+        /// <summary>
+        /// Security policy: User can not change password
+        /// </summary>
+        [JsonProperty("policy:FixPassword_bool")]
+        public bool SecPol_FixPassword_bool;
+
+        /// <summary>
+        /// Security policy: Multiple logins limit
+        /// </summary>
+        [JsonProperty("policy:MultiLogins_u32")]
+        public uint SecPol_MultiLogins_u32;
+
+        /// <summary>
+        /// Security policy: Prohibit the use of VoIP / QoS features
+        /// </summary>
+        [JsonProperty("policy:NoQoS_bool")]
+        public bool SecPol_NoQoS_bool;
+
+        /// <summary>
+        /// Security policy: Filter the Router Solicitation / Advertising packet (IPv6)
+        /// </summary>
+        [JsonProperty("policy:RSandRAFilter_bool")]
+        public bool SecPol_RSandRAFilter_bool;
+
+        /// <summary>
+        /// Security policy: Filter the router advertisement packet (IPv6)
+        /// </summary>
+        [JsonProperty("policy:RAFilter_bool")]
+        public bool SecPol_RAFilter_bool;
+
+        /// <summary>
+        /// Security policy: Filter DHCP packets (IPv6)
+        /// </summary>
+        [JsonProperty("policy:DHCPv6Filter_bool")]
+        public bool SecPol_DHCPv6Filter_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the behavior of the DHCP server (IPv6)
+        /// </summary>
+        [JsonProperty("policy:DHCPv6NoServer_bool")]
+        public bool SecPol_DHCPv6NoServer_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the router behavior (IPv6)
+        /// </summary>
+        [JsonProperty("policy:NoRoutingV6_bool")]
+        public bool SecPol_NoRoutingV6_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit the duplicate IP address (IPv6)
+        /// </summary>
+        [JsonProperty("policy:CheckIPv6_bool")]
+        public bool SecPol_CheckIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Prohibit to operate as a TCP/IP server (IPv6)
+        /// </summary>
+        [JsonProperty("policy:NoServerV6_bool")]
+        public bool SecPol_NoServerV6_bool;
+
+        /// <summary>
+        /// Security policy: Maximum number of IP address (IPv6)
+        /// </summary>
+        [JsonProperty("policy:MaxIPv6_u32")]
+        public uint SecPol_MaxIPv6_u32;
+
+        /// <summary>
+        /// Security policy: Prohibit to save the password in the VPN Client
+        /// </summary>
+        [JsonProperty("policy:NoSavePassword_bool")]
+        public bool SecPol_NoSavePassword_bool;
+
+        /// <summary>
+        /// Security policy: Disconnect the VPN Client automatically at a certain period of time
+        /// </summary>
+        [JsonProperty("policy:AutoDisconnect_u32")]
+        public uint SecPol_AutoDisconnect_u32;
+
+        /// <summary>
+        /// Security policy: Filter all IPv4 packets
+        /// </summary>
+        [JsonProperty("policy:FilterIPv4_bool")]
+        public bool SecPol_FilterIPv4_bool;
+
+        /// <summary>
+        /// Security policy: Filter all IPv6 packets
+        /// </summary>
+        [JsonProperty("policy:FilterIPv6_bool")]
+        public bool SecPol_FilterIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Filter all non-IP packets
+        /// </summary>
+        [JsonProperty("policy:FilterNonIP_bool")]
+        public bool SecPol_FilterNonIP_bool;
+
+        /// <summary>
+        /// Security policy: Delete the default router specification from the IPv6 router advertisement
+        /// </summary>
+        [JsonProperty("policy:NoIPv6DefaultRouterInRA_bool")]
+        public bool SecPol_NoIPv6DefaultRouterInRA_bool;
+
+        /// <summary>
+        /// Security policy: Delete the default router specification from the IPv6 router advertisement (Enable IPv6 connection)
+        /// </summary>
+        [JsonProperty("policy:NoIPv6DefaultRouterInRAWhenIPv6_bool")]
+        public bool SecPol_NoIPv6DefaultRouterInRAWhenIPv6_bool;
+
+        /// <summary>
+        /// Security policy: Specify the VLAN ID
+        /// </summary>
+        [JsonProperty("policy:VLanId_u32")]
+        public uint SecPol_VLanId_u32;
+
+        /// <summary>
+        /// Security policy: Whether version 3.0
+        /// </summary>
+        [JsonProperty("policy:Ver3_bool")]
+        public bool SecPol_Ver3_bool = true;
+        // ---- End of Security policy ---
     }
 
     /// <summary>
@@ -1740,7 +2019,48 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// RPC_ENUM_DHCP *
+    /// RPC_ENUM_DHCP_ITEM
+    /// </summary>
+    public class VpnRpcEnumDhcpItem
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public uint Id_u32;
+
+        /// <summary>
+        /// Lease time
+        /// </summary>
+        public DateTime LeasedTime_dt;
+
+        /// <summary>
+        /// Expiration date
+        /// </summary>
+        public DateTime ExpireTime_dt;
+
+        /// <summary>
+        /// MAC address
+        /// </summary>
+        public byte[] MacAddress_bin;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string IpAddress_ip;
+
+        /// <summary>
+        /// Subnet mask
+        /// </summary>
+        public uint Mask_u32;
+
+        /// <summary>
+        /// Host name
+        /// </summary>
+        public string Hostname_str;
+    }
+
+    /// <summary>
+    /// RPC_ENUM_DHCP
     /// </summary>
     public class VpnRpcEnumDhcp
     {
@@ -1750,14 +2070,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// Item
         /// </summary>
-        // TODO: RPC_ENUM_DHCP_ITEM *Items;
+        public VpnRpcEnumDhcpItem[] DhcpTable;
     }
 
     /// <summary>
@@ -1771,19 +2086,30 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Ethernet enumeration item
+    /// </summary>
+    public class VpnRpcEnumEthItem
+    {
+        /// <summary>
+        /// Device name
+        /// </summary>
+        public string DeviceName_str;
+
+        /// <summary>
+        /// Network connection name
+        /// </summary>
+        public string NetworkConnectionName_utf;
+    }
+
+    /// <summary>
     /// Ethernet enumeration
     /// </summary>
     public class VpnRpcEnumEth
     {
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// Item
         /// </summary>
-        // TODO: RPC_ENUM_ETH_ITEM *Items;
+        public VpnRpcEnumEthItem[] EthList;
     }
 
     /// <summary>
@@ -1880,6 +2206,37 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Enumeration items in the group
+    /// </summary>
+    public class VpnRpcEnumGroupItem
+    {
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Real name
+        /// </summary>
+        public string Realname_utf;
+
+        /// <summary>
+        /// Note
+        /// </summary>
+        public string Note_utf;
+
+        /// <summary>
+        /// Number of users
+        /// </summary>
+        public uint NumUsers_u32;
+
+        /// <summary>
+        /// Access denied
+        /// </summary>
+        public bool DenyAccess_bool;
+    }
+
+    /// <summary>
     /// Group enumeration
     /// </summary>
     public class VpnRpcEnumGroup
@@ -1890,14 +2247,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of groups
-        /// </summary>
-        public uint NumGroup_u32;
-
-        /// <summary>
         /// Group
         /// </summary>
-        // TODO: RPC_ENUM_GROUP_ITEM *Groups;
+        public VpnRpcEnumGroupItem[] GroupList;
     }
 
     /// <summary>
@@ -2036,6 +2388,52 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Enumeration items of IP table
+    /// </summary>
+    public class VpnRpcEnumIpTableItem
+    {
+        /// <summary>
+        /// Key
+        /// </summary>
+        public uint Key_u32;
+
+        /// <summary>
+        /// Session name
+        /// </summary>
+        public string SessionName_str;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string IpAddress_ip;
+
+        /// <summary>
+        /// Assigned by the DHCP
+        /// </summary>
+        public bool DhcpAllocated_bool;
+
+        /// <summary>
+        /// Creation date and time
+        /// </summary>
+        public DateTime CreatedTime_dt;
+
+        /// <summary>
+        /// Updating date
+        /// </summary>
+        public DateTime UpdatedTime_dt;
+
+        /// <summary>
+        /// Remote items
+        /// </summary>
+        public bool RemoteItem_bool;
+
+        /// <summary>
+        /// Remote host name
+        /// </summary>
+        public string RemoteHostname_str;
+    }
+
+    /// <summary>
     /// Enumeration of IP table
     /// </summary>
     public class VpnRpcEnumIpTable
@@ -2046,14 +2444,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of tables
-        /// </summary>
-        public uint NumIpTable_u32;
-
-        /// <summary>
         /// MAC table
         /// </summary>
-        // TODO: RPC_ENUM_IP_TABLE_ITEM *IpTables;
+        public VpnRpcEnumIpTableItem[] IpTable;
     }
 
     /// <summary>
@@ -2239,6 +2632,52 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Enumeration items of the MAC table
+    /// </summary>
+    public class VpnRpcEnumMacTableItem
+    {
+        /// <summary>
+        /// Key
+        /// </summary>
+        public uint Key_u32;
+
+        /// <summary>
+        /// Session name
+        /// </summary>
+        public string SessionName_str;
+
+        /// <summary>
+        /// MAC address
+        /// </summary>
+        public byte[] MacAddress_bin;
+
+        /// <summary>
+        /// Creation date and time
+        /// </summary>
+        public DateTime CreatedTime_dt;
+
+        /// <summary>
+        /// Updating date
+        /// </summary>
+        public DateTime UpdatedTime_dt;
+
+        /// <summary>
+        /// Remote items
+        /// </summary>
+        public bool RemoteItem_bool;
+
+        /// <summary>
+        /// Remote host name
+        /// </summary>
+        public string RemoteHostname_str;
+
+        /// <summary>
+        /// VLAN ID
+        /// </summary>
+        public uint VlanId_u32;
+    }
+
+    /// <summary>
     /// Enumeration of the MAC table
     /// </summary>
     public class VpnRpcEnumMacTable
@@ -2249,18 +2688,141 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of tables
-        /// </summary>
-        public uint NumMacTable_u32;
-
-        /// <summary>
         /// MAC table
         /// </summary>
-        // TODO: RPC_ENUM_MAC_TABLE_ITEM *MacTables;
+        public VpnRpcEnumMacTableItem[] MacTable;
     }
 
     /// <summary>
-    /// RPC_ENUM_NAT *
+    /// NAT Entry Protocol Number
+    /// </summary>
+    public enum VpnRpcNatProtocol
+    {
+        /// <summary>
+        ///  TCP
+        /// </summary>
+        TCP = 0,
+
+        /// <summary>
+        /// UDP
+        /// </summary>
+        UDP = 1,
+
+        /// <summary>
+        ///  DNS
+        /// </summary>
+        DNS = 2,
+
+        /// <summary>
+        /// ICMP
+        /// </summary>
+        ICMP = 3,
+    }
+
+    /// <summary>
+    /// State of NAT session (TCP)
+    /// </summary>
+    public enum VpnRpcNatTcpState
+    {
+        /// <summary>
+        /// Connecting
+        /// </summary>
+        Connecting = 0,
+
+        /// <summary>
+        /// Send the RST (Connection failure or disconnected)
+        /// </summary>
+        SendReset = 1,
+
+        /// <summary>
+        /// Connection complete
+        /// </summary>
+        Connected = 2,
+
+        /// <summary>
+        /// Connection established
+        /// </summary>
+        Established = 3,
+
+        /// <summary>
+        /// Wait for socket disconnection
+        /// </summary>
+        WaitDisconnect = 4,
+    }
+
+    /// <summary>
+    /// VpnRpcEnumNat List Item
+    /// </summary>
+    public class VpnRpcEnumNatItem
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public uint Id_u32;
+
+        /// <summary>
+        /// Protocol
+        /// </summary>
+        public VpnRpcNatProtocol Protocol_u32;
+
+        /// <summary>
+        /// Source IP address
+        /// </summary>
+        public string SrcIp_ip;
+
+        /// <summary>
+        /// Source host name
+        /// </summary>
+        public string SrcHost_str;
+
+        /// <summary>
+        /// Source port number
+        /// </summary>
+        public uint SrcPort_u32;
+
+        /// <summary>
+        /// Destination IP address
+        /// </summary>
+        public string DestIp_ip;
+
+        /// <summary>
+        /// Destination host name
+        /// </summary>
+        public string DestHost_str;
+
+        /// <summary>
+        /// Destination port number
+        /// </summary>
+        public uint DestPort_u32;
+
+        /// <summary>
+        /// Connection time
+        /// </summary>
+        public DateTime CreatedTime_dt;
+
+        /// <summary>
+        /// Last communication time
+        /// </summary>
+        public DateTime LastCommTime_dt;
+
+        /// <summary>
+        /// Transmission size
+        /// </summary>
+        public ulong SendSize_u64;
+
+        /// <summary>
+        /// Receive size
+        /// </summary>
+        public ulong RecvSize_u64;
+
+        /// <summary>
+        /// TCP state
+        /// </summary>
+        public VpnRpcNatTcpState TcpStatus_u32;
+    }
+
+    /// <summary>
+    /// RPC_ENUM_NAT
     /// </summary>
     public class VpnRpcEnumNat
     {
@@ -2270,18 +2832,119 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// Item
         /// </summary>
-        // TODO: RPC_ENUM_NAT_ITEM *Items;
+        public VpnRpcEnumNatItem[] NatTable;
     }
 
     /// <summary>
-    /// Enumerate sessions *
+    /// Enumeration items of session
+    /// </summary>
+    public class VpnRpcEnumSessionItem
+    {
+        /// <summary>
+        /// Session name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Remote session
+        /// </summary>
+        public bool RemoteSession_bool;
+
+        /// <summary>
+        /// Remote server name
+        /// </summary>
+        public string RemoteHostname_str;
+
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string Username_str;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string ClientIP_ip;
+
+        /// <summary>
+        /// Host name
+        /// </summary>
+        public string Hostname_str;
+
+        /// <summary>
+        /// Maximum number of TCP connections
+        /// </summary>
+        public uint MaxNumTcp_u32;
+
+        /// <summary>
+        /// Number of currentl TCP connections
+        /// </summary>
+        public uint CurrentNumTcp_u32;
+
+        /// <summary>
+        /// Packet size
+        /// </summary>
+        public ulong PacketSize_u64;
+
+        /// <summary>
+        /// Number of packets
+        /// </summary>
+        public ulong PacketNum_u64;
+
+        /// <summary>
+        /// Link mode
+        /// </summary>
+        public bool LinkMode_bool;
+
+        /// <summary>
+        /// SecureNAT mode
+        /// </summary>
+        public bool SecureNATMode_bool;
+
+        /// <summary>
+        /// Bridge mode
+        /// </summary>
+        public bool BridgeMode_bool;
+
+        /// <summary>
+        /// Layer 3 mode
+        /// </summary>
+        public bool Layer3Mode_bool;
+
+        /// <summary>
+        /// Client is bridge mode
+        /// </summary>
+        public bool Client_BridgeMode_bool;
+
+        /// <summary>
+        /// Client is monitoring mode
+        /// </summary>
+        public bool Client_MonitorMode_bool;
+
+        /// <summary>
+        /// VLAN ID
+        /// </summary>
+        public uint VLanId_u32;
+
+        /// <summary>
+        /// Unique ID
+        /// </summary>
+        public byte[] UniqueId_bin;
+
+        /// <summary>
+        /// Creation date and time
+        /// </summary>
+        public DateTime CreatedTime_dt;
+
+        /// <summary>
+        /// Last communication date and time
+        /// </summary>
+        public DateTime LastCommTime_dt;
+    }
+
+    /// <summary>
+    /// Enumerate sessions
     /// </summary>
     public class VpnRpcEnumSession
     {
@@ -2291,14 +2954,118 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of sessions
-        /// </summary>
-        public uint NumSession_u32;
-
-        /// <summary>
         /// Session list
         /// </summary>
-        // TODO: struct RPC_ENUM_SESSION_ITEM *Sessions;
+        public VpnRpcEnumSessionItem[] SessionList;
+    }
+
+    /// <summary>
+    /// Enumeration item of user
+    /// </summary>
+    public class VpnRpcEnumUserItem
+    {
+        /// <summary>
+        /// User name
+        /// </summary>
+        public string Name_str;
+
+        /// <summary>
+        /// Group name
+        /// </summary>
+        public string GroupName_str;
+
+        /// <summary>
+        /// Real name
+        /// </summary>
+        public string Realname_utf;
+
+        /// <summary>
+        /// Note
+        /// </summary>
+        public string Note_utf;
+
+        /// <summary>
+        /// Authentication method
+        /// </summary>
+        public VpnRpcUserAuthType AuthType_u32;
+
+        /// <summary>
+        /// Number of logins
+        /// </summary>
+        public uint NumLogin_u32;
+
+        /// <summary>
+        /// Last login date and time
+        /// </summary>
+        public DateTime LastLoginTime_dt;
+
+        /// <summary>
+        /// Access denied
+        /// </summary>
+        public bool DenyAccess_bool;
+
+        /// <summary>
+        /// Flag of whether the traffic variable is set
+        /// </summary>
+        public bool IsTrafficFilled_bool;
+
+        /// <summary>
+        /// Flag of whether expiration date variable is set
+        /// </summary>
+        public bool IsExpiresFilled_bool;
+
+        /// <summary>
+        /// Expiration date
+        /// </summary>
+        public DateTime Expires_dt;
+
+        /// <summary>
+        /// Number of broadcast packets (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.BroadcastBytes_u64")]
+        public ulong Recv_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.BroadcastCount_u64")]
+        public ulong Recv_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast count (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.UnicastBytes_u64")]
+        public ulong Recv_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Recv)
+        /// </summary>
+        [JsonProperty("Ex.Recv.UnicastCount_u64")]
+        public ulong Recv_UnicastCount_u64;
+
+        /// <summary>
+        /// Number of broadcast packets (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.BroadcastBytes_u64")]
+        public ulong Send_BroadcastBytes_u64;
+
+        /// <summary>
+        /// Broadcast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.BroadcastCount_u64")]
+        public ulong Send_BroadcastCount_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.UnicastBytes_u64")]
+        public ulong Send_UnicastBytes_u64;
+
+        /// <summary>
+        /// Unicast bytes (Send)
+        /// </summary>
+        [JsonProperty("Ex.Send.UnicastCount_u64")]
+        public ulong Send_UnicastCount_u64;
     }
 
     /// <summary>
@@ -2312,14 +3079,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Number of users
-        /// </summary>
-        public uint NumUser_u32;
-
-        /// <summary>
         /// User
         /// </summary>
-        // TODO: RPC_ENUM_USER_ITEM *Users;
+        public VpnRpcEnumUserItem[] UserList;
     }
 
     /// <summary>
@@ -3151,7 +3913,23 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// KEEP setting
+    /// Keep alive protocol
+    /// </summary>
+    public enum VpnRpcKeepAliveProtocol
+    {
+        /// <summary>
+        /// TCP
+        /// </summary>
+        TCP = 0,
+
+        /// <summary>
+        /// UDP
+        /// </summary>
+        UDP = 1,
+    }
+
+    /// <summary>
+    /// Keep Alive setting
     /// </summary>
     public class VpnRpcKeep
     {
@@ -3173,7 +3951,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Protocol
         /// </summary>
-        public uint KeepConnectProtocol_u32;
+        public VpnRpcKeepAliveProtocol KeepConnectProtocol_u32;
 
         /// <summary>
         /// Interval
@@ -3513,14 +4291,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Target Virtual HUB name
         /// </summary>
-        public string HubName_str;
+        public string RpcHubName_str;
 
         /// <summary>
         /// MAC address
         /// </summary>
         public byte[] MacAddress_bin;
-
-        public byte[] Padding_bin;
 
         /// <summary>
         /// IP address
@@ -3573,7 +4349,7 @@ namespace SoftEther.VPNServerRpc
         public string DhcpSubnetMask_ip;
 
         /// <summary>
-        /// DHCP expiration date
+        /// DHCP expiration time in seconds
         /// </summary>
         public uint DhcpExpireTimeSpan_u32;
 
@@ -4249,29 +5025,230 @@ namespace SoftEther.VPNServerRpc
         public bool LinkMode_bool;
 
         /// <summary>
-        /// Status
-        /// </summary>
-        // TODO: RPC_CLIENT_GET_CONNECTION_STATUS Status;
-
-        /// <summary>
         /// Client IP address
         /// </summary>
-        public uint ClientIp_u32;
-
-        /// <summary>
-        /// Client IPv6 address
-        /// </summary>
-        public byte[] ClientIp6_bin;
+        public string Client_Ip_Address_ip;
 
         /// <summary>
         /// Client host name
         /// </summary>
+        [JsonProperty("SessionStatus_ClientHostName_str")]
         public string ClientHostName_str;
 
         /// <summary>
-        /// Node information
+        /// Operation flag
         /// </summary>
-        // TODO: NODE_INFO NodeInfo;
+        public bool Active_bool;
+
+        /// <summary>
+        /// Connected flag
+        /// </summary>
+        public bool Connected_bool;
+
+        /// <summary>
+        /// Session status
+        /// </summary>
+        public VpnRpcClientSessionStatus SessionStatus_u32;
+
+        /// <summary>
+        /// Server name
+        /// </summary>
+        public string ServerName_str;
+
+        /// <summary>
+        /// Port number of the server
+        /// </summary>
+        public uint ServerPort_u32;
+
+        /// <summary>
+        /// Server product name
+        /// </summary>
+        public string ServerProductName_str;
+
+        /// <summary>
+        /// Server product version
+        /// </summary>
+        public uint ServerProductVer_u32;
+
+        /// <summary>
+        /// Server product build number
+        /// </summary>
+        public uint ServerProductBuild_u32;
+
+        /// <summary>
+        /// Connection start time
+        /// </summary>
+        public DateTime StartTime_dt;
+
+        /// <summary>
+        /// Connection completion time of the first connection
+        /// </summary>
+        public DateTime FirstConnectionEstablisiedTime_dt;
+
+        /// <summary>
+        /// Connection completion time of this connection
+        /// </summary>
+        public DateTime CurrentConnectionEstablishTime_dt;
+
+        /// <summary>
+        /// Number of connections have been established so far
+        /// </summary>
+        public uint NumConnectionsEatablished_u32;
+
+        /// <summary>
+        /// Half-connection
+        /// </summary>
+        public bool HalfConnection_bool;
+
+        /// <summary>
+        /// VoIP / QoS
+        /// </summary>
+        public bool QoS_bool;
+
+        /// <summary>
+        /// Maximum number of the TCP connections
+        /// </summary>
+        public uint MaxTcpConnections_u32;
+
+        /// <summary>
+        /// Number of current TCP connections
+        /// </summary>
+        public uint NumTcpConnections_u32;
+
+        /// <summary>
+        /// Number of inbound connections
+        /// </summary>
+        public uint NumTcpConnectionsUpload_u32;
+
+        /// <summary>
+        /// Number of outbound connections
+        /// </summary>
+        public uint NumTcpConnectionsDownload_u32;
+
+        /// <summary>
+        /// Use of encryption
+        /// </summary>
+        public bool UseEncrypt_bool;
+
+        /// <summary>
+        /// Cipher algorithm name
+        /// </summary>
+        public string CipherName_str;
+
+        /// <summary>
+        /// Use of compression
+        /// </summary>
+        public bool UseCompress_bool;
+
+        /// <summary>
+        /// R-UDP session
+        /// </summary>
+        public bool IsRUDPSession_bool;
+
+        /// <summary>
+        /// Physical communication protocol
+        /// </summary>
+        public string UnderlayProtocol_str;
+
+        /// <summary>
+        /// The UDP acceleration is enabled
+        /// </summary>
+        public bool IsUdpAccelerationEnabled_bool;
+
+        /// <summary>
+        /// Using the UDP acceleration function
+        /// </summary>
+        public bool IsUsingUdpAcceleration_bool;
+
+        /// <summary>
+        /// Session name
+        /// </summary>
+        public string SessionName_str;
+
+        /// <summary>
+        /// Connection name
+        /// </summary>
+        public string ConnectionName_str;
+
+        /// <summary>
+        /// Session key
+        /// </summary>
+        public byte[] SessionKey_bin;
+
+        /// <summary>
+        /// Total transmitted data size
+        /// </summary>
+        public ulong TotalSendSize_u64;
+
+        /// <summary>
+        /// Total received data size
+        /// </summary>
+        public ulong TotalRecvSize_u64;
+
+        /// <summary>
+        /// Total transmitted data size (no compression)
+        /// </summary>
+        public ulong TotalSendSizeReal_u64;
+
+        /// <summary>
+        /// Total received data size (no compression)
+        /// </summary>
+        public ulong TotalRecvSizeReal_u64;
+
+        /// <summary>
+        /// Bridge Mode
+        /// </summary>
+        public bool IsBridgeMode_bool;
+
+        /// <summary>
+        /// Monitor mode
+        /// </summary>
+        public bool IsMonitorMode_bool;
+
+        /// <summary>
+        /// VLAN ID
+        /// </summary>
+        public uint VLanId_u32;
+
+        /// <summary>
+        /// Client product name
+        /// </summary>
+        public string ClientProductName_str;
+
+        /// <summary>
+        /// Client version
+        /// </summary>
+        public uint ClientProductVer_u32;
+
+        /// <summary>
+        /// Client build number
+        /// </summary>
+        public uint ClientProductBuild_u32;
+
+        /// <summary>
+        /// Client OS name
+        /// </summary>
+        public string ClientOsName_str;
+
+        /// <summary>
+        /// Client OS version
+        /// </summary>
+        public string ClientOsVer_str;
+
+        /// <summary>
+        /// Client OS Product ID
+        /// </summary>
+        public string ClientOsProductId_str;
+
+        /// <summary>
+        /// Client host name
+        /// </summary>
+        public string ClientHostname_str;
+
+        /// <summary>
+        /// Unique ID
+        /// </summary>
+        public byte[] UniqueId_bin;
     }
 
     /// <summary>

@@ -122,32 +122,62 @@ namespace DNT_VPN_JSONRPC
                 Test_SetAccessList();
             }
 
-            Test_CreateUser();
-            Test_SetUser();
-            Test_GetUser();
-            Test_DeleteUser();
-            Test_EnumUser();
             Test_CreateGroup();
             Test_SetGroup();
             Test_GetGroup();
-            Test_DeleteGroup();
+
+            Test_CreateUser();
+            Test_SetUser();
+            Test_GetUser();
+            Test_EnumUser();
             Test_EnumGroup();
-            Test_EnumSession();
-            Test_GetSessionStatus();
-            Test_DeleteSession();
-            Test_EnumMacTable();
-            Test_DeleteMacTable();
-            Test_EnumIpTable();
-            Test_DeleteIpTable();
+
+            Test_DeleteUser();
+            Test_DeleteGroup();
+   
+            VpnRpcEnumSession enum_session = Test_EnumSession();
+
+            if (enum_session.SessionList != null)
+            {
+                foreach (VpnRpcEnumSessionItem session in enum_session.SessionList)
+                {
+                    Test_GetSessionStatus(session.Name_str);
+
+                    //Test_DeleteSession(session.Name_str);
+                }
+            }
+
+            VpnRpcEnumMacTable enum_mac = Test_EnumMacTable();
+
+            if (enum_mac.MacTable != null)
+            {
+                foreach (VpnRpcEnumMacTableItem mac in enum_mac.MacTable)
+                {
+                    Test_DeleteMacTable(mac.Key_u32);
+                }
+            }
+
+            VpnRpcEnumIpTable enum_ip = Test_EnumIpTable();
+
+            if (enum_ip.IpTable != null)
+            {
+                foreach (VpnRpcEnumIpTableItem ip in enum_ip.IpTable)
+                {
+                    Test_DeleteIpTable(ip.Key_u32);
+                }
+            }
+
             Test_SetKeep();
             Test_GetKeep();
+
             Test_EnableSecureNAT();
-            Test_DisableSecureNAT();
-            Test_SetSecureNATOption();
             Test_GetSecureNATOption();
+            Test_SetSecureNATOption();
             Test_EnumNAT();
             Test_EnumDHCP();
             Test_GetSecureNATStatus();
+            Test_DisableSecureNAT();
+
             Test_EnumEthernet();
             Test_AddLocalBridge();
             Test_DeleteLocalBridge();
@@ -1432,10 +1462,20 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
             {
+                HubName_str = hub_name,
+                Name_str = "test1",
+                Realname_utf = "ねこさん",
+                Note_utf = "こらっ！",
+                GroupName_str = "group1",
+                AuthType_u32 = VpnRpcUserAuthType.Anonymous,
+                Auth_Password_str = "microsoft",
+                ExpireTime_dt = new DateTime(2019, 1, 1),
+                UsePolicy_bool = true,
+                SecPol_Access_bool = true,
+                SecPol_DHCPNoServer_bool = true,
+                SecPol_MaxMac_u32 = 16,
             };
             VpnRpcSetUser out_rpc_set_user = Rpc.SetUser(in_rpc_set_user);
-
-            print_object(out_rpc_set_user);
 
             Console.WriteLine("End: Test_SetUser");
             Console.WriteLine("-----");
@@ -1451,6 +1491,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetUser in_rpc_set_user = new VpnRpcSetUser()
             {
+                HubName_str = hub_name,
+                Name_str = "test1",
             };
             VpnRpcSetUser out_rpc_set_user = Rpc.GetUser(in_rpc_set_user);
 
@@ -1470,10 +1512,10 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser()
             {
+                HubName_str = hub_name,
+                Name_str = "test1",
             };
             VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteUser(in_rpc_delete_user);
-
-            print_object(out_rpc_delete_user);
 
             Console.WriteLine("End: Test_DeleteUser");
             Console.WriteLine("-----");
@@ -1489,6 +1531,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumUser in_rpc_enum_user = new VpnRpcEnumUser()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumUser out_rpc_enum_user = Rpc.EnumUser(in_rpc_enum_user);
 
@@ -1508,6 +1551,10 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
             {
+                HubName_str = hub_name,
+                Name_str = "group1",
+                Realname_utf = "ねこグループ",
+                Note_utf = "これは これは",
             };
             VpnRpcSetGroup out_rpc_set_group = Rpc.CreateGroup(in_rpc_set_group);
 
@@ -1527,6 +1574,10 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
             {
+                HubName_str = hub_name,
+                Name_str = "group1",
+                Realname_utf = "ねこグループ A",
+                Note_utf = "これは これは A",
             };
             VpnRpcSetGroup out_rpc_set_group = Rpc.SetGroup(in_rpc_set_group);
 
@@ -1546,6 +1597,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcSetGroup in_rpc_set_group = new VpnRpcSetGroup()
             {
+                HubName_str = hub_name,
+                Name_str = "group1",
             };
             VpnRpcSetGroup out_rpc_set_group = Rpc.GetGroup(in_rpc_set_group);
 
@@ -1565,6 +1618,8 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcDeleteUser in_rpc_delete_user = new VpnRpcDeleteUser()
             {
+                HubName_str = hub_name,
+                Name_str = "group1",
             };
             VpnRpcDeleteUser out_rpc_delete_user = Rpc.DeleteGroup(in_rpc_delete_user);
 
@@ -1584,6 +1639,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumGroup in_rpc_enum_group = new VpnRpcEnumGroup()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumGroup out_rpc_enum_group = Rpc.EnumGroup(in_rpc_enum_group);
 
@@ -1597,12 +1653,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumSession', Enumerate sessions
         /// </summary>
-        public void Test_EnumSession()
+        public VpnRpcEnumSession Test_EnumSession()
         {
             Console.WriteLine("Begin: Test_EnumSession");
 
             VpnRpcEnumSession in_rpc_enum_session = new VpnRpcEnumSession()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumSession out_rpc_enum_session = Rpc.EnumSession(in_rpc_enum_session);
 
@@ -1611,17 +1668,21 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumSession");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_session;
         }
 
         /// <summary>
         /// API test for 'GetSessionStatus', Get session status
         /// </summary>
-        public void Test_GetSessionStatus()
+        public void Test_GetSessionStatus(string session_name)
         {
             Console.WriteLine("Begin: Test_GetSessionStatus");
 
             VpnRpcSessionStatus in_rpc_session_status = new VpnRpcSessionStatus()
             {
+                HubName_str = hub_name,
+                Name_str = session_name,
             };
             VpnRpcSessionStatus out_rpc_session_status = Rpc.GetSessionStatus(in_rpc_session_status);
 
@@ -1635,12 +1696,14 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'DeleteSession', Delete a session
         /// </summary>
-        public void Test_DeleteSession()
+        public void Test_DeleteSession(string session_id)
         {
             Console.WriteLine("Begin: Test_DeleteSession");
 
             VpnRpcDeleteSession in_rpc_delete_session = new VpnRpcDeleteSession()
             {
+                HubName_str = hub_name,
+                Name_str = session_id,
             };
             VpnRpcDeleteSession out_rpc_delete_session = Rpc.DeleteSession(in_rpc_delete_session);
 
@@ -1654,12 +1717,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumMacTable', Get MAC address table
         /// </summary>
-        public void Test_EnumMacTable()
+        public VpnRpcEnumMacTable Test_EnumMacTable()
         {
             Console.WriteLine("Begin: Test_EnumMacTable");
 
             VpnRpcEnumMacTable in_rpc_enum_mac_table = new VpnRpcEnumMacTable()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumMacTable out_rpc_enum_mac_table = Rpc.EnumMacTable(in_rpc_enum_mac_table);
 
@@ -1668,21 +1732,23 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumMacTable");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_mac_table;
         }
 
         /// <summary>
         /// API test for 'DeleteMacTable', Delete MAC address table entry
         /// </summary>
-        public void Test_DeleteMacTable()
+        public void Test_DeleteMacTable(uint key32)
         {
             Console.WriteLine("Begin: Test_DeleteMacTable");
 
             VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable()
             {
+                HubName_str = hub_name,
+                Key_u32 = key32,
             };
             VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteMacTable(in_rpc_delete_table);
-
-            print_object(out_rpc_delete_table);
 
             Console.WriteLine("End: Test_DeleteMacTable");
             Console.WriteLine("-----");
@@ -1692,12 +1758,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'EnumIpTable', Get IP address table
         /// </summary>
-        public void Test_EnumIpTable()
+        public VpnRpcEnumIpTable Test_EnumIpTable()
         {
             Console.WriteLine("Begin: Test_EnumIpTable");
 
             VpnRpcEnumIpTable in_rpc_enum_ip_table = new VpnRpcEnumIpTable()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumIpTable out_rpc_enum_ip_table = Rpc.EnumIpTable(in_rpc_enum_ip_table);
 
@@ -1706,17 +1773,21 @@ namespace DNT_VPN_JSONRPC
             Console.WriteLine("End: Test_EnumIpTable");
             Console.WriteLine("-----");
             Console.WriteLine();
+
+            return out_rpc_enum_ip_table;
         }
 
         /// <summary>
         /// API test for 'DeleteIpTable', Delete IP address table entry
         /// </summary>
-        public void Test_DeleteIpTable()
+        public void Test_DeleteIpTable(uint key32)
         {
             Console.WriteLine("Begin: Test_DeleteIpTable");
 
             VpnRpcDeleteTable in_rpc_delete_table = new VpnRpcDeleteTable()
             {
+                HubName_str = hub_name,
+                Key_u32 = key32,
             };
             VpnRpcDeleteTable out_rpc_delete_table = Rpc.DeleteIpTable(in_rpc_delete_table);
 
@@ -1736,6 +1807,11 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcKeep in_rpc_keep = new VpnRpcKeep()
             {
+                UseKeepConnect_bool = true,
+                KeepConnectHost_str = "www.softether.org",
+                KeepConnectPort_u32 = 123,
+                KeepConnectProtocol_u32 = VpnRpcKeepAliveProtocol.UDP,
+                KeepConnectInterval_u32 = 1,
             };
             VpnRpcKeep out_rpc_keep = Rpc.SetKeep(in_rpc_keep);
 
@@ -1774,6 +1850,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcHub in_rpc_hub = new VpnRpcHub()
             {
+                HubName_str = hub_name,
             };
             VpnRpcHub out_rpc_hub = Rpc.EnableSecureNAT(in_rpc_hub);
 
@@ -1793,6 +1870,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcHub in_rpc_hub = new VpnRpcHub()
             {
+                HubName_str = hub_name,
             };
             VpnRpcHub out_rpc_hub = Rpc.DisableSecureNAT(in_rpc_hub);
 
@@ -1812,6 +1890,26 @@ namespace DNT_VPN_JSONRPC
 
             VpnVhOption in_vh_option = new VpnVhOption()
             {
+                RpcHubName_str = hub_name,
+                MacAddress_bin = new byte[] { 0x00, 0xAC, 0x00, 0x11, 0x22, 0x33 },
+                Ip_ip = "10.0.0.254",
+                Mask_ip = "255.255.255.0",
+                UseNat_bool = true,
+                Mtu_u32 = 1200,
+                NatTcpTimeout_u32 = 100,
+                NatUdpTimeout_u32 = 50,
+                UseDhcp_bool = true,
+                DhcpLeaseIPStart_ip = "10.0.0.101",
+                DhcpLeaseIPEnd_ip = "10.0.0.199",
+                DhcpSubnetMask_ip = "255.255.255.0",
+                DhcpExpireTimeSpan_u32 = 3600,
+                DhcpGatewayAddress_ip = "10.0.0.254",
+                DhcpDnsServerAddress_ip = "10.0.0.254",
+                DhcpDnsServerAddress2_ip = "8.8.8.8",
+                DhcpDomainName_str = "lab.coe.ad.jp",
+                SaveLog_bool = true,
+                ApplyDhcpPushRoutes_bool = true,
+                DhcpPushRoutes_str = "10.1.0.0/255.255.0.0/192.168.0.1 , 10.2.0.0/255.255.0.0/192.168.0.2",
             };
             VpnVhOption out_vh_option = Rpc.SetSecureNATOption(in_vh_option);
 
@@ -1831,6 +1929,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnVhOption in_vh_option = new VpnVhOption()
             {
+                RpcHubName_str = hub_name,
             };
             VpnVhOption out_vh_option = Rpc.GetSecureNATOption(in_vh_option);
 
@@ -1850,6 +1949,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumNat in_rpc_enum_nat = new VpnRpcEnumNat()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumNat out_rpc_enum_nat = Rpc.EnumNAT(in_rpc_enum_nat);
 
@@ -1869,6 +1969,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcEnumDhcp in_rpc_enum_dhcp = new VpnRpcEnumDhcp()
             {
+                HubName_str = hub_name,
             };
             VpnRpcEnumDhcp out_rpc_enum_dhcp = Rpc.EnumDHCP(in_rpc_enum_dhcp);
 
@@ -1888,6 +1989,7 @@ namespace DNT_VPN_JSONRPC
 
             VpnRpcNatStatus in_rpc_nat_status = new VpnRpcNatStatus()
             {
+                HubName_str = hub_name,
             };
             VpnRpcNatStatus out_rpc_nat_status = Rpc.GetSecureNATStatus(in_rpc_nat_status);
 
