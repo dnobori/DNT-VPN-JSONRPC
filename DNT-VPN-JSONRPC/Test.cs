@@ -27,265 +27,233 @@ namespace DNT_VPN_JSONRPC
 
             Test_Test();
 
-            if (false)
-            {
 
-                Test_GetServerInfo();
-                Test_GetServerStatus();
+            Test_GetServerInfo();
+            Test_GetServerStatus();
 
-                uint new_listener_port = Test_CreateListener();
-                Test_EnableListener(new_listener_port, false);
-                Test_EnumListener();
-                Test_EnableListener(new_listener_port, true);
-                Test_EnumListener();
-                Test_DeleteListener(new_listener_port);
+            uint new_listener_port = Test_CreateListener();
+            Test_EnableListener(new_listener_port, false);
+            Test_EnumListener();
+            Test_EnableListener(new_listener_port, true);
+            Test_EnumListener();
+            Test_DeleteListener(new_listener_port);
 
-                Test_SetServerPassword();
-
-                if (false)
-                {
-                    Test_GetFarmSetting();
-
-                    Test_SetFarmSetting();
-
-                    VpnRpcEnumFarm farm_members = Test_EnumFarmMember();
-
-                    foreach (VpnRpcEnumFarmItem farm_member in farm_members.FarmMemberList)
-                    {
-                        Test_GetFarmInfo(farm_member.Id_u32);
-                    }
-
-                    Test_GetFarmConnectionStatus();
-                }
-
-                Test_GetServerCert();
-
-                Test_SetServerCert();
-
-                Test_GetServerCipher();
-
-                Test_SetServerCipher();
-
-                VpnRpcEnumConnection enum_connection = Test_EnumConnection();
-                //Test_DisconnectConnection();
-                foreach (VpnRpcEnumConnectionItem connecton in enum_connection.ConnectionList)
-                {
-                    Test_GetConnectionInfo(connecton.Name_str);
-                }
-
-                //hub_name = Test_CreateHub();
-                
-
-                Test_SetHub();
-                Test_GetHub();
-                Test_EnumHub();
-                //Test_DeleteHub();
-                Test_SetHubRadius();
-                Test_GetHubRadius();
-
-                //return;
-
-                Test_SetHubOnline();
-                Test_GetHubStatus();
-
-                VpnRpcHubLog hub_log_settings = Test_GetHubLog();
-                Test_SetHubLog(hub_log_settings);
-
-                Test_AddCa();
-                VpnRpcHubEnumCA enum_ca = Test_EnumCa();
-                foreach (VpnRpcHubEnumCAItem ca in enum_ca.CAList)
-                {
-                    Test_GetCa(ca.Key_u32);
-                    Test_DeleteCa(ca.Key_u32);
-                }
-            }
+            Test_SetServerPassword();
 
             if (false)
             {
-                Test_CreateLink();
-                Test_GetLink();
-                Test_SetLink();
-                Test_SetLinkOffline();
-                Test_SetLinkOnline();
-                VpnRpcEnumLink enum_link = Test_EnumLink();
-                foreach (var link in enum_link.LinkList)
+                Test_GetFarmSetting();
+
+                Test_SetFarmSetting();
+
+                VpnRpcEnumFarm farm_members = Test_EnumFarmMember();
+
+                foreach (VpnRpcEnumFarmItem farm_member in farm_members.FarmMemberList)
                 {
-                    Test_GetLinkStatus(link.AccountName_utf);
-                }
-                Test_RenameLink();
-                Test_DeleteLink();
-            }
-
-            if (false)
-            {
-                Test_AddAccess();
-                Test_EnumAccess();
-                Test_DeleteAccess();
-                Test_SetAccessList();
-            }
-
-            if (false)
-            {
-                Test_CreateGroup();
-                Test_SetGroup();
-                Test_GetGroup();
-
-                Test_CreateUser();
-                Test_SetUser();
-                Test_GetUser();
-                Test_EnumUser();
-                Test_EnumGroup();
-
-                Test_DeleteUser();
-                Test_DeleteGroup();
-
-                VpnRpcEnumSession enum_session = Test_EnumSession();
-
-                foreach (VpnRpcEnumSessionItem session in enum_session.SessionList)
-                {
-                    Test_GetSessionStatus(session.Name_str);
-
-                    //Test_DeleteSession(session.Name_str);
+                    Test_GetFarmInfo(farm_member.Id_u32);
                 }
 
-                VpnRpcEnumMacTable enum_mac = Test_EnumMacTable();
-
-                foreach (VpnRpcEnumMacTableItem mac in enum_mac.MacTable)
-                {
-                    Test_DeleteMacTable(mac.Key_u32);
-                }
-
-                VpnRpcEnumIpTable enum_ip = Test_EnumIpTable();
-
-                foreach (VpnRpcEnumIpTableItem ip in enum_ip.IpTable)
-                {
-                    Test_DeleteIpTable(ip.Key_u32);
-                }
-
-                Test_SetKeep();
-                Test_GetKeep();
-
-                Test_EnableSecureNAT();
-                Test_GetSecureNATOption();
-                Test_SetSecureNATOption();
-                Test_EnumNAT();
-                Test_EnumDHCP();
-                Test_GetSecureNATStatus();
-                Test_DisableSecureNAT();
+                Test_GetFarmConnectionStatus();
             }
 
-            if (false)
+            Test_GetServerCert();
+
+            Test_SetServerCert();
+
+            Test_GetServerCipher();
+
+            Test_SetServerCipher();
+
+            VpnRpcEnumConnection enum_connection = Test_EnumConnection();
+
+            foreach (VpnRpcEnumConnectionItem connecton in enum_connection.ConnectionList)
             {
-                Test_EnumEthernet();
-                Test_AddLocalBridge();
-                Test_EnumLocalBridge();
-                Test_DeleteLocalBridge();
-                Test_GetBridgeSupport();
+                Test_GetConnectionInfo(connecton.Name_str);
+                //Test_DisconnectConnection(connecton.Name_str);
             }
 
-            if (false)
+            hub_name = Test_CreateHub();
+
+            Test_SetHub();
+            Test_GetHub();
+            Test_EnumHub();
+            Test_SetHubRadius();
+            Test_GetHubRadius();
+
+            Test_SetHubOnline();
+            Test_GetHubStatus();
+
+            VpnRpcHubLog hub_log_settings = Test_GetHubLog();
+            Test_SetHubLog(hub_log_settings);
+
+            Test_AddCa();
+            VpnRpcHubEnumCA enum_ca = Test_EnumCa();
+            foreach (VpnRpcHubEnumCAItem ca in enum_ca.CAList)
             {
-                Test_RebootServer();
-                Test_GetCaps();
-                Test_GetConfig();
-                Test_SetConfig();
+                Test_GetCa(ca.Key_u32);
+                Test_DeleteCa(ca.Key_u32);
             }
 
-            if (false)
+            Test_CreateLink();
+            Test_GetLink();
+            Test_SetLink();
+            Test_SetLinkOffline();
+            Test_SetLinkOnline();
+            VpnRpcEnumLink enum_link = Test_EnumLink();
+            foreach (var link in enum_link.LinkList)
             {
-                Test_GetDefaultHubAdminOptions();
-                //Test_GetHubAdminOptions();
-                //Test_SetHubAdminOptions();
-                Test_GetHubExtOptions();
-                Test_SetHubExtOptions();
+                Test_GetLinkStatus(link.AccountName_utf);
             }
+            Test_RenameLink();
+            Test_DeleteLink();
 
-            if (false)
+            Test_AddAccess();
+            Test_EnumAccess();
+            Test_DeleteAccess();
+            Test_SetAccessList();
+
+            Test_CreateGroup();
+            Test_SetGroup();
+            Test_GetGroup();
+
+            Test_CreateUser();
+            Test_SetUser();
+            Test_GetUser();
+            Test_EnumUser();
+            Test_EnumGroup();
+
+            Test_DeleteUser();
+            Test_DeleteGroup();
+
+            VpnRpcEnumSession enum_session = Test_EnumSession();
+
+            foreach (VpnRpcEnumSessionItem session in enum_session.SessionList)
             {
-                Test_AddL3Switch();
-                Test_AddL3If();
-                Test_EnumL3Switch();
-                Test_EnumL3If();
-                Test_AddL3Table();
-                Test_EnumL3Table();
-                Test_DelL3Table();
-                Test_StartL3Switch();
-                Test_StopL3Switch();
-                Test_DelL3If();
-                Test_DelL3Switch();
+                Test_GetSessionStatus(session.Name_str);
 
-                Test_AddCrl();
-                VpnRpcEnumCrl enum_crl = Test_EnumCrl();
-                foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
-                {
-                    VpnRpcCrl got_crl = Test_GetCrl(crl.Key_u32);
-
-                    got_crl.CommonName_utf = got_crl.CommonName_utf + "_a";
-                    Test_SetCrl(got_crl);
-                }
-
-                enum_crl = Test_EnumCrl();
-                foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
-                {
-                    Test_DelCrl(crl.Key_u32);
-                }
+                Test_DeleteSession(session.Name_str);
             }
 
-            if (false)
+            VpnRpcEnumMacTable enum_mac = Test_EnumMacTable();
+
+            foreach (VpnRpcEnumMacTableItem mac in enum_mac.MacTable)
             {
-                Test_SetAcList();
-                Test_GetAcList();
+                Test_DeleteMacTable(mac.Key_u32);
             }
 
-            if (false)
+            VpnRpcEnumIpTable enum_ip = Test_EnumIpTable();
+
+            foreach (VpnRpcEnumIpTableItem ip in enum_ip.IpTable)
             {
-                VpnRpcEnumLogFile enum_log_file = Test_EnumLogFile();
-                foreach (VpnRpcEnumLogFileItem log in enum_log_file.LogFiles)
-                {
-                    Test_ReadLogFile(log.FilePath_str);
-                }
+                Test_DeleteIpTable(ip.Key_u32);
             }
 
-            if (false)
+            Test_SetKeep();
+            Test_GetKeep();
+
+            Test_EnableSecureNAT();
+            Test_GetSecureNATOption();
+            Test_SetSecureNATOption();
+            Test_EnumNAT();
+            Test_EnumDHCP();
+            Test_GetSecureNATStatus();
+            Test_DisableSecureNAT();
+
+            Test_EnumEthernet();
+            Test_AddLocalBridge();
+            Test_EnumLocalBridge();
+            Test_DeleteLocalBridge();
+            Test_GetBridgeSupport();
+
+            Test_GetCaps();
+            Test_GetConfig();
+            Test_SetConfig();
+
+            Test_GetDefaultHubAdminOptions();
+            Test_GetHubAdminOptions();
+            Test_SetHubAdminOptions();
+            Test_GetHubExtOptions();
+            Test_SetHubExtOptions();
+
+            Test_AddL3Switch();
+            Test_AddL3If();
+            Test_EnumL3Switch();
+            Test_EnumL3If();
+            Test_AddL3Table();
+            Test_EnumL3Table();
+            Test_DelL3Table();
+            Test_StartL3Switch();
+            Test_StopL3Switch();
+            Test_DelL3If();
+            Test_DelL3Switch();
+
+            Test_AddCrl();
+            VpnRpcEnumCrl enum_crl = Test_EnumCrl();
+            foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
             {
-                Test_SetSysLog();
-                Test_GetSysLog();
-                Test_SetSysLog(false);
+                VpnRpcCrl got_crl = Test_GetCrl(crl.Key_u32);
 
-                Test_SetHubMsg();
-                Test_GetHubMsg();
-                Test_GetAdminMsg();
-                Test_Flush();
-
-                Test_SetIPsecServices();
-                Test_GetIPsecServices();
-
-                Test_AddEtherIpId();
-                VpnRpcEnumEtherIpId enum_etherip_id = Test_EnumEtherIpId();
-                foreach (VpnEtherIpId etherip_id in enum_etherip_id.Settings)
-                {
-                    Test_GetEtherIpId(etherip_id.Id_str);
-                    Test_DeleteEtherIpId(etherip_id.Id_str);
-                }
-
-                Test_SetOpenVpnSstpConfig();
-                Test_GetOpenVpnSstpConfig();
-
-                Test_GetDDnsClientStatus();
-                Test_SetDDnsInternetSettng();
-                Test_GetDDnsInternetSettng();
-
-                Test_ChangeDDnsClientHostname();
-                Test_RegenerateServerCert();
-                //Test_MakeOpenVpnConfigFile();
-                Test_SetSpecialListener();
-                Test_GetSpecialListener();
+                got_crl.CommonName_utf = got_crl.CommonName_utf + "_a";
+                Test_SetCrl(got_crl);
             }
+
+            enum_crl = Test_EnumCrl();
+            foreach (VpnRpcEnumCrlItem crl in enum_crl.CRLList)
+            {
+                Test_DelCrl(crl.Key_u32);
+            }
+
+            Test_SetAcList();
+            Test_GetAcList();
+
+            VpnRpcEnumLogFile enum_log_file = Test_EnumLogFile();
+            foreach (VpnRpcEnumLogFileItem log in enum_log_file.LogFiles)
+            {
+                Test_ReadLogFile(log.FilePath_str);
+
+                break;
+            }
+
+            Test_SetSysLog();
+            Test_GetSysLog();
+            Test_SetSysLog(false);
+
+            Test_SetHubMsg();
+            Test_GetHubMsg();
+            Test_GetAdminMsg();
+            Test_Flush();
+
+            Test_SetIPsecServices();
+            Test_GetIPsecServices();
+
+            Test_AddEtherIpId();
+            VpnRpcEnumEtherIpId enum_etherip_id = Test_EnumEtherIpId();
+            foreach (VpnEtherIpId etherip_id in enum_etherip_id.Settings)
+            {
+                Test_GetEtherIpId(etherip_id.Id_str);
+                Test_DeleteEtherIpId(etherip_id.Id_str);
+            }
+
+            Test_SetOpenVpnSstpConfig();
+            Test_GetOpenVpnSstpConfig();
+
+            Test_GetDDnsClientStatus();
+            Test_SetDDnsInternetSettng();
+            Test_GetDDnsInternetSettng();
+
+            Test_ChangeDDnsClientHostname();
+            Test_RegenerateServerCert();
+            Test_MakeOpenVpnConfigFile();
+            Test_SetSpecialListener();
+            Test_GetSpecialListener();
 
             Test_GetAzureStatus();
             Test_SetAzureStatus();
             Test_SetVgsConfig();
             Test_GetVgsConfig();
+
+            Test_DeleteHub();
+            //Test_RebootServer();
 
             return;
         }
@@ -783,13 +751,13 @@ namespace DNT_VPN_JSONRPC
         /// <summary>
         /// API test for 'DisconnectConnection', Disconnect a connection
         /// </summary>
-        public void Test_DisconnectConnection()
+        public void Test_DisconnectConnection(string connection_id)
         {
             Console.WriteLine("Begin: Test_DisconnectConnection");
 
             VpnRpcDisconnectConnection in_rpc_disconnect_connection = new VpnRpcDisconnectConnection()
             {
-                Name_str = "CID-32-5791811E91",
+                Name_str = connection_id,
             };
             VpnRpcDisconnectConnection out_rpc_disconnect_connection = Rpc.DisconnectConnection(in_rpc_disconnect_connection);
 
@@ -1482,7 +1450,7 @@ namespace DNT_VPN_JSONRPC
                 Note_utf = "こらっ！",
                 AuthType_u32 = VpnRpcUserAuthType.Password,
                 Auth_Password_str = "microsoft",
-                ExpireTime_dt = new DateTime(2019,1,1),
+                ExpireTime_dt = new DateTime(2019, 1, 1),
                 UsePolicy_bool = true,
                 SecPol_Access_bool = true,
                 SecPol_DHCPNoServer_bool = true,
@@ -2068,7 +2036,7 @@ namespace DNT_VPN_JSONRPC
             VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
             {
                 DeviceName_str = "Intel(R) Ethernet Connection (2) I219-V (ID=3632031273)",
-                HubNameLB_str = "test",
+                HubNameLB_str = hub_name,
             };
             VpnRpcLocalBridge out_rpc_localbridge = Rpc.AddLocalBridge(in_rpc_localbridge);
 
@@ -2089,7 +2057,7 @@ namespace DNT_VPN_JSONRPC
             VpnRpcLocalBridge in_rpc_localbridge = new VpnRpcLocalBridge()
             {
                 DeviceName_str = "Intel(R) Ethernet Connection (2) I219-V (ID=3632031273)",
-                HubNameLB_str = "test",
+                HubNameLB_str = hub_name,
             };
             VpnRpcLocalBridge out_rpc_localbridge = Rpc.DeleteLocalBridge(in_rpc_localbridge);
 
@@ -2425,7 +2393,7 @@ namespace DNT_VPN_JSONRPC
             VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
             {
                 Name_str = "L3SW1",
-                HubName_str = "TEST",
+                HubName_str = hub_name,
                 IpAddress_ip = "192.168.0.1",
                 SubnetMask_ip = "255.255.255.0",
             };
@@ -2448,7 +2416,7 @@ namespace DNT_VPN_JSONRPC
             VpnRpcL3If in_rpc_l3if = new VpnRpcL3If()
             {
                 Name_str = "L3SW1",
-                HubName_str = "TEST",
+                HubName_str = hub_name,
             };
             VpnRpcL3If out_rpc_l3if = Rpc.DelL3If(in_rpc_l3if);
 
@@ -2587,7 +2555,7 @@ namespace DNT_VPN_JSONRPC
                 Local_utf = "Tsukuba",
                 Serial_bin = new byte[] { 1, 2, 3, 4, 5 },
                 DigestMD5_bin = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-                DigestSHA1_bin = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19},
+                DigestSHA1_bin = new byte[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19 },
             };
             VpnRpcCrl out_rpc_crl = Rpc.AddCrl(in_rpc_crl);
 
