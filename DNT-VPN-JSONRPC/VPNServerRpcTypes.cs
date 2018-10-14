@@ -227,7 +227,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Add CA to HUB *
+    /// Add CA to HUB
     /// </summary>
     public class VpnRpcHubAddCA
     {
@@ -443,7 +443,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Create, configure, and get the group *
+    /// Create, configure, and get the group
     /// </summary>
     public class VpnRpcSetGroup
     {
@@ -843,7 +843,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Create and set of link *
+    /// Create and set of link
     /// </summary>
     public class VpnRpcCreateLink
     {
@@ -959,17 +959,6 @@ namespace SoftEther.VPNServerRpc
         public bool ClientOption_HalfConnection_bool;
 
         /// <summary>
-        /// Client Option Parameters: Disable the routing tracking
-        /// </summary>
-        //[JsonProperty("NoRoutingTracking_bool")]
-        //public bool ClientOption_NoRoutingTracking_bool;
-
-        /// <summary>
-        /// Client Option Parameters: VLAN device name
-        /// </summary>
-        //public string DeviceName_str;
-
-        /// <summary>
         /// Client Option Parameters: Connection attempt interval when additional connection establish
         /// </summary>
         [JsonProperty("AdditionalConnectionInterval_u32")]
@@ -980,30 +969,6 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         [JsonProperty("ConnectionDisconnectSpan_u32")]
         public uint ClientOption_ConnectionDisconnectSpan_u32;
-
-        /// <summary>
-        /// Client Option Parameters: Hide the status window
-        /// </summary>
-        //[JsonProperty("HideStatusWindow_bool")]
-        //public bool ClientOption_HideStatusWindow_bool;
-
-        /// <summary>
-        /// Client Option Parameters: Hide the NIC status window
-        /// </summary>
-        //[JsonProperty("HideNicInfoWindow_bool")]
-        //public bool ClientOption_HideNicInfoWindow_bool;
-
-        /// <summary>
-        /// Client Option Parameters: Monitor port mode
-        /// </summary>
-        //[JsonProperty("RequireMonitorMode_bool")]
-        //public bool ClientOption_RequireMonitorMode_bool;
-
-        /// <summary>
-        /// Client Option Parameters: Bridge or routing mode
-        /// </summary>
-        //[JsonProperty("RequireBridgeRoutingMode_bool")]
-        //public bool ClientOption_RequireBridgeRoutingMode_bool;
 
         /// <summary>
         /// Client Option Parameters: Disable the VoIP / QoS function
@@ -1062,25 +1027,6 @@ namespace SoftEther.VPNServerRpc
         public byte[] ClientAuth_ClientK_bin;
 
         /// <summary>
-        /// Secure device certificate name
-        /// </summary>
-        //public string SecurePublicCertName_str;
-
-        /// <summary>
-        /// Secure device secret key name
-        /// </summary>
-        //public string SecurePrivateKeyName_str;
-
-        // ---- End of Client Auth Parameters ---
-
-        // ---- Start of Security policy ---
-        /// <summary>
-        /// Security policy: Grant access
-        /// </summary>
-        //[JsonProperty("policy:Access_bool")]
-        //public bool SecPol_Access_bool;
-
-        /// <summary>
         /// Security policy: Filter DHCP packets (IPv4)
         /// </summary>
         [JsonProperty("policy:DHCPFilter_bool")]
@@ -1097,18 +1043,6 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         [JsonProperty("policy:DHCPForce_bool")]
         public bool SecPol_DHCPForce_bool;
-
-        /// <summary>
-        /// Security policy: Prohibit the bridge behavior
-        /// </summary>
-        //[JsonProperty("policy:NoBridge_bool")]
-        //public bool SecPol_NoBridge_bool;
-
-        /// <summary>
-        /// Security policy: Prohibit the router behavior (IPv4)
-        /// </summary>
-        //[JsonProperty("policy:NoRouting_bool")]
-        //public bool SecPol_NoRouting_bool;
 
         /// <summary>
         /// Security policy: Prohibit the duplicate MAC address
@@ -1147,24 +1081,6 @@ namespace SoftEther.VPNServerRpc
         public bool SecPol_NoBroadcastLimiter_bool;
 
         /// <summary>
-        /// Security policy: Allow monitoring mode
-        /// </summary>
-        //[JsonProperty("policy:MonitorPort_bool")]
-        //public bool SecPol_MonitorPort_bool;
-
-        /// <summary>
-        /// Security policy: Maximum number of TCP connections
-        /// </summary>
-        //[JsonProperty("policy:MaxConnection_u32")]
-        //public uint SecPol_MaxConnection_u32;
-
-        /// <summary>
-        /// Security policy: Communication time-out period
-        /// </summary>
-        //[JsonProperty("policy:TimeOut_u32")]
-        //public uint SecPol_TimeOut_u32;
-
-        /// <summary>
         /// Security policy: Maximum number of MAC address
         /// </summary>
         [JsonProperty("policy:MaxMac_u32")]
@@ -1187,24 +1103,6 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         [JsonProperty("policy:MaxDownload_u32")]
         public uint SecPol_MaxDownload_u32;
-
-        /// <summary>
-        /// Security policy: User can not change password
-        /// </summary>
-        //[JsonProperty("policy:FixPassword_bool")]
-        //public bool SecPol_FixPassword_bool;
-
-        /// <summary>
-        /// Security policy: Multiple logins limit
-        /// </summary>
-        //[JsonProperty("policy:MultiLogins_u32")]
-        //public uint SecPol_MultiLogins_u32;
-
-        /// <summary>
-        /// Security policy: Prohibit the use of VoIP / QoS features
-        /// </summary>
-        //[JsonProperty("policy:NoQoS_bool")]
-        //public bool SecPol_NoQoS_bool;
 
         /// <summary>
         /// Security policy: Filter the Router Solicitation / Advertising packet (IPv6)
@@ -1231,12 +1129,6 @@ namespace SoftEther.VPNServerRpc
         public bool SecPol_DHCPv6NoServer_bool;
 
         /// <summary>
-        /// Security policy: Prohibit the router behavior (IPv6)
-        /// </summary>
-        //[JsonProperty("policy:NoRoutingV6_bool")]
-        //public bool SecPol_NoRoutingV6_bool;
-
-        /// <summary>
         /// Security policy: Prohibit the duplicate IP address (IPv6)
         /// </summary>
         [JsonProperty("policy:CheckIPv6_bool")]
@@ -1253,18 +1145,6 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         [JsonProperty("policy:MaxIPv6_u32")]
         public uint SecPol_MaxIPv6_u32;
-
-        /// <summary>
-        /// Security policy: Prohibit to save the password in the VPN Client
-        /// </summary>
-        //[JsonProperty("policy:NoSavePassword_bool")]
-        //public bool SecPol_NoSavePassword_bool;
-
-        /// <summary>
-        /// Security policy: Disconnect the VPN Client automatically at a certain period of time
-        /// </summary>
-        //[JsonProperty("policy:AutoDisconnect_u32")]
-        //public uint SecPol_AutoDisconnect_u32;
 
         /// <summary>
         /// Security policy: Filter all IPv4 packets
@@ -1289,12 +1169,6 @@ namespace SoftEther.VPNServerRpc
         /// </summary>
         [JsonProperty("policy:NoIPv6DefaultRouterInRA_bool")]
         public bool SecPol_NoIPv6DefaultRouterInRA_bool;
-
-        /// <summary>
-        /// Security policy: Delete the default router specification from the IPv6 router advertisement (Enable IPv6 connection)
-        /// </summary>
-        //[JsonProperty("policy:NoIPv6DefaultRouterInRAWhenIPv6_bool")]
-        //public bool SecPol_NoIPv6DefaultRouterInRAWhenIPv6_bool;
 
         /// <summary>
         /// Security policy: Specify the VLAN ID
@@ -1363,7 +1237,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Create, configure, and get the user *
+    /// Create, configure, and get the user
     /// </summary>
     public class VpnRpcSetUser
     {
@@ -1914,7 +1788,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// CA enumeration of HUB *
+    /// CA enumeration of HUB
     /// </summary>
     public class VpnRpcHubEnumCA
     {
@@ -3252,7 +3126,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Get the CA of HUB *
+    /// Get the CA of HUB
     /// </summary>
     public class VpnRpcHubGetCA
     {
@@ -3600,7 +3474,7 @@ namespace SoftEther.VPNServerRpc
 
 
     /// <summary>
-    /// Server farm member information acquisition *
+    /// Server farm member information acquisition
     /// </summary>
     public class VpnRpcFarmInfo
     {
@@ -3676,7 +3550,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Server farm configuration *
+    /// Server farm configuration
     /// </summary>
     public class VpnRpcFarm
     {
@@ -4145,7 +4019,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Get the link state *
+    /// Get the link state
     /// </summary>
     public class VpnRpcLinkStatus
     {
@@ -4540,7 +4414,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// String *
+    /// String
     /// </summary>
     public class VpnRpcStr
     {
@@ -5073,7 +4947,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Session status *
+    /// Session status
     /// </summary>
     public class VpnRpcSessionStatus
     {
