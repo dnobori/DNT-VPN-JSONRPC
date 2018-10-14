@@ -40,9 +40,10 @@ namespace DNT_VPN_JSONRPC
 
             Test_SetServerPassword();
 
+            Test_GetFarmSetting();
+
             if (false)
             {
-                Test_GetFarmSetting();
 
                 Test_SetFarmSetting();
 
@@ -104,6 +105,7 @@ namespace DNT_VPN_JSONRPC
             {
                 Test_GetLinkStatus(link.AccountName_utf);
             }
+            System.Threading.Thread.Sleep(3000);
             Test_RenameLink();
             Test_DeleteLink();
 
@@ -160,14 +162,14 @@ namespace DNT_VPN_JSONRPC
             Test_DisableSecureNAT();
 
             Test_EnumEthernet();
-            Test_AddLocalBridge();
+            //Test_AddLocalBridge();
             Test_EnumLocalBridge();
-            Test_DeleteLocalBridge();
+            //Test_DeleteLocalBridge();
             Test_GetBridgeSupport();
 
             Test_GetCaps();
             Test_GetConfig();
-            Test_SetConfig();
+            //Test_SetConfig();
 
             Test_GetDefaultHubAdminOptions();
             Test_GetHubAdminOptions();

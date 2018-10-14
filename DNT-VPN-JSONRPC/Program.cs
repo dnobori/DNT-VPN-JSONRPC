@@ -10,7 +10,16 @@ namespace DNT_VPN_JSONRPC
         {
             VPNRPCTest test = new VPNRPCTest();
 
-            test.Test_All();
+            int i = 0;
+
+            for (i = 0; ; i++)
+            {
+                Console.WriteLine("-------------");
+                Console.WriteLine($"Test #{i} start");
+                test.Test_All();
+                Console.WriteLine($"Test #{i} finish");
+                Console.WriteLine("-------------");
+            }
 
             //Tools.GenCode1();
 
