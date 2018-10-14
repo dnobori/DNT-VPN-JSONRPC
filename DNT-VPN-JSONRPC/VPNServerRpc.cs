@@ -1118,12 +1118,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Enumerate log files (Async mode)
         /// </summary>
-        public async Task<VpnRpcEnumLogFile> EnumLogFileAsync(VpnRpcEnumLogFile input_param) => await Call<VpnRpcEnumLogFile>("EnumLogFile", input_param);
+        public async Task<VpnRpcEnumLogFile> EnumLogFileAsync() => await Call<VpnRpcEnumLogFile>("EnumLogFile", new VpnRpcEnumLogFile());
 
         /// <summary>
         /// Enumerate log files (Sync mode)
         /// </summary>
-        public VpnRpcEnumLogFile EnumLogFile(VpnRpcEnumLogFile input_param) => EnumLogFileAsync(input_param).Result;
+        public VpnRpcEnumLogFile EnumLogFile() => EnumLogFileAsync().Result;
 
         /// <summary>
         /// Read a log file (Async mode)
@@ -1134,46 +1134,6 @@ namespace SoftEther.VPNServerRpc
         /// Read a log file (Sync mode)
         /// </summary>
         public VpnRpcReadLogFile ReadLogFile(VpnRpcReadLogFile input_param) => ReadLogFileAsync(input_param).Result;
-
-        /// <summary>
-        /// Add new license key (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> AddLicenseKeyAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("AddLicenseKey", input_param);
-
-        /// <summary>
-        /// Add new license key (Sync mode)
-        /// </summary>
-        public VpnRpcTest AddLicenseKey(VpnRpcTest input_param) => AddLicenseKeyAsync(input_param).Result;
-
-        /// <summary>
-        /// Delete a license key (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> DelLicenseKeyAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("DelLicenseKey", input_param);
-
-        /// <summary>
-        /// Delete a license key (Sync mode)
-        /// </summary>
-        public VpnRpcTest DelLicenseKey(VpnRpcTest input_param) => DelLicenseKeyAsync(input_param).Result;
-
-        /// <summary>
-        /// Enumerate license key (Async mode)
-        /// </summary>
-        public async Task<VpnRpcEnumLicenseKey> EnumLicenseKeyAsync(VpnRpcEnumLicenseKey input_param) => await Call<VpnRpcEnumLicenseKey>("EnumLicenseKey", input_param);
-
-        /// <summary>
-        /// Enumerate license key (Sync mode)
-        /// </summary>
-        public VpnRpcEnumLicenseKey EnumLicenseKey(VpnRpcEnumLicenseKey input_param) => EnumLicenseKeyAsync(input_param).Result;
-
-        /// <summary>
-        /// Get license status (Async mode)
-        /// </summary>
-        public async Task<VpnRpcLicenseStatus> GetLicenseStatusAsync(VpnRpcLicenseStatus input_param) => await Call<VpnRpcLicenseStatus>("GetLicenseStatus", input_param);
-
-        /// <summary>
-        /// Get license status (Sync mode)
-        /// </summary>
-        public VpnRpcLicenseStatus GetLicenseStatus(VpnRpcLicenseStatus input_param) => GetLicenseStatusAsync(input_param).Result;
 
         /// <summary>
         /// Set syslog function setting (Async mode)
@@ -1194,26 +1154,6 @@ namespace SoftEther.VPNServerRpc
         /// Get syslog function setting (Sync mode)
         /// </summary>
         public VpnSyslogSetting GetSysLog(VpnSyslogSetting input_param) => GetSysLogAsync(input_param).Result;
-
-        /// <summary>
-        /// Enumerate VLAN tag transparent setting (Async mode)
-        /// </summary>
-        public async Task<VpnRpcEnumEthVlan> EnumEthVLanAsync(VpnRpcEnumEthVlan input_param) => await Call<VpnRpcEnumEthVlan>("EnumEthVLan", input_param);
-
-        /// <summary>
-        /// Enumerate VLAN tag transparent setting (Sync mode)
-        /// </summary>
-        public VpnRpcEnumEthVlan EnumEthVLan(VpnRpcEnumEthVlan input_param) => EnumEthVLanAsync(input_param).Result;
-
-        /// <summary>
-        /// Set VLAN tag transparent setting (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> SetEnableEthVLanAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("SetEnableEthVLan", input_param);
-
-        /// <summary>
-        /// Set VLAN tag transparent setting (Sync mode)
-        /// </summary>
-        public VpnRpcTest SetEnableEthVLan(VpnRpcTest input_param) => SetEnableEthVLanAsync(input_param).Result;
 
         /// <summary>
         /// Set message of today on hub (Async mode)
@@ -1248,12 +1188,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get message for administrators (Async mode)
         /// </summary>
-        public async Task<VpnRpcMsg> GetAdminMsgAsync(VpnRpcMsg input_param) => await Call<VpnRpcMsg>("GetAdminMsg", input_param);
+        public async Task<VpnRpcMsg> GetAdminMsgAsync() => await Call<VpnRpcMsg>("GetAdminMsg", new VpnRpcMsg());
 
         /// <summary>
         /// Get message for administrators (Sync mode)
         /// </summary>
-        public VpnRpcMsg GetAdminMsg(VpnRpcMsg input_param) => GetAdminMsgAsync(input_param).Result;
+        public VpnRpcMsg GetAdminMsg() => GetAdminMsgAsync().Result;
 
         /// <summary>
         /// Flush configuration file (Async mode)
@@ -1264,16 +1204,6 @@ namespace SoftEther.VPNServerRpc
         /// Flush configuration file (Sync mode)
         /// </summary>
         public VpnRpcTest Flush(VpnRpcTest input_param) => FlushAsync(input_param).Result;
-
-        /// <summary>
-        /// Do debug function (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> DebugAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("Debug", input_param);
-
-        /// <summary>
-        /// Do debug function (Sync mode)
-        /// </summary>
-        public VpnRpcTest Debug(VpnRpcTest input_param) => DebugAsync(input_param).Result;
 
         /// <summary>
         /// Set IPsec service configuration (Async mode)
@@ -1288,12 +1218,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get IPsec service configuration (Async mode)
         /// </summary>
-        public async Task<VpnIPsecServices> GetIPsecServicesAsync(VpnIPsecServices input_param) => await Call<VpnIPsecServices>("GetIPsecServices", input_param);
+        public async Task<VpnIPsecServices> GetIPsecServicesAsync() => await Call<VpnIPsecServices>("GetIPsecServices", new VpnIPsecServices());
 
         /// <summary>
         /// Get IPsec service configuration (Sync mode)
         /// </summary>
-        public VpnIPsecServices GetIPsecServices(VpnIPsecServices input_param) => GetIPsecServicesAsync(input_param).Result;
+        public VpnIPsecServices GetIPsecServices() => GetIPsecServicesAsync().Result;
 
         /// <summary>
         /// Add EtherIP ID setting (Async mode)
@@ -1328,12 +1258,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Enumerate EtherIP ID settings (Async mode)
         /// </summary>
-        public async Task<VpnRpcEnumEtherIpId> EnumEtherIpIdAsync(VpnRpcEnumEtherIpId input_param) => await Call<VpnRpcEnumEtherIpId>("EnumEtherIpId", input_param);
+        public async Task<VpnRpcEnumEtherIpId> EnumEtherIpIdAsync() => await Call<VpnRpcEnumEtherIpId>("EnumEtherIpId", new VpnRpcEnumEtherIpId());
 
         /// <summary>
         /// Enumerate EtherIP ID settings (Sync mode)
         /// </summary>
-        public VpnRpcEnumEtherIpId EnumEtherIpId(VpnRpcEnumEtherIpId input_param) => EnumEtherIpIdAsync(input_param).Result;
+        public VpnRpcEnumEtherIpId EnumEtherIpId() => EnumEtherIpIdAsync().Result;
 
         /// <summary>
         /// Set configurations for OpenVPN and SSTP (Async mode)
@@ -1348,22 +1278,22 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get configurations for OpenVPN and SSTP (Async mode)
         /// </summary>
-        public async Task<VpnOpenVpnSstpConfig> GetOpenVpnSstpConfigAsync(VpnOpenVpnSstpConfig input_param) => await Call<VpnOpenVpnSstpConfig>("GetOpenVpnSstpConfig", input_param);
+        public async Task<VpnOpenVpnSstpConfig> GetOpenVpnSstpConfigAsync() => await Call<VpnOpenVpnSstpConfig>("GetOpenVpnSstpConfig", new VpnOpenVpnSstpConfig());
 
         /// <summary>
         /// Get configurations for OpenVPN and SSTP (Sync mode)
         /// </summary>
-        public VpnOpenVpnSstpConfig GetOpenVpnSstpConfig(VpnOpenVpnSstpConfig input_param) => GetOpenVpnSstpConfigAsync(input_param).Result;
+        public VpnOpenVpnSstpConfig GetOpenVpnSstpConfig() => GetOpenVpnSstpConfigAsync().Result;
 
         /// <summary>
         /// Get status of DDNS client (Async mode)
         /// </summary>
-        public async Task<VpnDDnsClientStatus> GetDDnsClientStatusAsync(VpnDDnsClientStatus input_param) => await Call<VpnDDnsClientStatus>("GetDDnsClientStatus", input_param);
+        public async Task<VpnDDnsClientStatus> GetDDnsClientStatusAsync() => await Call<VpnDDnsClientStatus>("GetDDnsClientStatus", new VpnDDnsClientStatus());
 
         /// <summary>
         /// Get status of DDNS client (Sync mode)
         /// </summary>
-        public VpnDDnsClientStatus GetDDnsClientStatus(VpnDDnsClientStatus input_param) => GetDDnsClientStatusAsync(input_param).Result;
+        public VpnDDnsClientStatus GetDDnsClientStatus() => GetDDnsClientStatusAsync().Result;
 
         /// <summary>
         /// Change host-name for DDNS client (Async mode)
@@ -1378,22 +1308,22 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Regenerate server certification (Async mode)
         /// </summary>
-        public async Task<VpnRpcTest> RegenerateServerCertAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("RegenerateServerCert", input_param);
+        public async Task<VpnRpcTest> RegenerateServerCertAsync() => await Call<VpnRpcTest>("RegenerateServerCert", new VpnRpcTest());
 
         /// <summary>
         /// Regenerate server certification (Sync mode)
         /// </summary>
-        public VpnRpcTest RegenerateServerCert(VpnRpcTest input_param) => RegenerateServerCertAsync(input_param).Result;
+        public VpnRpcTest RegenerateServerCert() => RegenerateServerCertAsync().Result;
 
         /// <summary>
         /// Generate OpenVPN configuration files (Async mode)
         /// </summary>
-        public async Task<VpnRpcReadLogFile> MakeOpenVpnConfigFileAsync(VpnRpcReadLogFile input_param) => await Call<VpnRpcReadLogFile>("MakeOpenVpnConfigFile", input_param);
+        public async Task<VpnRpcReadLogFile> MakeOpenVpnConfigFileAsync() => await Call<VpnRpcReadLogFile>("MakeOpenVpnConfigFile", new VpnRpcReadLogFile());
 
         /// <summary>
         /// Generate OpenVPN configuration files (Sync mode)
         /// </summary>
-        public VpnRpcReadLogFile MakeOpenVpnConfigFile(VpnRpcReadLogFile input_param) => MakeOpenVpnConfigFileAsync(input_param).Result;
+        public VpnRpcReadLogFile MakeOpenVpnConfigFile() => MakeOpenVpnConfigFileAsync().Result;
 
         /// <summary>
         /// Set special listener status (Async mode)
@@ -1408,22 +1338,22 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get special listener status (Async mode)
         /// </summary>
-        public async Task<VpnRpcSpecialListener> GetSpecialListenerAsync(VpnRpcSpecialListener input_param) => await Call<VpnRpcSpecialListener>("GetSpecialListener", input_param);
+        public async Task<VpnRpcSpecialListener> GetSpecialListenerAsync() => await Call<VpnRpcSpecialListener>("GetSpecialListener", new VpnRpcSpecialListener());
 
         /// <summary>
         /// Get special listener status (Sync mode)
         /// </summary>
-        public VpnRpcSpecialListener GetSpecialListener(VpnRpcSpecialListener input_param) => GetSpecialListenerAsync(input_param).Result;
+        public VpnRpcSpecialListener GetSpecialListener() => GetSpecialListenerAsync().Result;
 
         /// <summary>
         /// Get Azure status (Async mode)
         /// </summary>
-        public async Task<VpnRpcAzureStatus> GetAzureStatusAsync(VpnRpcAzureStatus input_param) => await Call<VpnRpcAzureStatus>("GetAzureStatus", input_param);
+        public async Task<VpnRpcAzureStatus> GetAzureStatusAsync() => await Call<VpnRpcAzureStatus>("GetAzureStatus", new VpnRpcAzureStatus());
 
         /// <summary>
         /// Get Azure status (Sync mode)
         /// </summary>
-        public VpnRpcAzureStatus GetAzureStatus(VpnRpcAzureStatus input_param) => GetAzureStatusAsync(input_param).Result;
+        public VpnRpcAzureStatus GetAzureStatus() => GetAzureStatusAsync().Result;
 
         /// <summary>
         /// Set Azure status (Async mode)
@@ -1438,12 +1368,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get DDNS proxy configuration (Async mode)
         /// </summary>
-        public async Task<VpnInternetSetting> GetDDnsInternetSettngAsync(VpnInternetSetting input_param) => await Call<VpnInternetSetting>("GetDDnsInternetSettng", input_param);
+        public async Task<VpnInternetSetting> GetDDnsInternetSettngAsync() => await Call<VpnInternetSetting>("GetDDnsInternetSettng", new VpnInternetSetting());
 
         /// <summary>
         /// Get DDNS proxy configuration (Sync mode)
         /// </summary>
-        public VpnInternetSetting GetDDnsInternetSettng(VpnInternetSetting input_param) => GetDDnsInternetSettngAsync(input_param).Result;
+        public VpnInternetSetting GetDDnsInternetSettng() => GetDDnsInternetSettngAsync().Result;
 
         /// <summary>
         /// Set DDNS proxy configuration (Async mode)
@@ -1468,12 +1398,12 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Get VPN Gate configuration (Async mode)
         /// </summary>
-        public async Task<VpnVgsConfig> GetVgsConfigAsync(VpnVgsConfig input_param) => await Call<VpnVgsConfig>("GetVgsConfig", input_param);
+        public async Task<VpnVgsConfig> GetVgsConfigAsync() => await Call<VpnVgsConfig>("GetVgsConfig", new VpnVgsConfig());
 
         /// <summary>
         /// Get VPN Gate configuration (Sync mode)
         /// </summary>
-        public VpnVgsConfig GetVgsConfig(VpnVgsConfig input_param) => GetVgsConfigAsync(input_param).Result;
+        public VpnVgsConfig GetVgsConfig() => GetVgsConfigAsync().Result;
 
 
     }

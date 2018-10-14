@@ -890,7 +890,7 @@ namespace SoftEther.VPNServerRpc
         /// Client Option Parameters: Type of proxy
         /// </summary>
         [JsonProperty("ProxyType_u32")]
-        public uint ClientOption_ProxyType_u32;
+        public VpnRpcProxyType ClientOption_ProxyType_u32;
 
         /// <summary>
         /// Client Option Parameters: Proxy server name
@@ -2131,9 +2131,10 @@ namespace SoftEther.VPNServerRpc
     /// </summary>
     public class VpnRpcEnumEtherIpId
     {
-        public uint NumItem_u32;
-
-        // TODO: ETHERIP_ID *IdList;
+        /// <summary>
+        /// Setting list
+        /// </summary>
+        public VpnEtherIpId[] Settings;
     }
 
     /// <summary>
@@ -2161,22 +2162,6 @@ namespace SoftEther.VPNServerRpc
         /// Item
         /// </summary>
         public VpnRpcEnumEthItem[] EthList;
-    }
-
-    /// <summary>
-    /// TODO
-    ///</summary>
-    public class VpnRpcEnumEthVlan
-    {
-        /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
-        /// List
-        /// </summary>
-        // TODO: RPC_ENUM_ETH_VLAN_ITEM *Items;
     }
 
     /// <summary>
@@ -2572,22 +2557,6 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// TODO
-    ///</summary>
-    public class VpnRpcEnumLicenseKey
-    {
-        /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
-        /// List
-        /// </summary>
-        // TODO: RPC_ENUM_LICENSE_KEY_ITEM *Items;
-    }
-
-    /// <summary>
     /// Enumeration items of link
     /// </summary>
     public class VpnRpcEnumLinkItem
@@ -2693,19 +2662,40 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// TODO
+    /// Log file enumeration
+    /// </summary>
+    public class VpnRpcEnumLogFileItem
+    {
+        /// <summary>
+        /// Server name
+        /// </summary>
+        public string ServerName_str;
+
+        /// <summary>
+        /// File Path
+        /// </summary>
+        public string FilePath_str;
+
+        /// <summary>
+        /// File size
+        /// </summary>
+        public uint FileSize_u32;
+
+        /// <summary>
+        /// Updating date
+        /// </summary>
+        public DateTime UpdatedTime_dt;
+    }
+
+    /// <summary>
+    /// Log file enumeration
     ///</summary>
     public class VpnRpcEnumLogFile
     {
         /// <summary>
-        /// Number of items
-        /// </summary>
-        public uint NumItem_u32;
-
-        /// <summary>
         /// List
         /// </summary>
-        // TODO: RPC_ENUM_LOG_FILE_ITEM *Items;
+        public VpnRpcEnumLogFileItem[] LogFiles;
     }
 
     /// <summary>
@@ -3162,6 +3152,42 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Access control List Entry
+    /// </summary>
+    public class VpnAc
+    {
+        /// <summary>
+        /// ID
+        /// </summary>
+        public uint Id_u32;
+
+        /// <summary>
+        /// Priority
+        /// </summary>
+        public uint Priority_u32;
+
+        /// <summary>
+        /// Deny access
+        /// </summary>
+        public bool Deny_bool;
+
+        /// <summary>
+        /// Is masked
+        /// </summary>
+        public bool Masked_bool;
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        public string IpAddress_ip;
+
+        /// <summary>
+        /// Subnet mask
+        /// </summary>
+        public string SubnetMask_ip;
+    }
+
+    /// <summary>
     /// AC list
     /// </summary>
     public class VpnRpcAcList
@@ -3172,11 +3198,9 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// List body
+        /// List
         /// </summary>
-        // TODO: LIST *o;
-
-        public bool InternalFlag1_bool;
+        public VpnAc[] ACList;
     }
 
     /// <summary>
@@ -3192,7 +3216,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Message
         /// </summary>
-        public string Msg_utf;
+        public byte[] Msg_bin;
     }
 
     /// <summary>
@@ -3363,14 +3387,50 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
+    /// Proxy type
+    /// </summary>
+    public enum VpnRpcProxyType
+    {
+        /// <summary>
+        /// Direct TCP connection
+        /// </summary>
+        Direct = 0,
+
+        /// <summary>
+        /// Connection via HTTP proxy server
+        /// </summary>
+        HTTP = 1,
+
+        /// <summary>
+        /// Connection via SOCKS proxy server
+        /// </summary>
+        SOCKS = 2,
+    }
+
+    /// <summary>
     /// The current status of the DDNS
     /// </summary>
     public class VpnDDnsClientStatus
     {
         /// <summary>
-        /// Last error
+        /// Last error code (IPv4)
         /// </summary>
-        public uint Err_IPv4, _u32;
+        public uint Err_IPv4_u32;
+
+        /// <summary>
+        /// Last error string (IPv4)
+        /// </summary>
+        public string ErrStr_IPv4_utf;
+
+        /// <summary>
+        /// Last error code (IPv6)
+        /// </summary>
+        public uint Err_IPv6_u32;
+
+        /// <summary>
+        /// Last error string (IPv6)
+        /// </summary>
+        public string ErrStr_IPv6_utf;
 
         /// <summary>
         /// Current host name
@@ -3396,31 +3456,6 @@ namespace SoftEther.VPNServerRpc
         /// Current IPv6 address
         /// </summary>
         public string CurrentIPv6_str;
-
-        /// <summary>
-        /// IP address of Azure Server to be used
-        /// </summary>
-        public string CurrentAzureIp_str;
-
-        /// <summary>
-        /// Time stamp to be presented to the Azure Server
-        /// </summary>
-        public ulong CurrentAzureTimestamp_u64;
-
-        /// <summary>
-        /// Signature to be presented to the Azure Server
-        /// </summary>
-        public string CurrentAzureSignature_str;
-
-        /// <summary>
-        /// Azure Server certificate hash
-        /// </summary>
-        public string AzureCertHash_str;
-
-        /// <summary>
-        /// Internet settings
-        /// </summary>
-        // TODO: INTERNET_SETTING InternetSetting;
     }
 
     /// <summary>
@@ -3431,7 +3466,7 @@ namespace SoftEther.VPNServerRpc
         /// <summary>
         /// Type of proxy server
         /// </summary>
-        public uint ProxyType_u32;
+        public VpnRpcProxyType ProxyType_u32;
 
         /// <summary>
         /// Proxy server host name
@@ -4071,72 +4106,6 @@ namespace SoftEther.VPNServerRpc
         /// Interval
         /// </summary>
         public uint KeepConnectInterval_u32;
-    }
-
-    /// <summary>
-    /// License status of the server
-    /// </summary>
-    public class VpnRpcLicenseStatus
-    {
-        /// <summary>
-        /// Edition ID
-        /// </summary>
-        public uint EditionId_u32;
-
-        /// <summary>
-        /// Edition name
-        /// </summary>
-        public string EditionStr_str;
-
-        /// <summary>
-        /// System ID
-        /// </summary>
-        public ulong SystemId_u64;
-
-        /// <summary>
-        /// System expiration date
-        /// </summary>
-        public ulong SystemExpires_u64;
-
-        /// <summary>
-        /// Maximum number of concurrent client connections
-        /// </summary>
-        public uint NumClientConnectLicense_u32;
-
-        /// <summary>
-        /// Available number of concurrent bridge connections
-        /// </summary>
-        public uint NumBridgeConnectLicense_u32;
-
-        /// <summary>
-        /// Subscription system is enabled
-        /// </summary>
-        public bool NeedSubscription_bool;
-
-        /// <summary>
-        /// Subscription expiration date
-        /// </summary>
-        public ulong SubscriptionExpires_u64;
-
-        /// <summary>
-        /// Whether the subscription is expired
-        /// </summary>
-        public bool IsSubscriptionExpired_bool;
-
-        /// <summary>
-        /// Maximum number of users
-        /// </summary>
-        public uint NumUserCreationLicense_u32;
-
-        /// <summary>
-        /// Operation of the enterprise function
-        /// </summary>
-        public bool AllowEnterpriseFunction_bool;
-
-        /// <summary>
-        /// Release date
-        /// </summary>
-        public ulong ReleaseDate_u64;
     }
 
     /// <summary>
@@ -5384,12 +5353,38 @@ namespace SoftEther.VPNServerRpc
     /// <summary>
     /// Syslog configuration
     /// </summary>
+    public enum VpnSyslogSaveType
+    {
+        /// <summary>
+        /// Do not use syslog
+        /// </summary>
+        None = 0,
+
+        /// <summary>
+        /// Only server log
+        /// </summary>
+        ServerLog = 1,
+
+        /// <summary>
+        /// Server and Virtual HUB security log
+        /// </summary>
+        ServerAndHubSecurityLog = 2,
+
+        /// <summary>
+        /// Server, Virtual HUB security, and packet log
+        /// </summary>
+        ServerAndHubAllLog = 3,
+    }
+
+    /// <summary>
+    /// Syslog configuration
+    /// </summary>
     public class VpnSyslogSetting
     {
         /// <summary>
         /// Save type
         /// </summary>
-        public uint SaveType_u32;
+        public VpnSyslogSaveType SaveType_u32;
 
         /// <summary>
         /// Host name
@@ -5464,9 +5459,9 @@ namespace SoftEther.VPNServerRpc
         public uint Offset_u32;
 
         /// <summary>
-        /// Buffer
+        /// Receive buffer
         /// </summary>
-        // TODO: BUF *Buffer;
+        public byte[] Buffer_bin;
     }
 
     /// <summary>
