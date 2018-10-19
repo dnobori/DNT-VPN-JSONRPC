@@ -21,24 +21,8 @@ namespace SoftEther.VPNServerRpc
         {
             rpc_client = new JsonRpcClient($"https://{vpnserver_host}:{vpnserver_port}/api/", null);
 
-            /*
-            LABEL_A:
-            A a = new A();
-
-            try
-            {
-                RpcServerInfo ret = c.Call<RpcServerInfo>("GetServerInfo", a).Result;
-                Console.WriteLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-
-            }
-            Console.ReadLine();
-
-            goto LABEL_A;
-            */
+            rpc_client.HttpHeaders.Add("X-VPNADMIN-HUBNAME", string.IsNullOrEmpty(hub_name) ? "" : hub_name);
+            rpc_client.HttpHeaders.Add("X-VPNADMIN-PASSWORD", admin_password);
         }
 
         public async Task<T> Call<T>(string method_name, T request)

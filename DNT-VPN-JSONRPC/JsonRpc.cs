@@ -162,6 +162,7 @@ namespace SoftEther.JsonRpc
         HttpClient client;
         public const int DefaultTimeoutMsecs = 60 * 1000;
         public int TimeoutMsecs { get => (int)client.Timeout.TotalMilliseconds; set => client.Timeout = new TimeSpan(0, 0, 0, 0, value); }
+        public Dictionary<string, string> HttpHeaders { get; } = new Dictionary<string, string>();
 
         string base_url;
 
@@ -192,6 +193,17 @@ namespace SoftEther.JsonRpc
             string req_string = req.ObjectToJson();
 
             HttpContent content = new StringContent(req_string, Encoding.UTF8, "application/json");
+
+            foreach (string key in this.HttpHeaders.Keys)
+            {
+                string value = this.HttpHeaders[key];
+
+                //if (string.IsNullOrEmpty(value) == false)
+                {
+                    content.Headers.Add(key, value);
+                }
+            }
+
             HttpResponseMessage response = await this.client.PostAsync(base_url, content);
 
             Stream responseStream = await response.Content.ReadAsStreamAsync();

@@ -18,7 +18,7 @@ namespace DNT_VPN_JSONRPC
 
         public VPNRPCTest()
         {
-            Rpc = new VpnServerRpc("127.0.0.1", 443, "", "");
+            Rpc = new VpnServerRpc("127.0.0.1", 443, "microsoft", "");
         }
 
         public void Test_All()
