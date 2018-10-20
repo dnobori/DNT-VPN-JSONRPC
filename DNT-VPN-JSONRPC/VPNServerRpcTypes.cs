@@ -40,7 +40,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Access list
+    /// The body of the Access list
     /// </summary>
     public class VpnAccess
     {
@@ -50,173 +50,173 @@ namespace SoftEther.VPNServerRpc
         public uint Id_u32;
 
         /// <summary>
-        /// Note
+        /// Specify a description (note) for this rule
         /// </summary>
         public string Note_utf;
 
         /// <summary>
-        /// Enable flag
+        /// Enabled flag (true: enabled, false: disabled)
         /// </summary>
         public bool Active_bool;
 
         /// <summary>
-        /// Priority
+        /// Specify an integer of 1 or higher to indicate the priority of the rule. Higher priority is given to rules with the lower priority values.
         /// </summary>
         public uint Priority_u32;
 
         /// <summary>
-        /// Discard flag
+        /// The flag if the rule is DISCARD operation or PASS operation. When a packet matches this rule condition, this operation is decided. When the operation of the rule is PASS, the packet is allowed to pass, otherwise the packet will be discarded.
         /// </summary>
         public bool Discard_bool;
 
         /// <summary>
-        /// Whether it's an IPv6
+        /// The flag if the rule is for IPv6. Specify false for IPv4, or specify true for IPv6.
         /// </summary>
         public bool IsIPv6_bool;
 
         /// <summary>
-        /// Source IP address (IPv4)
+        /// Valid only if the rule is IPv4 mode (IsIPv6_bool == false). Specify a source IPv4 address as a rule condition. You must also specify the SrcSubnetMask_ip field.
         /// </summary>
         public string SrcIpAddress_ip;
 
         /// <summary>
-        /// Source subnet mask (IPv4)
+        /// Valid only if the rule is IPv4 mode (IsIPv6_bool == false). Specify a source IPv4 subnet mask as a rule condition. "0.0.0.0" means all hosts. "255.255.255.255" means one single host.
         /// </summary>
         public string SrcSubnetMask_ip;
 
         /// <summary>
-        /// Destination IP address (IPv4)
+        /// Valid only if the rule is IPv4 mode (IsIPv6_bool == false). Specify a destination IPv4 address as a rule condition. You must also specify the DestSubnetMask_ip field.
         /// </summary>
         public string DestIpAddress_ip;
 
         /// <summary>
-        /// Destination subnet mask (IPv4)
+        /// Valid only if the rule is IPv4 mode (IsIPv6_bool == false). Specify a destination IPv4 subnet mask as a rule condition. "0.0.0.0" means all hosts. "255.255.255.255" means one single host.
         /// </summary>
         public string DestSubnetMask_ip;
 
         /// <summary>
-        /// The source IP address (IPv6) (16 bytes, 128 bits)
+        /// Valid only if the rule is IPv6 mode (IsIPv6_bool == true). Specify a source IPv6 address as a rule condition. The field must be a byte array of 16 bytes (128 bits) to contain the IPv6 address in binary form. You must also specify the SrcSubnetMask6_bin field.
         /// </summary>
         public byte[] SrcIpAddress6_bin;
 
         /// <summary>
-        /// Source subnet mask (IPv6) (16 bytes, 128 bits)
+        /// Valid only if the rule is IPv6 mode (IsIPv6_bool == true). Specify a source IPv6 subnet mask as a rule condition. The field must be a byte array of 16 bytes (128 bits) to contain the IPv6 subnet mask in binary form.
         /// </summary>
         public byte[] SrcSubnetMask6_bin;
 
         /// <summary>
-        /// Destination IP address (IPv6) (16 bytes, 128 bits)
+        /// Valid only if the rule is IPv6 mode (IsIPv6_bool == true). Specify a destination IPv6 address as a rule condition. The field must be a byte array of 16 bytes (128 bits) to contain the IPv6 address in binary form. You must also specify the DestSubnetMask6_bin field.
         /// </summary>
         public byte[] DestIpAddress6_bin;
 
         /// <summary>
-        /// Destination subnet mask (IPv6) (16 bytes, 128 bits)
+        /// Valid only if the rule is IPv6 mode (IsIPv6_bool == true). Specify a destination IPv6 subnet mask as a rule condition. The field must be a byte array of 16 bytes (128 bits) to contain the IPv6 subnet mask in binary form.
         /// </summary>
         public byte[] DestSubnetMask6_bin;
 
         /// <summary>
-        /// Protocol
+        /// The IP protocol number
         /// </summary>
         public VpnIpProtocolNumber Protocol_u32;
 
         /// <summary>
-        /// Source port number starting point
+        /// The Start Value of the Source Port Number Range. If the specified protocol is TCP/IP or UDP/IP, specify the source port number as the rule condition. Protocols other than this will be ignored. When this parameter is not specified, the rules will apply to all port numbers.
         /// </summary>
         public uint SrcPortStart_u32;
 
         /// <summary>
-        /// Source port number end point
+        /// The End Value of the Source Port Number Range. If the specified protocol is TCP/IP or UDP/IP, specify the source port number as the rule condition. Protocols other than this will be ignored. When this parameter is not specified, the rules will apply to all port numbers.
         /// </summary>
         public uint SrcPortEnd_u32;
 
         /// <summary>
-        /// Destination port number starting point
+        /// The Start Value of the Destination Port Number Range. If the specified protocol is TCP/IP or UDP/IP, specify the destination port number as the rule condition. Protocols other than this will be ignored. When this parameter is not specified, the rules will apply to all port numbers.
         /// </summary>
         public uint DestPortStart_u32;
 
         /// <summary>
-        /// Destination port number end point
+        /// The End Value of the Destination Port Number Range. If the specified protocol is TCP/IP or UDP/IP, specify the destination port number as the rule condition. Protocols other than this will be ignored. When this parameter is not specified, the rules will apply to all port numbers.
         /// </summary>
         public uint DestPortEnd_u32;
 
         /// <summary>
-        /// Source user name
+        /// Source user name. You can apply this rule to only the packets sent by a user session of a user name that has been specified as a rule condition. In this case, specify the user name.
         /// </summary>
         public string SrcUsername_str;
 
         /// <summary>
-        /// Destination user name
+        /// Destination user name. You can apply this rule to only the packets received by a user session of a user name that has been specified as a rule condition. In this case, specify the user name.
         /// </summary>
         public string DestUsername_str;
 
         /// <summary>
-        /// Presence of a source MAC address setting
+        /// Specify true if you want to check the source MAC address.
         /// </summary>
         public bool CheckSrcMac_bool;
 
         /// <summary>
-        /// Source MAC address (6 bytes)
+        /// Source MAC address (6 bytes), valid only if CheckSrcMac_bool == true.
         /// </summary>
         public byte[] SrcMacAddress_bin;
 
         /// <summary>
-        /// Source MAC address mask (6 bytes)
+        /// Source MAC address mask (6 bytes), valid only if CheckSrcMac_bool == true.
         /// </summary>
         public byte[] SrcMacMask_bin;
 
         /// <summary>
-        /// Whether the setting of the destination MAC address exists
+        /// Specify true if you want to check the destination MAC address.
         /// </summary>
         public bool CheckDstMac_bool;
 
         /// <summary>
-        /// Destination MAC address (6 bytes)
+        /// Destination MAC address (6 bytes), valid only if CheckSrcMac_bool == true.
         /// </summary>
         public byte[] DstMacAddress_bin;
 
         /// <summary>
-        /// Destination MAC address mask (6 bytes)
+        /// Destination MAC address mask (6 bytes), valid only if CheckSrcMac_bool == true.
         /// </summary>
         public byte[] DstMacMask_bin;
 
         /// <summary>
-        /// The state of the TCP connection
+        /// Specify true if you want to check the state of the TCP connection.
         /// </summary>
         public bool CheckTcpState_bool;
 
         /// <summary>
-        /// Establieshed(TCP)
+        /// Valid only if CheckTcpState_bool == true. Set this field true to match only TCP-established packets. Set this field false to match only TCP-non established packets.
         /// </summary>
         public bool Established_bool;
 
         /// <summary>
-        /// Delay
+        /// Set this value to generate delays when packets is passing. Specify the delay period in milliseconds. Specify 0 means no delays to generate. The delays must be 10000 milliseconds at most.
         /// </summary>
         public uint Delay_u32;
 
         /// <summary>
-        /// Jitter
+        /// Set this value to generate jitters when packets is passing. Specify the ratio of fluctuation of jitters within 0% to 100% range. Specify 0 means no jitters to generate.
         /// </summary>
         public uint Jitter_u32;
 
         /// <summary>
-        /// Packet loss
+        /// Set this value to generate packet losses when packets is passing. Specify the ratio of packet losses within 0% to 100% range. Specify 0 means no packet losses to generate.
         /// </summary>
         public uint Loss_u32;
 
         /// <summary>
-        /// URL to redirect to
+        /// The specified URL will be mandatory replied to the client as a response for TCP connecting request packets which matches the conditions of this access list entry via this Virtual Hub. To use this setting, you can enforce the web browser of the VPN Client computer to show the specified web site when that web browser tries to access the specific IP address.
         /// </summary>
         public string RedirectUrl_str;
     }
 
     /// <summary>
-    /// Add to Access List
+    /// Add an item to Access List
     /// </summary>
     public class VpnRpcAddAccess
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -232,12 +232,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubAddCA
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Certificate
+        /// The body of the X.509 certificate
         /// </summary>
         public byte[] Cert_bin;
     }
@@ -248,57 +248,57 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcCrl
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Key
+        /// Key ID
         /// </summary>
         public uint Key_u32;
 
         /// <summary>
-        /// CN
+        /// CN, optional
         /// </summary>
         public string CommonName_utf;
 
         /// <summary>
-        /// O
+        /// O, optional
         /// </summary>
         public string Organization_utf;
 
         /// <summary>
-        /// OU
+        /// OU, optional
         /// </summary>
         public string Unit_utf;
 
         /// <summary>
-        /// C
+        /// C, optional
         /// </summary>
         public string Country_utf;
 
         /// <summary>
-        /// ST
+        /// ST, optional
         /// </summary>
         public string State_utf;
 
         /// <summary>
-        /// L
+        /// L, optional
         /// </summary>
         public string Local_utf;
 
         /// <summary>
-        /// Serial
+        /// Serial, optional
         /// </summary>
         public byte[] Serial_bin;
 
         /// <summary>
-        /// MD5 Digest
+        /// MD5 Digest, optional
         /// </summary>
         public byte[] DigestMD5_bin;
 
         /// <summary>
-        /// SHA1 Digest
+        /// SHA1 Digest, optional
         /// </summary>
         public byte[] DigestSHA1_bin;
     }
@@ -309,28 +309,28 @@ namespace SoftEther.VPNServerRpc
     public class VpnEtherIpId
     {
         /// <summary>
-        /// ID
+        /// Specify an ISAKMP Phase 1 ID. The ID must be exactly same as a ID in the configuration of the EtherIP / L2TPv3 Client. You can specify IP address as well as characters as ID, if the EtherIP Client uses IP address as Phase 1 ID. If you specify '*' (asterisk), it will be a wildcard to match any clients which doesn't match other explicit rules.
         /// </summary>
         public string Id_str;
 
         /// <summary>
-        /// Virtual HUB name
+        /// Specify the name of the Virtual Hub to connect.
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// User name
+        /// Specify the username to login to the destination Virtual Hub.
         /// </summary>
         public string UserName_str;
 
         /// <summary>
-        /// Password
+        /// Specify the password to login to the destination Virtual Hub.
         /// </summary>
         public string Password_str;
     }
 
     /// <summary>
-    /// Layer-3 interface
+    /// Layer-3 virtual interface
     /// </summary>
     public class VpnRpcL3If
     {
@@ -361,7 +361,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcL3Sw
     {
         /// <summary>
-        /// L3 switch name
+        /// Layer-3 Switch name
         /// </summary>
         public string Name_str;
     }
@@ -398,7 +398,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Test
+    /// Generic parameter to contain u32, u64, ascii_string and unicode string
     /// </summary>
     public class VpnRpcTest
     {
@@ -412,17 +412,17 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Bridge item
+    /// Local Bridge list item
     /// </summary>
     public class VpnRpcLocalBridge
     {
         /// <summary>
-        /// Device name
+        /// Physical Ethernet device name
         /// </summary>
         public string DeviceName_str;
 
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubNameLB_str;
 
@@ -437,7 +437,7 @@ namespace SoftEther.VPNServerRpc
         public bool Active_bool;
 
         /// <summary>
-        /// Tap mode
+        /// Specify true if you are using a tap device rather than a network adapter for the bridge destination (only supported for Linux versions).
         /// </summary>
         public bool TapMode_bool;
     }
@@ -448,22 +448,22 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSetGroup
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// User name
+        /// The group name
         /// </summary>
         public string Name_str;
 
         /// <summary>
-        /// Real name
+        /// Optional real name (full name) of the group, allow using any Unicode characters
         /// </summary>
         public string Realname_utf;
 
         /// <summary>
-        /// Note
+        /// Optional, specify a description of the group
         /// </summary>
         public string Note_utf;
 
@@ -835,11 +835,6 @@ namespace SoftEther.VPNServerRpc
         /// Certificate authentication
         /// </summary>
         Cert = 3,
-
-        /// <summary>
-        /// Security token devices authentication
-        /// </summary>
-        Secure = 4,
     }
 
     /// <summary>
@@ -848,7 +843,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcCreateLink
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_Ex_str;
 
@@ -858,132 +853,120 @@ namespace SoftEther.VPNServerRpc
         public bool Online_bool;
 
         /// <summary>
-        /// Validate the server certificate
+        /// The flag to enable validation for the server certificate
         /// </summary>
         public bool CheckServerCert_bool;
 
         /// <summary>
-        /// Server certificate
+        /// The body of server X.509 certificate to compare. Valid only if the CheckServerCert_bool flag is true.
         /// </summary>
         public byte[] ServerCert_bin;
 
         // ---- Start of Client Option Parameters ---
         /// <summary>
-        /// Client Option Parameters: Connection setting name
+        /// Client Option Parameters: Specify the name of the Cascade Connection
         /// </summary>
         [JsonProperty("AccountName_utf")]
         public string ClientOption_AccountName_utf;
 
         /// <summary>
-        /// Client Option Parameters: Host name
+        /// Client Option Parameters: Specify the hostname of the destination VPN Server. You can also specify by IP address.
         /// </summary>
         [JsonProperty("Hostname_str")]
         public string ClientOption_Hostname_str;
 
         /// <summary>
-        /// Client Option Parameters: Port number
+        /// Client Option Parameters: Specify the port number of the destination VPN Server.
         /// </summary>
         [JsonProperty("Port_u32")]
         public uint ClientOption_Port_u32;
 
         /// <summary>
-        /// Client Option Parameters: Type of proxy
+        /// Client Option Parameters: The type of the proxy server
         /// </summary>
         [JsonProperty("ProxyType_u32")]
         public VpnRpcProxyType ClientOption_ProxyType_u32;
 
         /// <summary>
-        /// Client Option Parameters: Proxy server name
+        /// Client Option Parameters: The hostname or IP address of the proxy server name
         /// </summary>
         [JsonProperty("ProxyName_str")]
         public string ClientOption_ProxyName_str;
 
         /// <summary>
-        /// Client Option Parameters: Port number of the proxy server
+        /// Client Option Parameters: The port number of the proxy server
         /// </summary>
         [JsonProperty("ProxyPort_u32")]
         public uint ClientOption_ProxyPort_u32;
 
         /// <summary>
-        /// Client Option Parameters: Maximum user name length
+        /// Client Option Parameters: The username to connect to the proxy server
         /// </summary>
         [JsonProperty("ProxyUsername_str")]
         public string ClientOption_ProxyUsername_str;
 
         /// <summary>
-        /// Client Option Parameters: Maximum password length
+        /// Client Option Parameters: The password to connect to the proxy server
         /// </summary>
         [JsonProperty("ProxyPassword_str")]
         public string ClientOption_ProxyPassword_str;
 
         /// <summary>
-        /// Client Option Parameters: Automatic retries
-        /// </summary>
-        [JsonProperty("NumRetry_u32")]
-        public uint ClientOption_NumRetry_u32;
-
-        /// <summary>
-        /// Client Option Parameters: Retry interval
-        /// </summary>
-        [JsonProperty("RetryInterval_u32")]
-        public uint ClientOption_RetryInterval_u32;
-
-        /// <summary>
-        /// Client Option Parameters: HUB name
+        /// Client Option Parameters: The Virtual Hub on the destination VPN Server
         /// </summary>
         [JsonProperty("HubName_str")]
         public string ClientOption_HubName_str;
 
         /// <summary>
-        /// Client Option Parameters: Maximum number of concurrent TCP connections
+        /// Client Option Parameters: Number of TCP Connections to Use in VPN Communication
         /// </summary>
         [JsonProperty("MaxConnection_u32")]
         public uint ClientOption_MaxConnection_u32;
 
         /// <summary>
-        /// Client Option Parameters: Use encrypted communication
+        /// Client Option Parameters: The flag to enable the encryption on the communication
         /// </summary>
         [JsonProperty("UseEncrypt_bool")]
         public bool ClientOption_UseEncrypt_bool;
 
         /// <summary>
-        /// Client Option Parameters: Use data compression
+        /// Client Option Parameters: Enable / Disable Data Compression when Communicating by Cascade Connection
         /// </summary>
         [JsonProperty("UseCompress_bool")]
         public bool ClientOption_UseCompress_bool;
 
         /// <summary>
-        /// Client Option Parameters: Use half connection in TCP
+        /// Client Option Parameters: Specify true when enabling half duplex mode. When using two or more TCP connections for VPN communication, it is possible to use Half Duplex Mode. By enabling half duplex mode it is possible to automatically fix data transmission direction as half and half for each TCP connection. In the case where a VPN using 8 TCP connections is established, for example, when half-duplex is enabled, communication can be fixes so that 4 TCP connections are dedicated to the upload direction and the other 4 connections are dedicated to the download direction.
         /// </summary>
         [JsonProperty("HalfConnection_bool")]
         public bool ClientOption_HalfConnection_bool;
 
         /// <summary>
-        /// Client Option Parameters: Connection attempt interval when additional connection establish
+        /// Client Option Parameters: Connection attempt interval when additional connection will be established
         /// </summary>
         [JsonProperty("AdditionalConnectionInterval_u32")]
         public uint ClientOption_AdditionalConnectionInterval_u32;
 
         /// <summary>
-        /// Client Option Parameters: Disconnection interval
+        /// Client Option Parameters: Connection Life of Each TCP Connection (0 for no keep-alive)
         /// </summary>
         [JsonProperty("ConnectionDisconnectSpan_u32")]
         public uint ClientOption_ConnectionDisconnectSpan_u32;
 
         /// <summary>
-        /// Client Option Parameters: Disable the VoIP / QoS function
+        /// Client Option Parameters: Disable QoS Control Function if the value is true
         /// </summary>
         [JsonProperty("DisableQoS_bool")]
         public bool ClientOption_DisableQoS_bool;
 
         /// <summary>
-        /// Client Option Parameters: Do not use TLS 1.x
+        /// Client Option Parameters: Do not use TLS 1.x of the value is true
         /// </summary>
         [JsonProperty("NoTls1_bool")]
         public bool ClientOption_NoTls1_bool;
 
         /// <summary>
-        /// Client Option Parameters: Do not use UDP acceleration mode
+        /// Client Option Parameters: Do not use UDP acceleration mode if the value is true
         /// </summary>
         [JsonProperty("NoUdpAcceleration_bool")]
         public bool ClientOption_NoUdpAcceleration_bool;
@@ -1003,25 +986,25 @@ namespace SoftEther.VPNServerRpc
         public string ClientAuth_Username_str;
 
         /// <summary>
-        /// SHA-0 Hashed password
+        /// SHA-0 Hashed password. Valid only if ClientAuth_AuthType_u32 == SHA0_Hashed_Password (1). The SHA-0 hashed password must be caluclated by the SHA0(UpperCase(username_ascii_string) + password_ascii_string).
         /// </summary>
         [JsonProperty("HashedPassword_bin")]
         public byte[] ClientAuth_HashedPassword_bin;
 
         /// <summary>
-        /// Plaintext Password
+        /// Plaintext Password. Valid only if ClientAuth_AuthType_u32 == PlainPassword (2).
         /// </summary>
         [JsonProperty("PlainPassword_str")]
         public string ClientAuth_PlainPassword_str;
 
         /// <summary>
-        /// Client certificate
+        /// Client certificate. Valid only if ClientAuth_AuthType_u32 == Cert (3).
         /// </summary>
         [JsonProperty("ClientX_bin")]
         public byte[] ClientAuth_ClientX_bin;
 
         /// <summary>
-        /// Client private key
+        /// Client private key of the certificate. Valid only if ClientAuth_AuthType_u32 == Cert (3).
         /// </summary>
         [JsonProperty("ClientK_bin")]
         public byte[] ClientAuth_ClientK_bin;
@@ -1242,27 +1225,27 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSetUser
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// User name
+        /// Specify the user name of the user
         /// </summary>
         public string Name_str;
 
         /// <summary>
-        /// Group name
+        /// Assigned group name for the user
         /// </summary>
         public string GroupName_str;
 
         /// <summary>
-        /// Real name
+        /// Optional real name (full name) of the user, allow using any Unicode characters
         /// </summary>
         public string Realname_utf;
 
         /// <summary>
-        /// Note
+        /// Optional User Description
         /// </summary>
         public string Note_utf;
 
@@ -1272,57 +1255,57 @@ namespace SoftEther.VPNServerRpc
         public DateTime CreatedTime_dt;
 
         /// <summary>
-        /// Updating date
+        /// Last modified date and time
         /// </summary>
         public DateTime UpdatedTime_dt;
 
         /// <summary>
-        /// Expiration date
+        /// Expiration date and time
         /// </summary>
         public DateTime ExpireTime_dt;
 
         /// <summary>
-        /// Authentication method
+        /// Authentication method of the user
         /// </summary>
         public VpnRpcUserAuthType AuthType_u32;
 
         /// <summary>
-        /// User password
+        /// User password, valid only if AuthType_u32 == Password(1). Valid only to create or set operations.
         /// </summary>
         public string Auth_Password_str;
 
         /// <summary>
-        /// User certificate
+        /// User certificate, valid only if AuthType_u32 == UserCert(2).
         /// </summary>
         [JsonProperty("UserX_bin")]
         public byte[] Auth_UserCert_CertData;
 
         /// <summary>
-        /// Certificate Serial Number
+        /// Certificate Serial Number, optional, valid only if AuthType_u32 == RootCert(3).
         /// </summary>
         [JsonProperty("Serial_bin")]
         public byte[] Auth_RootCert_Serial;
 
         /// <summary>
-        /// Certificate Common Name
+        /// Certificate Common Name, optional,v alid only if AuthType_u32 == RootCert(3).
         /// </summary>
         [JsonProperty("CommonName_utf")]
         public string Auth_RootCert_CommonName;
 
         /// <summary>
-        /// Username in RADIUS server
+        /// Username in RADIUS server, optional, valid only if AuthType_u32 == Radius(4).
         /// </summary>
         [JsonProperty("RadiusUsername_utf")]
         public string Auth_Radius_RadiusUsername;
 
         /// <summary>
-        /// Username in NT Domain server
+        /// Username in NT Domain server, optional, valid only if AuthType_u32 == Radius(4).
         /// </summary>
         [JsonProperty("NtUsername_utf")]
         public string Auth_NT_NTUsername;
 
         /// <summary>
-        /// Number of logins
+        /// Number of total logins of the user
         /// </summary>
         public uint NumLogin_u32;
 
@@ -1622,7 +1605,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcDeleteAccess
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -1638,12 +1621,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubDeleteCA
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Certificate key to be deleted
+        /// Certificate key id to be deleted
         /// </summary>
         public uint Key_u32;
     }
@@ -1654,7 +1637,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcDeleteUser
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -1670,7 +1653,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcDeleteHub
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
     }
@@ -1681,12 +1664,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcDeleteTable
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Key
+        /// Key ID
         /// </summary>
         public uint Key_u32;
     }
@@ -1697,12 +1680,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcLink
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Account name
+        /// The name of the cascade connection
         /// </summary>
         public string AccountName_utf;
     }
@@ -1713,7 +1696,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcDeleteSession
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -1729,13 +1712,13 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHub
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
     }
 
     /// <summary>
-    /// Disconnection
+    /// Disconnect a connection
     /// </summary>
     public class VpnRpcDisconnectConnection
     {
@@ -1751,7 +1734,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumAccessList
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -1767,12 +1750,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubEnumCAItem
     {
         /// <summary>
-        /// Certificate key
+        /// The key id of the item
         /// </summary>
         public uint Key_u32;
 
         /// <summary>
-        /// Issued to
+        /// Subject
         /// </summary>
         public string SubjectName_utf;
 
@@ -1793,12 +1776,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubEnumCA
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// CA
+        /// The list of CA
         /// </summary>
         public VpnRpcHubEnumCAItem[] CAList;
     }
@@ -1890,7 +1873,7 @@ namespace SoftEther.VPNServerRpc
         public DateTime ConnectedTime_dt;
 
         /// <summary>
-        /// Type
+        /// Connection type
         /// </summary>
         public VpnRpcConnectionType Type_u32;
     }
@@ -1917,12 +1900,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumCrlItem
     {
         /// <summary>
-        /// Key
+        /// Key ID
         /// </summary>
         public uint Key_u32;
 
         /// <summary>
-        /// Information
+        /// The contents of the CRL item
         /// </summary>
         public string CrlInfo_utf;
     }
@@ -1933,12 +1916,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumCrl
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// List
+        /// CRL list
         /// </summary>
         public VpnRpcEnumCrlItem[] CRLList;
     }
@@ -1990,12 +1973,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumDhcp
     {
         /// <summary>
-        /// HUB name
+        /// Virtual Hub Name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Item
+        /// DHCP Item
         /// </summary>
         public VpnRpcEnumDhcpItem[] DhcpTable;
     }
@@ -2012,7 +1995,7 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Ethernet enumeration item
+    /// Ethernet Network Adapters list item
     /// </summary>
     public class VpnRpcEnumEthItem
     {
@@ -2022,18 +2005,18 @@ namespace SoftEther.VPNServerRpc
         public string DeviceName_str;
 
         /// <summary>
-        /// Network connection name
+        /// Network connection name (description)
         /// </summary>
         public string NetworkConnectionName_utf;
     }
 
     /// <summary>
-    /// Ethernet enumeration
+    /// Ethernet Network Adapters list
     /// </summary>
     public class VpnRpcEnumEth
     {
         /// <summary>
-        /// Item
+        /// Ethernet Network Adapters list
         /// </summary>
         public VpnRpcEnumEthItem[] EthList;
     }
@@ -2152,12 +2135,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumGroup
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Group
+        /// Group list
         /// </summary>
         public VpnRpcEnumGroupItem[] GroupList;
     }
@@ -2303,7 +2286,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumIpTableItem
     {
         /// <summary>
-        /// Key
+        /// Key ID
         /// </summary>
         public uint Key_u32;
 
@@ -2349,7 +2332,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumIpTable
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -2365,10 +2348,13 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumL3If
     {
         /// <summary>
-        /// L3 switch name
+        /// Layer-3 switch name
         /// </summary>
         public string Name_str;
 
+        /// <summary>
+        /// Layer-3 interface list
+        /// </summary>
         public VpnRpcL3If[] L3IFList;
     }
 
@@ -2378,27 +2364,27 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumL3SwItem
     {
         /// <summary>
-        /// Name
+        /// Name of the layer-3 switch
         /// </summary>
         public string Name_str;
 
         /// <summary>
-        /// Number of interfaces
+        /// Number of layer-3 switch virtual interfaces
         /// </summary>
         public uint NumInterfaces_u32;
 
         /// <summary>
-        /// Routing table number
+        /// Number of routing tables
         /// </summary>
         public uint NumTables_u32;
 
         /// <summary>
-        /// In operation
+        /// Activated flag
         /// </summary>
         public bool Active_bool;
 
         /// <summary>
-        /// Online
+        /// Online flag
         /// </summary>
         public bool Online_bool;
     }
@@ -2409,7 +2395,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumL3Sw
     {
         /// <summary>
-        /// Items
+        /// Layer-3 switch list
         /// </summary>
         public VpnRpcEnumL3SwItem[] L3SWList;
     }
@@ -2425,18 +2411,18 @@ namespace SoftEther.VPNServerRpc
         public string Name_str;
 
         /// <summary>
-        /// Items
+        /// Routing table item list
         /// </summary>
         public VpnRpcL3Table[] L3Table;
     }
 
     /// <summary>
-    /// Enumeration items of link
+    /// Cascade Connection Enumeration
     /// </summary>
     public class VpnRpcEnumLinkItem
     {
         /// <summary>
-        /// Account name
+        /// The name of cascade connection
         /// </summary>
         public string AccountName_utf;
 
@@ -2446,12 +2432,12 @@ namespace SoftEther.VPNServerRpc
         public bool Online_bool;
 
         /// <summary>
-        /// Connection completion flag
+        /// The flag indicates whether the cascade connection is established
         /// </summary>
         public bool Connected_bool;
 
         /// <summary>
-        /// The error that last occurred
+        /// The error last occurred if the cascade connection is in the fail state
         /// </summary>
         public uint LastError_u32;
 
@@ -2461,12 +2447,12 @@ namespace SoftEther.VPNServerRpc
         public DateTime ConnectedTime_dt;
 
         /// <summary>
-        /// Host name
+        /// Host name of the destination VPN server
         /// </summary>
         public string Hostname_str;
 
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string TargetHubName_str;
     }
@@ -2477,17 +2463,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumLink
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Number of links
+        /// Number of cascade connections
         /// </summary>
         public uint NumLink_u32;
 
         /// <summary>
-        /// Link List
+        /// The list of cascade connections
         /// </summary>
         public VpnRpcEnumLinkItem[] LinkList;
     }
@@ -2525,12 +2511,12 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Bridge enumeration
+    /// Local Bridge enumeration
     /// </summary>
     public class VpnRpcEnumLocalBridge
     {
         /// <summary>
-        /// Item
+        /// Local Bridge list
         /// </summary>
         public VpnRpcLocalBridge[] LocalBridgeList;
     }
@@ -2546,7 +2532,7 @@ namespace SoftEther.VPNServerRpc
         public string ServerName_str;
 
         /// <summary>
-        /// File Path
+        /// File path
         /// </summary>
         public string FilePath_str;
 
@@ -2556,7 +2542,7 @@ namespace SoftEther.VPNServerRpc
         public uint FileSize_u32;
 
         /// <summary>
-        /// Updating date
+        /// Last write date
         /// </summary>
         public DateTime UpdatedTime_dt;
     }
@@ -2567,7 +2553,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumLogFile
     {
         /// <summary>
-        /// List
+        /// Log file list
         /// </summary>
         public VpnRpcEnumLogFileItem[] LogFiles;
     }
@@ -2578,7 +2564,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumMacTableItem
     {
         /// <summary>
-        /// Key
+        /// Key ID
         /// </summary>
         public uint Key_u32;
 
@@ -2624,7 +2610,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumMacTable
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -2768,18 +2754,18 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumNat
     {
         /// <summary>
-        /// HUB name
+        /// Virtual Hub Name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Item
+        /// NAT item
         /// </summary>
         public VpnRpcEnumNatItem[] NatTable;
     }
 
     /// <summary>
-    /// Enumeration items of session
+    /// Enumeration item of VPN session
     /// </summary>
     public class VpnRpcEnumSessionItem
     {
@@ -2814,52 +2800,52 @@ namespace SoftEther.VPNServerRpc
         public string Hostname_str;
 
         /// <summary>
-        /// Maximum number of TCP connections
+        /// Maximum number of underlying TCP connections
         /// </summary>
         public uint MaxNumTcp_u32;
 
         /// <summary>
-        /// Number of currentl TCP connections
+        /// Number of current underlying TCP connections
         /// </summary>
         public uint CurrentNumTcp_u32;
 
         /// <summary>
-        /// Packet size
+        /// Packet size transmitted
         /// </summary>
         public ulong PacketSize_u64;
 
         /// <summary>
-        /// Number of packets
+        /// Number of packets transmitted
         /// </summary>
         public ulong PacketNum_u64;
 
         /// <summary>
-        /// Link mode
+        /// Is a Cascade VPN session
         /// </summary>
         public bool LinkMode_bool;
 
         /// <summary>
-        /// SecureNAT mode
+        /// Is a SecureNAT VPN session
         /// </summary>
         public bool SecureNATMode_bool;
 
         /// <summary>
-        /// Bridge mode
+        /// Is the VPN session for Local Bridge
         /// </summary>
         public bool BridgeMode_bool;
 
         /// <summary>
-        /// Layer 3 mode
+        /// Is a Layer-3 Switch VPN session
         /// </summary>
         public bool Layer3Mode_bool;
 
         /// <summary>
-        /// Client is bridge mode
+        /// Is in Bridge Mode
         /// </summary>
         public bool Client_BridgeMode_bool;
 
         /// <summary>
-        /// Client is monitoring mode
+        /// Is in Monitor Mode
         /// </summary>
         public bool Client_MonitorMode_bool;
 
@@ -2869,7 +2855,7 @@ namespace SoftEther.VPNServerRpc
         public uint VLanId_u32;
 
         /// <summary>
-        /// Unique ID
+        /// Unique ID of the VPN Session
         /// </summary>
         public byte[] UniqueId_bin;
 
@@ -2885,17 +2871,17 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Enumerate sessions
+    /// Enumerate VPN sessions
     /// </summary>
     public class VpnRpcEnumSession
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Session list
+        /// VPN sessions list
         /// </summary>
         public VpnRpcEnumSessionItem[] SessionList;
     }
@@ -3015,18 +3001,18 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumUser
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// User
+        /// User list
         /// </summary>
         public VpnRpcEnumUserItem[] UserList;
     }
 
     /// <summary>
-    /// Access control List Entry
+    /// Source IP Address Limit List Item
     /// </summary>
     public class VpnAc
     {
@@ -3046,7 +3032,7 @@ namespace SoftEther.VPNServerRpc
         public bool Deny_bool;
 
         /// <summary>
-        /// Is masked
+        /// Set true if you want to specify the SubnetMask_ip item.
         /// </summary>
         public bool Masked_bool;
 
@@ -3056,23 +3042,23 @@ namespace SoftEther.VPNServerRpc
         public string IpAddress_ip;
 
         /// <summary>
-        /// Subnet mask
+        /// Subnet mask, valid only if Masked_bool == true
         /// </summary>
         public string SubnetMask_ip;
     }
 
     /// <summary>
-    /// AC list
+    /// Source IP Address Limit List
     /// </summary>
     public class VpnRpcAcList
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// List
+        /// Source IP Address Limit List
         /// </summary>
         public VpnAc[] ACList;
     }
@@ -3083,12 +3069,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcMsg
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Message
+        /// Message (Unicode strings acceptable)
         /// </summary>
         public byte[] Msg_bin;
     }
@@ -3099,28 +3085,28 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcAzureStatus
     {
         /// <summary>
-        /// Whether enabled
+        /// Whether VPN Azure Function is Enabled
         /// </summary>
         public bool IsEnabled_bool;
 
         /// <summary>
-        /// Whether it's connected
+        /// Whether connection to VPN Azure Cloud Server is established
         /// </summary>
         public bool IsConnected_bool;
     }
 
     /// <summary>
-    /// Bridge support information
+    /// Local Bridge support information
     /// </summary>
     public class VpnRpcBridgeSupport
     {
         /// <summary>
-        /// Whether the OS supports the bridge
+        /// Whether the OS supports the Local Bridge function
         /// </summary>
         public bool IsBridgeSupportedOs_bool;
 
         /// <summary>
-        /// Whether WinPcap is necessary
+        /// Whether WinPcap is necessary to install
         /// </summary>
         public bool IsWinPcapNeeded_bool;
     }
@@ -3131,23 +3117,23 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubGetCA
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Certificate key
+        /// The key id of the certificate
         /// </summary>
         public uint Key_u32;
 
         /// <summary>
-        /// Certificate
+        /// The body of the X.509 certificate
         /// </summary>
         public byte[] Cert_bin;
     }
 
     /// <summary>
-    /// Caps related
+    /// Caps item of the VPN Server
     /// </summary>
     public class VpnCaps
     {
@@ -3168,12 +3154,12 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// TODO
+    /// Caps list of the VPN Server
     ///</summary>
     public class VpnCapslist
     {
         /// <summary>
-        /// Caps list
+        /// Caps list of the VPN Server
         /// </summary>
         public VpnCaps[] CapsList;
     }
@@ -3184,7 +3170,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcConfig
     {
         /// <summary>
-        /// File name
+        /// File name (valid only for returning from the server)
         /// </summary>
         public string FileName_str;
 
@@ -3307,27 +3293,27 @@ namespace SoftEther.VPNServerRpc
         public string ErrStr_IPv6_utf;
 
         /// <summary>
-        /// Current host name
+        /// Current DDNS host name
         /// </summary>
         public string CurrentHostName_str;
 
         /// <summary>
-        /// Current FQDN
+        /// Current FQDN of the DDNS hostname
         /// </summary>
         public string CurrentFqdn_str;
 
         /// <summary>
-        /// DNS suffix
+        /// DDNS suffix
         /// </summary>
         public string DnsSuffix_str;
 
         /// <summary>
-        /// Current IPv4 address
+        /// Current IPv4 address of the VPN Server
         /// </summary>
         public string CurrentIPv4_str;
 
         /// <summary>
-        /// Current IPv6 address
+        /// Current IPv6 address of the VPN Server
         /// </summary>
         public string CurrentIPv6_str;
     }
@@ -3395,7 +3381,7 @@ namespace SoftEther.VPNServerRpc
         public string HubName_str;
 
         /// <summary>
-        /// Data
+        /// List data
         /// </summary>
         public VpnAdminOption[] AdminOptionList;
     }
@@ -3462,7 +3448,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcFarmHub
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -3709,53 +3695,53 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubLog
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// To save the security log
+        /// The flag to enable / disable saving the security log
         /// </summary>
         public bool SaveSecurityLog_bool;
 
         /// <summary>
-        /// Switching type of security log
+        /// The log filename switching setting of the security log
         /// </summary>
         public VpnRpcLogSwitchType SecurityLogSwitchType_u32;
 
         /// <summary>
-        /// To save the packet log
+        /// The flag to enable / disable saving the security log
         /// </summary>
         public bool SavePacketLog_bool;
 
         /// <summary>
-        /// Switching type of packet log
+        /// The log filename switching settings of the packet logs
         /// </summary>
         public VpnRpcLogSwitchType PacketLogSwitchType_u32;
 
         /// <summary>
-        /// Packet log settings (uint * 16 array)
+        /// Specify the save contents of the packet logs (uint * 16 array). The index numbers: TcpConnection = 0, TcpAll = 1, DHCP = 2, UDP = 3, ICMP = 4, IP = 5, ARP = 6, Ethernet = 7.
         /// </summary>
         public VpnRpcPacketLogSetting[] PacketLogConfig_u32 = new VpnRpcPacketLogSetting[16];
     }
 
     /// <summary>
-    /// Radius server options
+    /// RADIUS server options
     /// </summary>
     public class VpnRpcRadius
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Radius server name
+        /// RADIUS server name
         /// </summary>
         public string RadiusServerName_str;
 
         /// <summary>
-        /// Radius port number
+        /// RADIUS port number
         /// </summary>
         public uint RadiusPort_u32;
 
@@ -3776,7 +3762,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcHubStatus
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
@@ -3796,12 +3782,12 @@ namespace SoftEther.VPNServerRpc
         public uint NumSessions_u32;
 
         /// <summary>
-        /// Number of sessions (client)
+        /// Number of sessions (client mode)
         /// </summary>
         public uint NumSessionsClient_u32;
 
         /// <summary>
-        /// Number of sessions (bridge)
+        /// Number of sessions (bridge mode)
         /// </summary>
         public uint NumSessionsBridge_u32;
 
@@ -3910,27 +3896,27 @@ namespace SoftEther.VPNServerRpc
     public class VpnIPsecServices
     {
         /// <summary>
-        /// Raw L2TP
+        /// Enable or Disable the L2TP Server Function (Raw L2TP with No Encryptions). To accept special VPN clients, enable this option.
         /// </summary>
         public bool L2TP_Raw_bool;
 
         /// <summary>
-        /// L2TP over IPsec
+        /// Enable or Disable the L2TP over IPsec Server Function. To accept VPN connections from iPhone, iPad, Android, Windows or Mac OS X, enable this option.
         /// </summary>
         public bool L2TP_IPsec_bool;
 
         /// <summary>
-        /// EtherIP over IPsec
+        /// Enable or Disable the EtherIP / L2TPv3 over IPsec Server Function (for site-to-site VPN Server function). Router Products which are compatible with EtherIP over IPsec can connect to Virtual Hubs on the VPN Server and establish Layer-2 (Ethernet) Bridging.
         /// </summary>
         public bool EtherIP_IPsec_bool;
 
         /// <summary>
-        /// IPsec pre-shared key
+        /// Specify the IPsec Pre-Shared Key. An IPsec Pre-Shared Key is also called as "PSK" or "secret". Specify it equal or less than 8 letters, and distribute it to every users who will connect to the VPN Server. Please note: Google Android 4.0 has a bug which a Pre-Shared Key with 10 or more letters causes a unexpected behavior. For that reason, the letters of a Pre-Shared Key should be 9 or less characters.
         /// </summary>
         public string IPsec_Secret_str;
 
         /// <summary>
-        /// Default Virtual HUB name for L2TP connection
+        /// Specify the default Virtual HUB in a case of omitting the name of HUB on the Username. Users should specify their username such as "Username@Target Virtual HUB Name" to connect this L2TP Server. If the designation of the Virtual Hub is omitted, the above HUB will be used as the target.
         /// </summary>
         public string L2TP_DefaultHub_str;
     }
@@ -3952,32 +3938,32 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Keep Alive setting
+    /// Keep Alive settings
     /// </summary>
     public class VpnRpcKeep
     {
         /// <summary>
-        /// Keep connected to the Internet
+        /// The flag to enable keep-alive to the Internet
         /// </summary>
         public bool UseKeepConnect_bool;
 
         /// <summary>
-        /// Host name
+        /// Specify the host name or IP address of the destination
         /// </summary>
         public string KeepConnectHost_str;
 
         /// <summary>
-        /// Port number
+        /// Specify the port number of the destination
         /// </summary>
         public uint KeepConnectPort_u32;
 
         /// <summary>
-        /// Protocol
+        /// Protocol type
         /// </summary>
         public VpnRpcKeepAliveProtocol KeepConnectProtocol_u32;
 
         /// <summary>
-        /// Interval
+        /// Interval Between Packets Sends (Seconds)
         /// </summary>
         public uint KeepConnectInterval_u32;
     }
@@ -4024,37 +4010,37 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcLinkStatus
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_Ex_str;
 
         /// <summary>
-        /// Account name
+        /// The name of the cascade connection
         /// </summary>
         public string AccountName_utf;
 
         /// <summary>
-        /// Operation flag
+        /// The flag whether the cascade connection is enabled
         /// </summary>
         public bool Active_bool;
 
         /// <summary>
-        /// Connected flag
+        /// The flag whether the cascade connection is established
         /// </summary>
         public bool Connected_bool;
 
         /// <summary>
-        /// Session status
+        /// The session status
         /// </summary>
         public VpnRpcClientSessionStatus SessionStatus_u32;
 
         /// <summary>
-        /// Server name
+        /// The destination VPN server name
         /// </summary>
         public string ServerName_str;
 
         /// <summary>
-        /// Port number of the server
+        /// The port number of the server
         /// </summary>
         public uint ServerPort_u32;
 
@@ -4074,7 +4060,7 @@ namespace SoftEther.VPNServerRpc
         public uint ServerProductBuild_u32;
 
         /// <summary>
-        /// Server certificate
+        /// Server's X.509 certificate
         /// </summary>
         public byte[] ServerX_bin;
 
@@ -4114,22 +4100,22 @@ namespace SoftEther.VPNServerRpc
         public bool QoS_bool;
 
         /// <summary>
-        /// Maximum number of the TCP connections
+        /// Maximum number of the underlying TCP connections
         /// </summary>
         public uint MaxTcpConnections_u32;
 
         /// <summary>
-        /// Number of current TCP connections
+        /// Number of current underlying TCP connections
         /// </summary>
         public uint NumTcpConnections_u32;
 
         /// <summary>
-        /// Number of inbound connections
+        /// Number of underlying inbound TCP connections
         /// </summary>
         public uint NumTcpConnectionsUpload_u32;
 
         /// <summary>
-        /// Number of outbound connections
+        /// Number of underlying outbound TCP connections
         /// </summary>
         public uint NumTcpConnectionsDownload_u32;
 
@@ -4149,12 +4135,12 @@ namespace SoftEther.VPNServerRpc
         public bool UseCompress_bool;
 
         /// <summary>
-        /// R-UDP session
+        /// The flag whether this is a R-UDP session
         /// </summary>
         public bool IsRUDPSession_bool;
 
         /// <summary>
-        /// Physical communication protocol
+        /// Underlying physical communication protocol
         /// </summary>
         public string UnderlayProtocol_str;
 
@@ -4164,7 +4150,7 @@ namespace SoftEther.VPNServerRpc
         public bool IsUdpAccelerationEnabled_bool;
 
         /// <summary>
-        /// Using the UDP acceleration function
+        /// The UDP acceleration is being actually used
         /// </summary>
         public bool IsUsingUdpAcceleration_bool;
 
@@ -4204,12 +4190,12 @@ namespace SoftEther.VPNServerRpc
         public ulong TotalRecvSizeReal_u64;
 
         /// <summary>
-        /// Bridge Mode
+        /// The flag whether the VPN session is Bridge Mode
         /// </summary>
         public bool IsBridgeMode_bool;
 
         /// <summary>
-        /// Monitor mode
+        /// The flag whether the VPN session is Monitor mode
         /// </summary>
         public bool IsMonitorMode_bool;
 
@@ -4225,17 +4211,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnOpenVpnSstpConfig
     {
         /// <summary>
-        /// OpenVPN is enabled
+        /// Specify true to enable the OpenVPN Clone Server Function. Specify false to disable.
         /// </summary>
         public bool EnableOpenVPN_bool;
 
         /// <summary>
-        /// OpenVPN UDP port number list
+        /// Specify UDP ports to listen for OpenVPN. Multiple UDP ports can be specified with splitting by space or comma letters, for example: "1194, 2001, 2010, 2012". The default port for OpenVPN is UDP 1194. You can specify any other UDP ports.
         /// </summary>
         public string OpenVPNPortList_str;
 
         /// <summary>
-        /// SSTP is enabled
+        /// pecify true to enable the Microsoft SSTP VPN Clone Server Function. Specify false to disable.
         /// </summary>
         public bool EnableSSTP_bool;
     }
@@ -4266,12 +4252,12 @@ namespace SoftEther.VPNServerRpc
         public string Mask_ip;
 
         /// <summary>
-        /// Use flag of NAT function
+        /// Use flag of the Virtual NAT function
         /// </summary>
         public bool UseNat_bool;
 
         /// <summary>
-        /// MTU value
+        /// MTU value (Standard: 1500)
         /// </summary>
         public uint Mtu_u32;
 
@@ -4291,57 +4277,57 @@ namespace SoftEther.VPNServerRpc
         public bool UseDhcp_bool;
 
         /// <summary>
-        /// Start of IP address range for DHCP distribution
+        /// Specify the start point of the address band to be distributed to the client. (Example: 192.168.30.10)
         /// </summary>
         public string DhcpLeaseIPStart_ip;
 
         /// <summary>
-        /// End of IP address range for DHCP distribution
+        /// Specify the end point of the address band to be distributed to the client. (Example: 192.168.30.200)
         /// </summary>
         public string DhcpLeaseIPEnd_ip;
 
         /// <summary>
-        /// DHCP subnet mask
+        /// Specify the subnet mask to be specified for the client. (Example: 255.255.255.0)
         /// </summary>
         public string DhcpSubnetMask_ip;
 
         /// <summary>
-        /// DHCP expiration time in seconds
+        /// Specify the expiration date in second units for leasing an IP address to a client.
         /// </summary>
         public uint DhcpExpireTimeSpan_u32;
 
         /// <summary>
-        /// Assigned gateway address
+        /// Specify the IP address of the default gateway to be notified to the client. You can specify a SecureNAT Virtual Host IP address for this when the SecureNAT Function's Virtual NAT Function has been enabled and is being used also. If you specify 0 or none, then the client will not be notified of the default gateway.
         /// </summary>
         public string DhcpGatewayAddress_ip;
 
         /// <summary>
-        /// Assigned DNS server address 1
+        /// Specify the IP address of the primary DNS Server to be notified to the client. You can specify a SecureNAT Virtual Host IP address for this when the SecureNAT Function's Virtual NAT Function has been enabled and is being used also. If you specify empty, then the client will not be notified of the DNS Server address.
         /// </summary>
         public string DhcpDnsServerAddress_ip;
 
         /// <summary>
-        /// Assigned DNS server address 2
+        /// Specify the IP address of the secondary DNS Server to be notified to the client. You can specify a SecureNAT Virtual Host IP address for this when the SecureNAT Function's Virtual NAT Function has been enabled and is being used also. If you specify empty, then the client will not be notified of the DNS Server address.
         /// </summary>
         public string DhcpDnsServerAddress2_ip;
 
         /// <summary>
-        /// Assigned domain name
+        /// Specify the domain name to be notified to the client. If you specify none, then the client will not be notified of the domain name.
         /// </summary>
         public string DhcpDomainName_str;
 
         /// <summary>
-        /// Save a log
+        /// Specify whether or not to save the Virtual DHCP Server operation in the Virtual Hub security log. Specify true to save it. This value is interlinked with the Virtual NAT Function log save setting.
         /// </summary>
         public bool SaveLog_bool;
 
         /// <summary>
-        /// Apply flag for DhcpPushRoutes
+        /// The flag to enable the DhcpPushRoutes_str field.
         /// </summary>
         public bool ApplyDhcpPushRoutes_bool;
 
         /// <summary>
-        /// DHCP pushing routes
+        /// Specify the static routing table to push. Example: "192.168.5.0/255.255.255.0/192.168.4.254, 10.0.0.0/255.0.0.0/192.168.4.253" Split multiple entries (maximum: 64 entries) by comma or space characters. Each entry must be specified in the "IP network address/subnet mask/gateway IP address" format. This Virtual DHCP Server can push the classless static routes (RFC 3442) with DHCP reply messages to VPN clients. Whether or not a VPN client can recognize the classless static routes (RFC 3442) depends on the target VPN client software. SoftEther VPN Client and OpenVPN Client are supporting the classless static routes. On L2TP/IPsec and MS-SSTP protocols, the compatibility depends on the implementation of the client software. You can realize the split tunneling if you clear the default gateway field on the Virtual DHCP Server options. On the client side, L2TP/IPsec and MS-SSTP clients need to be configured not to set up the default gateway for the split tunneling usage. You can also push the classless static routes (RFC 3442) by your existing external DHCP server. In that case, disable the Virtual DHCP Server function on SecureNAT, and you need not to set up the classless routes on this API. See the RFC 3442 to understand the classless routes.
         /// </summary>
         public string DhcpPushRoutes_str;
     }
@@ -4352,7 +4338,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcNatStatus
     {
         /// <summary>
-        /// HUB name
+        /// Virtual Hub Name
         /// </summary>
         public string HubName_str;
 
@@ -4382,12 +4368,12 @@ namespace SoftEther.VPNServerRpc
         public uint NumDhcpClients_u32;
 
         /// <summary>
-        /// Whether kernel mode
+        /// Whether the NAT is operating in the Kernel Mode
         /// </summary>
         public bool IsKernelMode_bool;
 
         /// <summary>
-        /// Whether raw IP mode
+        /// Whether the NAT is operating in the Raw IP Mode
         /// </summary>
         public bool IsRawIpMode_bool;
     }
@@ -4942,17 +4928,17 @@ namespace SoftEther.VPNServerRpc
     }
 
     /// <summary>
-    /// Session status
+    /// VPN Session status
     /// </summary>
     public class VpnRpcSessionStatus
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Session name
+        /// VPN session name
         /// </summary>
         public string Name_str;
 
@@ -4962,7 +4948,7 @@ namespace SoftEther.VPNServerRpc
         public string Username_str;
 
         /// <summary>
-        /// Real user name
+        /// Real user name which was used for the authentication
         /// </summary>
         public string RealUsername_str;
 
@@ -4972,7 +4958,7 @@ namespace SoftEther.VPNServerRpc
         public string GroupName_str;
 
         /// <summary>
-        /// Link mode
+        /// Is Cascade Session
         /// </summary>
         public bool LinkMode_bool;
 
@@ -4998,7 +4984,7 @@ namespace SoftEther.VPNServerRpc
         public bool Connected_bool;
 
         /// <summary>
-        /// Session status
+        /// State of the client session
         /// </summary>
         public VpnRpcClientSessionStatus SessionStatus_u32;
 
@@ -5058,22 +5044,22 @@ namespace SoftEther.VPNServerRpc
         public bool QoS_bool;
 
         /// <summary>
-        /// Maximum number of the TCP connections
+        /// Maximum number of the underlying TCP connections
         /// </summary>
         public uint MaxTcpConnections_u32;
 
         /// <summary>
-        /// Number of current TCP connections
+        /// Number of current underlying TCP connections
         /// </summary>
         public uint NumTcpConnections_u32;
 
         /// <summary>
-        /// Number of inbound connections
+        /// Number of inbound underlying connections
         /// </summary>
         public uint NumTcpConnectionsUpload_u32;
 
         /// <summary>
-        /// Number of outbound connections
+        /// Number of outbound underlying connections
         /// </summary>
         public uint NumTcpConnectionsDownload_u32;
 
@@ -5093,12 +5079,12 @@ namespace SoftEther.VPNServerRpc
         public bool UseCompress_bool;
 
         /// <summary>
-        /// R-UDP session
+        /// Is R-UDP session
         /// </summary>
         public bool IsRUDPSession_bool;
 
         /// <summary>
-        /// Physical communication protocol
+        /// Physical underlying communication protocol
         /// </summary>
         public string UnderlayProtocol_str;
 
@@ -5113,7 +5099,7 @@ namespace SoftEther.VPNServerRpc
         public bool IsUsingUdpAcceleration_bool;
 
         /// <summary>
-        /// Session name
+        /// VPN session name
         /// </summary>
         public string SessionName_str;
 
@@ -5148,12 +5134,12 @@ namespace SoftEther.VPNServerRpc
         public ulong TotalRecvSizeReal_u64;
 
         /// <summary>
-        /// Bridge Mode
+        /// Is Bridge Mode
         /// </summary>
         public bool IsBridgeMode_bool;
 
         /// <summary>
-        /// Monitor mode
+        /// Is Monitor mode
         /// </summary>
         public bool IsMonitorMode_bool;
 
@@ -5209,12 +5195,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSpecialListener
     {
         /// <summary>
-        /// VPN over ICMP
+        /// The flag to activate the VPN over ICMP server function
         /// </summary>
         public bool VpnOverIcmpListener_bool;
 
         /// <summary>
-        /// VPN over DNS
+        /// The flag to activate the VPN over DNS function
         /// </summary>
         public bool VpnOverDnsListener_bool;
     }
@@ -5251,17 +5237,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnSyslogSetting
     {
         /// <summary>
-        /// Save type
+        /// The behavior of the syslog function
         /// </summary>
         public VpnSyslogSaveType SaveType_u32;
 
         /// <summary>
-        /// Host name
+        /// Specify the host name or IP address of the syslog server
         /// </summary>
         public string Hostname_str;
 
         /// <summary>
-        /// Port number
+        /// Specify the port number of the syslog server
         /// </summary>
         public uint Port_u32;
     }
@@ -5287,7 +5273,7 @@ namespace SoftEther.VPNServerRpc
         public string Owner_utf;
 
         /// <summary>
-        /// Report
+        /// Abuse email
         /// </summary>
         public string Abuse_utf;
 
@@ -5323,12 +5309,12 @@ namespace SoftEther.VPNServerRpc
         public string FilePath_str;
 
         /// <summary>
-        /// Offset
+        /// Offset to download. You have to call the ReadLogFile API multiple times to download the entire log file with requesting a part of the file by specifying the Offset_u32 field.
         /// </summary>
         public uint Offset_u32;
 
         /// <summary>
-        /// Receive buffer
+        /// Received buffer
         /// </summary>
         public byte[] Buffer_bin;
     }
@@ -5339,17 +5325,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcRenameLink
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Old account name
+        /// The old name of the cascade connection
         /// </summary>
         public string OldAccountName_utf;
 
         /// <summary>
-        /// New account name
+        /// The new name of the cascade connection
         /// </summary>
         public string NewAccountName_utf;
     }
@@ -5360,7 +5346,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSetHubOnline
     {
         /// <summary>
-        /// HUB Name
+        /// The Virtual Hub name
         /// </summary>
         public string HubName_str;
 
