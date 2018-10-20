@@ -198,10 +198,7 @@ namespace SoftEther.JsonRpc
             {
                 string value = this.HttpHeaders[key];
 
-                //if (string.IsNullOrEmpty(value) == false)
-                {
-                    content.Headers.Add(key, value);
-                }
+                content.Headers.Add(key, value);
             }
 
             HttpResponseMessage response = await this.client.PostAsync(base_url, content);
