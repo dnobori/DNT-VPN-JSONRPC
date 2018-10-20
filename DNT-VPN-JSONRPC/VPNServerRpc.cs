@@ -120,7 +120,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetPassword SetServerPassword(VpnRpcSetPassword t) => SetServerPasswordAsync(t).Result;
 
         /// <summary>
-        /// Set the VPN Serverclustering configuration (Async mode). Use this to set the VPN Server type as Standalone Server, Cluster Controller Server or Cluster Member Server. Standalone server means a VPN Server that does not belong to any cluster in its current state. When VPN Server is installed, by default it will be in standalone server mode. Unless you have particular plans to configure a cluster, we recommend the VPN Server be operated in standalone mode. A cluster controller is the central computer of all member servers of a cluster in the case where a clustering environment is made up of multiple VPN Servers. Multiple cluster members can be added to the cluster as required. A cluster requires one computer to serve this role. The other cluster member servers that are configured in the same cluster begin operation as a cluster member by connecting to the cluster controller. To call this API, you must have VPN Server administrator privileges. Also, when this command is executed, VPN Server will automatically restart. This API cannot be called on VPN Bridge.
+        /// Set the VPN Serverclustering configuration (Async mode). Use this to set the VPN Server type as Standalone Server, Cluster Controller Server or Cluster Member Server. Standalone server means a VPN Server that does not belong to any cluster in its current state. When VPN Server is installed, by default it will be in standalone server mode. Unless you have particular plans to configure a cluster, we recommend the VPN Server be operated in standalone mode. A cluster controller is the central computer of all member servers of a cluster in the case where a clustering environment is made up of multiple VPN Servers. Multiple cluster members can be added to the cluster as required. A cluster requires one computer to serve this role. The other cluster member servers that are configured in the same cluster begin operation as a cluster member by connecting to the cluster controller. To call this API, you must have VPN Server administrator privileges. Also, when this API is executed, VPN Server will automatically restart. This API cannot be called on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcFarm> SetFarmSettingAsync(VpnRpcFarm t) => await Call<VpnRpcFarm>("SetFarmSetting", t);
 
@@ -380,7 +380,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubGetCA GetCa(VpnRpcHubGetCA input_param) => GetCaAsync(input_param).Result;
 
         /// <summary>
-        /// Delete Trusted CA Certificate (Async mode). Use this to delete an existing certificate from the list of CA certificates trusted by the currently managed Virtual Hub. To get a list of the current certificates you can use the CAList API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
+        /// Delete Trusted CA Certificate (Async mode). Use this to delete an existing certificate from the list of CA certificates trusted by the currently managed Virtual Hub. To get a list of the current certificates you can use the EnumCa API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcHubDeleteCA> DeleteCaAsync(VpnRpcHubDeleteCA input_param) => await Call<VpnRpcHubDeleteCA>("DeleteCa", input_param);
 
@@ -440,7 +440,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcLink SetLinkOnline(VpnRpcLink input_param) => SetLinkOnlineAsync(input_param).Result;
 
         /// <summary>
-        /// Switch Cascade Connection to Offline Status (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified, use this to switch that Cascade Connection to offline status. The Cascade Connection that is switched to offline will not connect to the VPN Server until next time it is switched to the online status using the CascadeOnline API You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// Switch Cascade Connection to Offline Status (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified, use this to switch that Cascade Connection to offline status. The Cascade Connection that is switched to offline will not connect to the VPN Server until next time it is switched to the online status using the SetLinkOnline API You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcLink> SetLinkOfflineAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("SetLinkOffline", input_param);
 
@@ -520,7 +520,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumAccessList SetAccessList(VpnRpcEnumAccessList input_param) => SetAccessListAsync(input_param).Result;
 
         /// <summary>
-        /// Create a user (Async mode). Use this to create a new user in the security account database of the currently managed Virtual Hub. By creating a user, the VPN Client can connect to the Virtual Hub by using the authentication information of that user. Note that a user whose user name has been created as "*" (a single asterisk character) will automatically be registered as a RADIUS authentication user. For cases where there are users with "*" as the name, when a user, whose user name that has been provided when a client connected to a VPN Server does not match existing user names, is able to be authenticated by a RADIUS server or NT domain controller by inputting a user name and password, the authentication settings and security policy settings will follow the setting for the user "*". To change the user information of a user that has been created, use the UserSet API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
+        /// Create a user (Async mode). Use this to create a new user in the security account database of the currently managed Virtual Hub. By creating a user, the VPN Client can connect to the Virtual Hub by using the authentication information of that user. Note that a user whose user name has been created as "*" (a single asterisk character) will automatically be registered as a RADIUS authentication user. For cases where there are users with "*" as the name, when a user, whose user name that has been provided when a client connected to a VPN Server does not match existing user names, is able to be authenticated by a RADIUS server or NT domain controller by inputting a user name and password, the authentication settings and security policy settings will follow the setting for the user "*". To change the user information of a user that has been created, use the SetUser API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetUser> CreateUserAsync(VpnRpcSetUser input_param) => await Call<VpnRpcSetUser>("CreateUser", input_param);
 
@@ -740,7 +740,7 @@ namespace SoftEther.VPNServerRpc
         public VpnVhOption SetSecureNATOption(VpnVhOption input_param) => SetSecureNATOptionAsync(input_param).Result;
 
         /// <summary>
-        /// Get Settings of SecureNAT Function (Async mode). This API get registered settings for the SecureNAT function which is set by the SetSecureNATOption API.
+        /// Get Settings of SecureNAT Function (Async mode). This API get the registered settings for the SecureNAT function which is set by the SetSecureNATOption API.
         /// </summary>
         public async Task<VpnVhOption> GetSecureNATOptionAsync(VpnVhOption input_param) => await Call<VpnVhOption>("GetSecureNATOption", input_param);
 
@@ -840,7 +840,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest RebootServer(VpnRpcTest input_param) => RebootServerAsync(input_param).Result;
 
         /// <summary>
-        /// Get List of Server Functions / Capability (Async mode). Use this get a list of functions and capability of the VPN Server currently connected and being managed. The function and capability of VPN Servers are different depending on the operating VPN server's edition and version. Sometimes commands may be included in the API line management utility that cannot operate because of the function and capability of the destination VPN Server. Using this API, you can find out the capability of the target VPN Server and report it. If the version of the VPN Server is newer than the API line management utility and there are functions that the API line management utility does not recognize, you can display the contents strings (variable names) as they are.
+        /// Get List of Server Functions / Capability (Async mode). Use this get a list of functions and capability of the VPN Server currently connected and being managed. The function and capability of VPN Servers are different depending on the operating VPN server's edition and version. Using this API, you can find out the capability of the target VPN Server and report it.
         /// </summary>
         public async Task<VpnCapslist> GetCapsAsync() => await Call<VpnCapslist>("GetCaps", new VpnCapslist());
 
@@ -930,7 +930,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw AddL3Switch(VpnRpcL3Sw input_param) => AddL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Delete Virtual Layer 3 Switch (Async mode). Use this to delete an existing Virtual Layer 3 Switch that is defined on the VPN Server. When the specified Virtual Layer 3 Switch is operating, it will be automatically deleted after operation stops. To get a list of existing Virtual Layer 3 Switches, use the RouterList API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge.
+        /// Delete Virtual Layer 3 Switch (Async mode). Use this to delete an existing Virtual Layer 3 Switch that is defined on the VPN Server. When the specified Virtual Layer 3 Switch is operating, it will be automatically deleted after operation stops. To get a list of existing Virtual Layer 3 Switches, use the EnumL3Switch API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcL3Sw> DelL3SwitchAsync(VpnRpcL3Sw input_param) => await Call<VpnRpcL3Sw>("DelL3Switch", input_param);
 
@@ -970,7 +970,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw StopL3Switch(VpnRpcL3Sw input_param) => StopL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Add Virtual Interface to Virtual Layer 3 Switch (Async mode). Use this to add to a specified Virtual Layer 3 Switch, a virtual interface that connects to a Virtual Hub operating on the same VPN Server. You can define multiple virtual interfaces and routing tables for a single Virtual Layer 3 Switch. A virtual interface is associated to a virtual Hub and operates as a single IP host on the Virtual Hub when that Virtual Hub is operating. When multiple virtual interfaces that respectively belong to a different IP network of a different Virtual Hub are defined, IP routing will be automatically performed between these interfaces. You must define the IP network space that the virtual interface belongs to and the IP address of the interface itself. Also, you must specify the name of the Virtual Hub that the interface will connect to. You can specify a Virtual Hub that currently doesn't exist for the Virtual Hub name. The virtual interface must have one IP address in the Virtual Hub. You also must specify the subnet mask of an IP network that the IP address belongs to. Routing via the Virtual Layer 3 Switches of IP spaces of multiple virtual Hubs operates based on the IP address is specified here. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the RouterStop API to stop it and then execute this API.
+        /// Add Virtual Interface to Virtual Layer 3 Switch (Async mode). Use this to add to a specified Virtual Layer 3 Switch, a virtual interface that connects to a Virtual Hub operating on the same VPN Server. You can define multiple virtual interfaces and routing tables for a single Virtual Layer 3 Switch. A virtual interface is associated to a virtual Hub and operates as a single IP host on the Virtual Hub when that Virtual Hub is operating. When multiple virtual interfaces that respectively belong to a different IP network of a different Virtual Hub are defined, IP routing will be automatically performed between these interfaces. You must define the IP network space that the virtual interface belongs to and the IP address of the interface itself. Also, you must specify the name of the Virtual Hub that the interface will connect to. You can specify a Virtual Hub that currently doesn't exist for the Virtual Hub name. The virtual interface must have one IP address in the Virtual Hub. You also must specify the subnet mask of an IP network that the IP address belongs to. Routing via the Virtual Layer 3 Switches of IP spaces of multiple virtual Hubs operates based on the IP address is specified here. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the StopL3Switch API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3If> AddL3IfAsync(VpnRpcL3If input_param) => await Call<VpnRpcL3If>("AddL3If", input_param);
 
@@ -1010,7 +1010,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Table AddL3Table(VpnRpcL3Table input_param) => AddL3TableAsync(input_param).Result;
 
         /// <summary>
-        /// Delete Routing Table Entry of Virtual Layer 3 Switch (Async mode). Use this to delete a routing table entry that is defined in the specified Virtual Layer 3 Switch. You can get a list of the already defined routing table entries by using the EnumL3Table API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the RouterStop API to stop it and then execute this API.
+        /// Delete Routing Table Entry of Virtual Layer 3 Switch (Async mode). Use this to delete a routing table entry that is defined in the specified Virtual Layer 3 Switch. You can get a list of the already defined routing table entries by using the EnumL3Table API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the StopL3Switch API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3Table> DelL3TableAsync(VpnRpcL3Table input_param) => await Call<VpnRpcL3Table>("DelL3Table", input_param);
 
@@ -1290,7 +1290,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest ChangeDDnsClientHostname(VpnRpcTest input_param) => ChangeDDnsClientHostnameAsync(input_param).Result;
 
         /// <summary>
-        /// Generate New Self-Signed Certificate with Specified CN (Common Name) and Register on VPN Server (Async mode). You can use this API to replace the current certificate on the VPN Server to a new self-signed certificate which has the CN (Common Name) value in the fields. This API is convenient if you are planning to use Microsoft SSTP VPN Clone Server Function. Because of the value of CN (Common Name) on the SSL certificate of VPN Server must match to the hostname specified on the SSTP VPN client. This API will delete the existing SSL certificate of the VPN Server. It is recommended to backup the current SSL certificate and private key by using the ServerKeyGet API beforehand. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// Generate New Self-Signed Certificate with Specified CN (Common Name) and Register on VPN Server (Async mode). You can use this API to replace the current certificate on the VPN Server to a new self-signed certificate which has the CN (Common Name) value in the fields. This API is convenient if you are planning to use Microsoft SSTP VPN Clone Server Function. Because of the value of CN (Common Name) on the SSL certificate of VPN Server must match to the hostname specified on the SSTP VPN client. This API will delete the existing SSL certificate of the VPN Server. It is recommended to backup the current SSL certificate and private key by using the GetServerCert API beforehand. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcTest> RegenerateServerCertAsync() => await Call<VpnRpcTest>("RegenerateServerCert", new VpnRpcTest());
 
