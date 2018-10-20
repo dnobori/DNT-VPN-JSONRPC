@@ -784,12 +784,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcCreateHub
     {
         /// <summary>
-        /// HUB Name
+        /// Specify the name of the Virtual Hub to create / update.
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Administrative password
+        /// Specify an administrator password when the administrator password is going to be set for the Virtual Hub. On the update, leave it to empty string if you don't want to change the password.
         /// </summary>
         public string AdminPasswordPlainText_str;
 
@@ -799,17 +799,17 @@ namespace SoftEther.VPNServerRpc
         public bool Online_bool;
 
         /// <summary>
-        /// Maximum number of sessions
+        /// Maximum number of VPN sessions
         /// </summary>
         public uint MaxSession_u32;
 
         /// <summary>
-        /// Not listed
+        /// No Enum flag. By enabling this option, the VPN Client user will be unable to enumerate this Virtual Hub even if they send a Virtual Hub enumeration request to the VPN Server.
         /// </summary>
         public bool NoEnum_bool;
 
         /// <summary>
-        /// Type of HUB
+        /// Type of the Virtual Hub (Valid only for Clustered VPN Servers)
         /// </summary>
         public VpnRpcHubType HubType_u32;
     }
@@ -1190,7 +1190,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcListener
     {
         /// <summary>
-        /// Port number
+        /// Port number (Range: 1 - 65535)
         /// </summary>
         public uint Port_u32;
 
@@ -2105,12 +2105,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumFarm
     {
         /// <summary>
-        /// Number of farm members
+        /// Number of Cluster Members
         /// </summary>
         public uint NumFarm_u32;
 
         /// <summary>
-        /// Farm member list
+        /// Cluster Members list
         /// </summary>
         public VpnRpcEnumFarmItem[] FarmMemberList;
     }
@@ -2168,17 +2168,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumHubItem
     {
         /// <summary>
-        /// HUB Name
+        /// The name of the Virtual Hub
         /// </summary>
         public string HubName_str;
 
         /// <summary>
-        /// Online
+        /// Online state
         /// </summary>
         public bool Online_bool;
 
         /// <summary>
-        /// Type of HUB
+        /// Type of HUB (Valid only for Clustered VPN Servers)
         /// </summary>
         public VpnRpcHubType HubType_u32;
 
@@ -2188,22 +2188,22 @@ namespace SoftEther.VPNServerRpc
         public uint NumUsers_u32;
 
         /// <summary>
-        /// Number of groups
+        /// Number of registered groups
         /// </summary>
         public uint NumGroups_u32;
 
         /// <summary>
-        /// Number of sessions
+        /// Number of registered sessions
         /// </summary>
         public uint NumSessions_u32;
 
         /// <summary>
-        /// Number of MAC table entries
+        /// Number of current MAC table entries
         /// </summary>
         public uint NumMacTables_u32;
 
         /// <summary>
-        /// Number of IP table entries
+        /// Number of current IP table entries
         /// </summary>
         public uint NumIpTables_u32;
 
@@ -2223,12 +2223,12 @@ namespace SoftEther.VPNServerRpc
         public DateTime CreatedTime_dt;
 
         /// <summary>
-        /// Number of logins
+        /// Number of accumulated logins
         /// </summary>
         public uint NumLogin_u32;
 
         /// <summary>
-        /// Whether the traffic information exists
+        /// Whether the traffic information is provided
         /// </summary>
         public bool IsTrafficFilled_bool;
 
@@ -2287,12 +2287,12 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcEnumHub
     {
         /// <summary>
-        /// Number of HUBs
+        /// Number of Virtual Hubs
         /// </summary>
         public uint NumHub_u32;
 
         /// <summary>
-        /// HUB
+        /// Virtual Hubs
         /// </summary>
         public VpnRpcEnumHubItem[] HubList;
     }
@@ -2498,17 +2498,17 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcListenerListItem
     {
         /// <summary>
-        /// Port number
+        /// TCP port number (range: 1 - 65535)
         /// </summary>
         public uint Ports_u32;
 
         /// <summary>
-        /// Effective state
+        /// Active state
         /// </summary>
         public bool Enables_bool;
 
         /// <summary>
-        /// If error occurred
+        /// The flag to indicate if the error occurred on the listener port
         /// </summary>
         public bool Errors_bool;
     }
@@ -3421,7 +3421,7 @@ namespace SoftEther.VPNServerRpc
         public bool Online_bool;
 
         /// <summary>
-        /// Last error
+        /// Last error code
         /// </summary>
         public uint LastError_u32;
 
@@ -3441,7 +3441,7 @@ namespace SoftEther.VPNServerRpc
         public DateTime CurrentConnectedTime_dt;
 
         /// <summary>
-        /// Number of trials
+        /// Number of retries
         /// </summary>
         public uint NumTry_u32;
 
@@ -3484,12 +3484,12 @@ namespace SoftEther.VPNServerRpc
         public uint Id_u32;
 
         /// <summary>
-        /// Controller
+        /// The flag if the server is Cluster Controller (false: Cluster Member servers)
         /// </summary>
         public bool Controller_bool;
 
         /// <summary>
-        /// Connection time
+        /// Connection Established Time
         /// </summary>
         public DateTime ConnectedTime_dt;
 
@@ -3509,12 +3509,12 @@ namespace SoftEther.VPNServerRpc
         public uint Point_u32;
 
         /// <summary>
-        /// Number of ports
+        /// Number of Public Ports
         /// </summary>
         public uint NumPort_u32;
 
         /// <summary>
-        /// Port
+        /// Public Ports
         /// </summary>
         public uint[] Ports_u32;
 
@@ -3529,12 +3529,12 @@ namespace SoftEther.VPNServerRpc
         public uint NumFarmHub_u32;
 
         /// <summary>
-        /// Farm HUB
+        /// The hosted Virtual Hub list
         /// </summary>
         public VpnRpcFarmHub[] HubsList;
 
         /// <summary>
-        /// Number of sessions
+        /// Number of hosted VPN sessions
         /// </summary>
         public uint NumSessions_u32;
 
@@ -3544,7 +3544,7 @@ namespace SoftEther.VPNServerRpc
         public uint NumTcpConnections_u32;
 
         /// <summary>
-        /// Performance ratio
+        /// Performance Standard Ratio
         /// </summary>
         public uint Weight_u32;
     }
@@ -3560,42 +3560,42 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcServerType ServerType_u32;
 
         /// <summary>
-        /// Number of public ports
+        /// Valid only for Cluster Member servers. Number of the Ports_u32 element.
         /// </summary>
         public uint NumPort_u32;
 
         /// <summary>
-        /// Public port list
+        /// Valid only for Cluster Member servers. Specify the list of public port numbers on this server. The list must have at least one public port number set, and it is also possible to set multiple public port numbers.
         /// </summary>
         public uint[] Ports_u32;
 
         /// <summary>
-        /// Public IP
+        /// Valid only for Cluster Member servers. Specify the public IP address of this server. If you wish to leave public IP address unspecified, specify the empty string. When a public IP address is not specified, the IP address of the network interface used when connecting to the cluster controller will be automatically used.
         /// </summary>
         public string PublicIp_ip;
 
         /// <summary>
-        /// Controller name
+        /// Valid only for Cluster Member servers. Specify the host name or IP address of the destination cluster controller.
         /// </summary>
         public string ControllerName_str;
 
         /// <summary>
-        /// Controller port
+        /// Valid only for Cluster Member servers. Specify the TCP port number of the destination cluster controller.
         /// </summary>
         public uint ControllerPort_u32;
 
         /// <summary>
-        /// Member password
+        /// Valid only for Cluster Member servers. Specify the password required to connect to the destination controller. It needs to be the same as an administrator password on the destination controller.
         /// </summary>
         public string MemberPasswordPlaintext_str;
 
         /// <summary>
-        /// Performance ratio
+        /// This sets a value for the performance standard ratio of this VPN Server. This is the standard value for when load balancing is performed in the cluster. For example, making only one machine 200 while the other members have a status of 100, will regulate that machine to receive twice as many connections as the other members. Specify 1 or higher for the value. If this parameter is left unspecified, 100 will be used.
         /// </summary>
         public uint Weight_u32;
 
         /// <summary>
-        /// Only controller function
+        /// Valid only for Cluster Controller server. By specifying true, the VPN Server will operate only as a controller on the cluster and it will always distribute general VPN Client connections to members other than itself. This function is used in high-load environments.
         /// </summary>
         public bool ControllerOnly_bool;
     }
@@ -4398,28 +4398,23 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcKeyPair
     {
         /// <summary>
-        /// Certificate
+        /// The body of the certificate
         /// </summary>
         public byte[] Cert_bin;
 
         /// <summary>
-        /// Secret key
+        /// The body of the private key
         /// </summary>
         public byte[] Key_bin;
-
-        /// <summary>
-        /// Flag1
-        /// </summary>
-        public uint Flag1_u32;
     }
 
     /// <summary>
-    /// String
+    /// Single string value
     /// </summary>
     public class VpnRpcStr
     {
         /// <summary>
-        /// String
+        /// A string value
         /// </summary>
         public string String_str;
     }
@@ -4803,52 +4798,52 @@ namespace SoftEther.VPNServerRpc
         public uint NumSessionsTotal_u32;
 
         /// <summary>
-        /// Number of Local sessions (only controller)
+        /// Number of local VPN sessions
         /// </summary>
         public uint NumSessionsLocal_u32;
 
         /// <summary>
-        /// The number of remote sessions (other than the controller)
+        /// The number of remote sessions
         /// </summary>
         public uint NumSessionsRemote_u32;
 
         /// <summary>
-        /// Number of MAC table entries
+        /// Number of MAC table entries (total sum of all Virtual Hubs)
         /// </summary>
         public uint NumMacTables_u32;
 
         /// <summary>
-        /// Number of IP table entries
+        /// Number of IP table entries (total sum of all Virtual Hubs)
         /// </summary>
         public uint NumIpTables_u32;
 
         /// <summary>
-        /// Number of users
+        /// Number of users (total sum of all Virtual Hubs)
         /// </summary>
         public uint NumUsers_u32;
 
         /// <summary>
-        /// Number of groups
+        /// Number of groups (total sum of all Virtual Hubs)
         /// </summary>
         public uint NumGroups_u32;
 
         /// <summary>
-        /// Number of assigned bridge licenses
+        /// Number of assigned bridge licenses (Useful to make a commercial version)
         /// </summary>
         public uint AssignedBridgeLicenses_u32;
 
         /// <summary>
-        /// Number of assigned client licenses
+        /// Number of assigned client licenses (Useful to make a commercial version)
         /// </summary>
         public uint AssignedClientLicenses_u32;
 
         /// <summary>
-        /// Number of Assigned bridge license (cluster-wide)
+        /// Number of Assigned bridge license (cluster-wide), useful to make a commercial version
         /// </summary>
         public uint AssignedBridgeLicensesTotal_u32;
 
         /// <summary>
-        /// Number of assigned client licenses (cluster-wide)
+        /// Number of assigned client licenses (cluster-wide), useful to make a commercial version
         /// </summary>
         public uint AssignedClientLicensesTotal_u32;
 
@@ -4906,12 +4901,12 @@ namespace SoftEther.VPNServerRpc
         public DateTime CurrentTime_dt;
 
         /// <summary>
-        /// Current tick
+        /// 64 bit High-Precision Logical System Clock
         /// </summary>
         public ulong CurrentTick_u64;
 
         /// <summary>
-        /// Start-up time
+        /// VPN Server Start-up time
         /// </summary>
         public DateTime StartTime_dt;
 
@@ -5381,7 +5376,7 @@ namespace SoftEther.VPNServerRpc
     public class VpnRpcSetPassword
     {
         /// <summary>
-        /// Password
+        /// The plaintext password
         /// </summary>
         public string PlainTextPassword_str;
     }
