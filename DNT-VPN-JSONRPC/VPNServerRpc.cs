@@ -310,7 +310,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcConnectionInfo GetConnectionInfo(VpnRpcConnectionInfo input_param) => GetConnectionInfoAsync(input_param).Result;
 
         /// <summary>
-        /// Make a hub on-line or off-line (Async mode)
+        /// Switch Virtual Hub to Online or Offline (Async mode). Use this to set the Virtual Hub to online or offline. A Virtual Hub with an offline status cannot receive VPN connections from clients. When you set the Virtual Hub offline, all sessions will be disconnected. A Virtual Hub with an offline status cannot receive VPN connections from clients. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcSetHubOnline> SetHubOnlineAsync(VpnRpcSetHubOnline input_param) => await Call<VpnRpcSetHubOnline>("SetHubOnline", input_param);
 
@@ -320,7 +320,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetHubOnline SetHubOnline(VpnRpcSetHubOnline input_param) => SetHubOnlineAsync(input_param).Result;
 
         /// <summary>
-        /// Get hub status (Async mode)
+        /// Get Current Status of Virtual Hub (Async mode). Use this to get the current status of the Virtual Hub currently being managed. You can get the following information: Virtual Hub Type, Number of Sessions, Number of Each Type of Object, Number of Logins, Last Login, Last Communication, and Communication Statistical Data.
         /// </summary>
         public async Task<VpnRpcHubStatus> GetHubStatusAsync(VpnRpcHubStatus input_param) => await Call<VpnRpcHubStatus>("GetHubStatus", input_param);
 
@@ -330,7 +330,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubStatus GetHubStatus(VpnRpcHubStatus input_param) => GetHubStatusAsync(input_param).Result;
 
         /// <summary>
-        /// Set logging configuration into the hub (Async mode)
+        /// Set the logging configuration of the Virtual Hub (Async mode). Use this to enable or disable a security log or packet logs of the Virtual Hub currently being managed, set the save contents of the packet log for each type of packet to be saved, and set the log file switch cycle for the security log or packet log that the currently managed Virtual Hub saves. There are the following packet types: TCP Connection Log, TCP Packet Log, DHCP Packet Log, UDP Packet Log, ICMP Packet Log, IP Packet Log, ARP Packet Log, and Ethernet Packet Log. To get the current setting, you can use the LogGet API. The log file switch cycle can be changed to switch in every second, every minute, every hour, every day, every month or not switch. To get the current setting, you can use the GetHubLog API.
         /// </summary>
         public async Task<VpnRpcHubLog> SetHubLogAsync(VpnRpcHubLog input_param) => await Call<VpnRpcHubLog>("SetHubLog", input_param);
 
@@ -340,7 +340,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubLog SetHubLog(VpnRpcHubLog input_param) => SetHubLogAsync(input_param).Result;
 
         /// <summary>
-        /// Get logging configuration of the hub (Async mode)
+        /// Get the logging configuration of the Virtual Hub (Async mode). Use this to get the configuration for a security log or packet logs of the Virtual Hub currently being managed, get the setting for save contents of the packet log for each type of packet to be saved, and get the log file switch cycle for the security log or packet log that the currently managed Virtual Hub saves. To set the current setting, you can use the SetHubLog API.
         /// </summary>
         public async Task<VpnRpcHubLog> GetHubLogAsync(VpnRpcHubLog input_param) => await Call<VpnRpcHubLog>("GetHubLog", input_param);
 
@@ -350,7 +350,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubLog GetHubLog(VpnRpcHubLog input_param) => GetHubLogAsync(input_param).Result;
 
         /// <summary>
-        /// Add CA(Certificate Authority) into the hub (Async mode)
+        /// Add Trusted CA Certificate (Async mode). Use this to add a new certificate to a list of CA certificates trusted by the currently managed Virtual Hub. The list of certificate authority certificates that are registered is used to verify certificates when a VPN Client is connected in signed certificate authentication mode. To get a list of the current certificates you can use the EnumCa API. The certificate you add must be saved in the X.509 file format. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcHubAddCA> AddCaAsync(VpnRpcHubAddCA input_param) => await Call<VpnRpcHubAddCA>("AddCa", input_param);
 
@@ -360,7 +360,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubAddCA AddCa(VpnRpcHubAddCA input_param) => AddCaAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate CA(Certificate Authority) in the hub (Async mode)
+        /// Get List of Trusted CA Certificates (Async mode). Here you can manage the certificate authority certificates that are trusted by this currently managed Virtual Hub. The list of certificate authority certificates that are registered is used to verify certificates when a VPN Client is connected in signed certificate authentication mode. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcHubEnumCA> EnumCaAsync(VpnRpcHubEnumCA input_param) => await Call<VpnRpcHubEnumCA>("EnumCa", input_param);
 
@@ -370,7 +370,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubEnumCA EnumCa(VpnRpcHubEnumCA input_param) => EnumCaAsync(input_param).Result;
 
         /// <summary>
-        /// Get CA(Certificate Authority) setting from the hub (Async mode)
+        /// Get Trusted CA Certificate (Async mode). Use this to get an existing certificate from the list of CA certificates trusted by the currently managed Virtual Hub and save it as a file in X.509 format. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcHubGetCA> GetCaAsync(VpnRpcHubGetCA input_param) => await Call<VpnRpcHubGetCA>("GetCa", input_param);
 
@@ -380,7 +380,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubGetCA GetCa(VpnRpcHubGetCA input_param) => GetCaAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a CA(Certificate Authority) setting from the hub (Async mode)
+        /// Delete Trusted CA Certificate (Async mode). Use this to delete an existing certificate from the list of CA certificates trusted by the currently managed Virtual Hub. To get a list of the current certificates you can use the CAList API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcHubDeleteCA> DeleteCaAsync(VpnRpcHubDeleteCA input_param) => await Call<VpnRpcHubDeleteCA>("DeleteCa", input_param);
 
@@ -390,47 +390,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHubDeleteCA DeleteCa(VpnRpcHubDeleteCA input_param) => DeleteCaAsync(input_param).Result;
 
         /// <summary>
-        /// Make a link into on-line (Async mode)
-        /// </summary>
-        public async Task<VpnRpcLink> SetLinkOnlineAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("SetLinkOnline", input_param);
-
-        /// <summary>
-        /// Make a link into on-line (Sync mode)
-        /// </summary>
-        public VpnRpcLink SetLinkOnline(VpnRpcLink input_param) => SetLinkOnlineAsync(input_param).Result;
-
-        /// <summary>
-        /// Make a link into off-line (Async mode)
-        /// </summary>
-        public async Task<VpnRpcLink> SetLinkOfflineAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("SetLinkOffline", input_param);
-
-        /// <summary>
-        /// Make a link into off-line (Sync mode)
-        /// </summary>
-        public VpnRpcLink SetLinkOffline(VpnRpcLink input_param) => SetLinkOfflineAsync(input_param).Result;
-
-        /// <summary>
-        /// Delete a link (Async mode)
-        /// </summary>
-        public async Task<VpnRpcLink> DeleteLinkAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("DeleteLink", input_param);
-
-        /// <summary>
-        /// Delete a link (Sync mode)
-        /// </summary>
-        public VpnRpcLink DeleteLink(VpnRpcLink input_param) => DeleteLinkAsync(input_param).Result;
-
-        /// <summary>
-        /// Rename link (cascade connection) (Async mode)
-        /// </summary>
-        public async Task<VpnRpcRenameLink> RenameLinkAsync(VpnRpcRenameLink input_param) => await Call<VpnRpcRenameLink>("RenameLink", input_param);
-
-        /// <summary>
-        /// Rename link (cascade connection) (Sync mode)
-        /// </summary>
-        public VpnRpcRenameLink RenameLink(VpnRpcRenameLink input_param) => RenameLinkAsync(input_param).Result;
-
-        /// <summary>
-        /// Create a new link(cascade) (Async mode)
+        /// Create New Cascade Connection (Async mode). Use this to create a new Cascade Connection on the currently managed Virtual Hub. By using a Cascade Connection, you can connect this Virtual Hub by Cascade Connection to another Virtual Hub that is operating on the same or a different computer. To create a Cascade Connection, you must specify the name of the Cascade Connection, destination server and destination Virtual Hub and user name. When a new Cascade Connection is created, the type of user authentication is initially set as Anonymous Authentication and the proxy server setting and the verification options of the server certificate is not set. To change these settings and other advanced settings after a Cascade Connection has been created, use the other APIs that include the name "Link". [Warning About Cascade Connections] By connecting using a Cascade Connection you can create a Layer 2 bridge between multiple Virtual Hubs but if the connection is incorrectly configured, a loopback Cascade Connection could inadvertently be created. When using a Cascade Connection function please design the network topology with care. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCreateLink> CreateLinkAsync(VpnRpcCreateLink input_param) => await Call<VpnRpcCreateLink>("CreateLink", input_param);
 
@@ -440,7 +400,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCreateLink CreateLink(VpnRpcCreateLink input_param) => CreateLinkAsync(input_param).Result;
 
         /// <summary>
-        /// Get link configuration (Async mode)
+        /// Get the Cascade Connection Setting (Async mode). Use this to get the Connection Setting of a Cascade Connection that is registered on the currently managed Virtual Hub. To change the Connection Setting contents of the Cascade Connection, use the APIs that include the name "Link" after creating the Cascade Connection. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCreateLink> GetLinkAsync(VpnRpcCreateLink input_param) => await Call<VpnRpcCreateLink>("GetLink", input_param);
 
@@ -450,7 +410,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCreateLink GetLink(VpnRpcCreateLink input_param) => GetLinkAsync(input_param).Result;
 
         /// <summary>
-        /// Set link configuration (Async mode)
+        /// Change Existing Cascade Connection (Async mode). Use this to alter the setting of an existing Cascade Connection on the currently managed Virtual Hub.
         /// </summary>
         public async Task<VpnRpcCreateLink> SetLinkAsync(VpnRpcCreateLink input_param) => await Call<VpnRpcCreateLink>("SetLink", input_param);
 
@@ -460,7 +420,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCreateLink SetLink(VpnRpcCreateLink input_param) => SetLinkAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate links (Async mode)
+        /// Get List of Cascade Connections (Async mode). Use this to get a list of Cascade Connections that are registered on the currently managed Virtual Hub. By using a Cascade Connection, you can connect this Virtual Hub by Layer 2 Cascade Connection to another Virtual Hub that is operating on the same or a different computer. [Warning About Cascade Connections] By connecting using a Cascade Connection you can create a Layer 2 bridge between multiple Virtual Hubs but if the connection is incorrectly configured, a loopback Cascade Connection could inadvertently be created. When using a Cascade Connection function please design the network topology with care. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcEnumLink> EnumLinkAsync(VpnRpcEnumLink input_param) => await Call<VpnRpcEnumLink>("EnumLink", input_param);
 
@@ -470,7 +430,47 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumLink EnumLink(VpnRpcEnumLink input_param) => EnumLinkAsync(input_param).Result;
 
         /// <summary>
-        /// Get link status (Async mode)
+        /// Switch Cascade Connection to Online Status (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified, use this to switch that Cascade Connection to online status. The Cascade Connection that is switched to online status begins the process of connecting to the destination VPN Server in accordance with the Connection Setting. The Cascade Connection that is switched to online status will establish normal connection to the VPN Server or continue to attempt connection until it is switched to offline status. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// </summary>
+        public async Task<VpnRpcLink> SetLinkOnlineAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("SetLinkOnline", input_param);
+
+        /// <summary>
+        /// Make a link into on-line (Sync mode)
+        /// </summary>
+        public VpnRpcLink SetLinkOnline(VpnRpcLink input_param) => SetLinkOnlineAsync(input_param).Result;
+
+        /// <summary>
+        /// Switch Cascade Connection to Offline Status (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified, use this to switch that Cascade Connection to offline status. The Cascade Connection that is switched to offline will not connect to the VPN Server until next time it is switched to the online status using the CascadeOnline API You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// </summary>
+        public async Task<VpnRpcLink> SetLinkOfflineAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("SetLinkOffline", input_param);
+
+        /// <summary>
+        /// Make a link into off-line (Sync mode)
+        /// </summary>
+        public VpnRpcLink SetLinkOffline(VpnRpcLink input_param) => SetLinkOfflineAsync(input_param).Result;
+
+        /// <summary>
+        /// Delete Cascade Connection Setting (Async mode). Use this to delete a Cascade Connection that is registered on the currently managed Virtual Hub. If the specified Cascade Connection has a status of online, the connections will be automatically disconnected and then the Cascade Connection will be deleted. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// </summary>
+        public async Task<VpnRpcLink> DeleteLinkAsync(VpnRpcLink input_param) => await Call<VpnRpcLink>("DeleteLink", input_param);
+
+        /// <summary>
+        /// Delete a link (Sync mode)
+        /// </summary>
+        public VpnRpcLink DeleteLink(VpnRpcLink input_param) => DeleteLinkAsync(input_param).Result;
+
+        /// <summary>
+        /// Change Name of Cascade Connection (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified, use this to change the name of that Cascade Connection. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
+        /// </summary>
+        public async Task<VpnRpcRenameLink> RenameLinkAsync(VpnRpcRenameLink input_param) => await Call<VpnRpcRenameLink>("RenameLink", input_param);
+
+        /// <summary>
+        /// Rename link (cascade connection) (Sync mode)
+        /// </summary>
+        public VpnRpcRenameLink RenameLink(VpnRpcRenameLink input_param) => RenameLinkAsync(input_param).Result;
+
+        /// <summary>
+        /// Get Current Cascade Connection Status (Async mode). When a Cascade Connection registered on the currently managed Virtual Hub is specified and that Cascade Connection is currently online, use this to get its connection status and other information. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcLinkStatus> GetLinkStatusAsync(VpnRpcLinkStatus input_param) => await Call<VpnRpcLinkStatus>("GetLinkStatus", input_param);
 
@@ -480,7 +480,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcLinkStatus GetLinkStatus(VpnRpcLinkStatus input_param) => GetLinkStatusAsync(input_param).Result;
 
         /// <summary>
-        /// Add access list entry (Async mode)
+        /// Add Access List Rule (Async mode). Use this to add a new rule to the access list of the currently managed Virtual Hub. The access list is a set of packet file rules that are applied to packets that flow through the Virtual Hub. You can register multiple rules in an access list and you can also define an priority for each rule. All packets are checked for the conditions specified by the rules registered in the access list and based on the operation that is stipulated by the first matching rule, they either pass or are discarded. Packets that do not match any rule are implicitly allowed to pass. You can also use the access list to generate delays, jitters and packet losses. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcAddAccess> AddAccessAsync(VpnRpcAddAccess input_param) => await Call<VpnRpcAddAccess>("AddAccess", input_param);
 
@@ -490,7 +490,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAddAccess AddAccess(VpnRpcAddAccess input_param) => AddAccessAsync(input_param).Result;
 
         /// <summary>
-        /// Delete access list entry (Async mode)
+        /// Delete Rule from Access List (Async mode). Use this to specify a packet filter rule registered on the access list of the currently managed Virtual Hub and delete it. To delete a rule, you must specify that rule's ID. You can display the ID by using the EnumAccess API. If you wish not to delete the rule but to only temporarily disable it, use the SetAccessList API to set the rule status to disable. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcDeleteAccess> DeleteAccessAsync(VpnRpcDeleteAccess input_param) => await Call<VpnRpcDeleteAccess>("DeleteAccess", input_param);
 
@@ -500,7 +500,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcDeleteAccess DeleteAccess(VpnRpcDeleteAccess input_param) => DeleteAccessAsync(input_param).Result;
 
         /// <summary>
-        /// Get access list (Async mode)
+        /// Get Access List Rule List (Async mode). Use this to get a list of packet filter rules that are registered on access list of the currently managed Virtual Hub. The access list is a set of packet file rules that are applied to packets that flow through the Virtual Hub. You can register multiple rules in an access list and you can also define a priority for each rule. All packets are checked for the conditions specified by the rules registered in the access list and based on the operation that is stipulated by the first matching rule, they either pass or are discarded. Packets that do not match any rule are implicitly allowed to pass. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcEnumAccessList> EnumAccessAsync(VpnRpcEnumAccessList input_param) => await Call<VpnRpcEnumAccessList>("EnumAccess", input_param);
 
@@ -510,7 +510,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumAccessList EnumAccess(VpnRpcEnumAccessList input_param) => EnumAccessAsync(input_param).Result;
 
         /// <summary>
-        /// Set access list (Async mode)
+        /// Replace all access lists on a single bulk API call (Async mode). This API removes all existing access list rules on the Virtual Hub, and replace them by new access list rules specified by the parameter.
         /// </summary>
         public async Task<VpnRpcEnumAccessList> SetAccessListAsync(VpnRpcEnumAccessList input_param) => await Call<VpnRpcEnumAccessList>("SetAccessList", input_param);
 
@@ -520,7 +520,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumAccessList SetAccessList(VpnRpcEnumAccessList input_param) => SetAccessListAsync(input_param).Result;
 
         /// <summary>
-        /// Create a user (Async mode)
+        /// Create a user (Async mode). Use this to create a new user in the security account database of the currently managed Virtual Hub. By creating a user, the VPN Client can connect to the Virtual Hub by using the authentication information of that user. Note that a user whose user name has been created as "*" (a single asterisk character) will automatically be registered as a RADIUS authentication user. For cases where there are users with "*" as the name, when a user, whose user name that has been provided when a client connected to a VPN Server does not match existing user names, is able to be authenticated by a RADIUS server or NT domain controller by inputting a user name and password, the authentication settings and security policy settings will follow the setting for the user "*". To change the user information of a user that has been created, use the UserSet API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetUser> CreateUserAsync(VpnRpcSetUser input_param) => await Call<VpnRpcSetUser>("CreateUser", input_param);
 
@@ -530,7 +530,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetUser CreateUser(VpnRpcSetUser input_param) => CreateUserAsync(input_param).Result;
 
         /// <summary>
-        /// Set user setting (Async mode)
+        /// Change User Settings (Async mode). Use this to change user settings that is registered on the security account database of the currently managed Virtual Hub. The user settings that can be changed using this API are the three items that are specified when a new user is created using the CreateUser API: Group Name, Full Name, and Description. To get the list of currently registered users, use the EnumUser API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetUser> SetUserAsync(VpnRpcSetUser input_param) => await Call<VpnRpcSetUser>("SetUser", input_param);
 
@@ -540,7 +540,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetUser SetUser(VpnRpcSetUser input_param) => SetUserAsync(input_param).Result;
 
         /// <summary>
-        /// Get user setting (Async mode)
+        /// Get User Settings (Async mode). Use this to get user settings information that is registered on the security account database of the currently managed Virtual Hub. The information that you can get using this API are User Name, Full Name, Group Name, Expiration Date, Security Policy, and Auth Type, as well as parameters that are specified as auth type attributes and the statistical data of that user. To get the list of currently registered users, use the EnumUser API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetUser> GetUserAsync(VpnRpcSetUser input_param) => await Call<VpnRpcSetUser>("GetUser", input_param);
 
@@ -555,12 +555,12 @@ namespace SoftEther.VPNServerRpc
         public async Task<VpnRpcDeleteUser> DeleteUserAsync(VpnRpcDeleteUser input_param) => await Call<VpnRpcDeleteUser>("DeleteUser", input_param);
 
         /// <summary>
-        /// Delete a user (Sync mode)
+        /// Delete a user (Sync mode). Use this to delete a user that is registered on the security account database of the currently managed Virtual Hub. By deleting the user, that user will no long be able to connect to the Virtual Hub. You can use the SetUser API to set the user's security policy to deny access instead of deleting a user, set the user to be temporarily denied from logging in. To get the list of currently registered users, use the EnumUser API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public VpnRpcDeleteUser DeleteUser(VpnRpcDeleteUser input_param) => DeleteUserAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate users (Async mode)
+        /// Get List of Users (Async mode). Use this to get a list of users that are registered on the security account database of the currently managed Virtual Hub. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcEnumUser> EnumUserAsync(VpnRpcEnumUser input_param) => await Call<VpnRpcEnumUser>("EnumUser", input_param);
 
@@ -570,7 +570,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumUser EnumUser(VpnRpcEnumUser input_param) => EnumUserAsync(input_param).Result;
 
         /// <summary>
-        /// Create a group (Async mode)
+        /// Create Group (Async mode). Use this to create a new group in the security account database of the currently managed Virtual Hub. You can register multiple users in a group. To register users in a group use the SetUser API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetGroup> CreateGroupAsync(VpnRpcSetGroup input_param) => await Call<VpnRpcSetGroup>("CreateGroup", input_param);
 
@@ -580,7 +580,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetGroup CreateGroup(VpnRpcSetGroup input_param) => CreateGroupAsync(input_param).Result;
 
         /// <summary>
-        /// Set group setting (Async mode)
+        /// Set group settings (Async mode). Use this to set group settings that is registered on the security account database of the currently managed Virtual Hub. To get the list of currently registered groups, use the EnumGroup API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetGroup> SetGroupAsync(VpnRpcSetGroup input_param) => await Call<VpnRpcSetGroup>("SetGroup", input_param);
 
@@ -590,17 +590,17 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSetGroup SetGroup(VpnRpcSetGroup input_param) => SetGroupAsync(input_param).Result;
 
         /// <summary>
-        /// Get group information (Async mode)
+        /// Get Group Setting (Sync mode). Use this to get the setting of a group that is registered on the security account database of the currently managed Virtual Hub. To get the list of currently registered groups, use the EnumGroup API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcSetGroup> GetGroupAsync(VpnRpcSetGroup input_param) => await Call<VpnRpcSetGroup>("GetGroup", input_param);
 
         /// <summary>
-        /// Get group information (Sync mode)
+        /// Get Group Setting (Sync mode). 
         /// </summary>
         public VpnRpcSetGroup GetGroup(VpnRpcSetGroup input_param) => GetGroupAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a group (Async mode)
+        /// Delete User from Group (Async mode). Use this to delete a specified user from the group that is registered on the security account database of the currently managed Virtual Hub. By deleting a user from the group, that user becomes unassigned. To get the list of currently registered groups, use the EnumGroup API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcDeleteUser> DeleteGroupAsync(VpnRpcDeleteUser input_param) => await Call<VpnRpcDeleteUser>("DeleteGroup", input_param);
 
@@ -610,7 +610,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcDeleteUser DeleteGroup(VpnRpcDeleteUser input_param) => DeleteGroupAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate groups (Async mode)
+        /// Get List of Groups (Async mode). Use this to get a list of groups that are registered on the security account database of the currently managed Virtual Hub. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a member server on a cluster.
         /// </summary>
         public async Task<VpnRpcEnumGroup> EnumGroupAsync(VpnRpcEnumGroup input_param) => await Call<VpnRpcEnumGroup>("EnumGroup", input_param);
 
@@ -620,7 +620,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumGroup EnumGroup(VpnRpcEnumGroup input_param) => EnumGroupAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate sessions (Async mode)
+        /// Get List of Connected VPN Sessions (Async mode). Use this to get a list of the sessions connected to the Virtual Hub currently being managed. In the list of sessions, the following information will be obtained for each connection: Session Name, Session Site, User Name, Source Host Name, TCP Connection, Transfer Bytes and Transfer Packets. If the currently connected VPN Server is a cluster controller and the currently managed Virtual Hub is a static Virtual Hub, you can get an all-linked-together list of all sessions connected to that Virtual Hub on all cluster members. In all other cases, only the list of sessions that are actually connected to the currently managed VPN Server will be obtained.
         /// </summary>
         public async Task<VpnRpcEnumSession> EnumSessionAsync(VpnRpcEnumSession input_param) => await Call<VpnRpcEnumSession>("EnumSession", input_param);
 
@@ -630,7 +630,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumSession EnumSession(VpnRpcEnumSession input_param) => EnumSessionAsync(input_param).Result;
 
         /// <summary>
-        /// Get session status (Async mode)
+        /// Get Session Status (Async mode). Use this to specify a session currently connected to the currently managed Virtual Hub and get the session information. The session status includes the following: source host name and user name, version information, time information, number of TCP connections, communication parameters, session key, statistical information on data transferred, and other client and server information. To get the list of currently connected sessions, use the EnumSession API.
         /// </summary>
         public async Task<VpnRpcSessionStatus> GetSessionStatusAsync(VpnRpcSessionStatus input_param) => await Call<VpnRpcSessionStatus>("GetSessionStatus", input_param);
 
@@ -640,7 +640,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSessionStatus GetSessionStatus(VpnRpcSessionStatus input_param) => GetSessionStatusAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a session (Async mode)
+        /// Disconnect Session (Async mode). Use this to specify a session currently connected to the currently managed Virtual Hub and forcefully disconnect that session using manager privileges. Note that when communication is disconnected by settings on the source client side and the automatically reconnect option is enabled, it is possible that the client will reconnect. To get the list of currently connected sessions, use the EnumSession API.
         /// </summary>
         public async Task<VpnRpcDeleteSession> DeleteSessionAsync(VpnRpcDeleteSession input_param) => await Call<VpnRpcDeleteSession>("DeleteSession", input_param);
 
@@ -650,7 +650,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcDeleteSession DeleteSession(VpnRpcDeleteSession input_param) => DeleteSessionAsync(input_param).Result;
 
         /// <summary>
-        /// Get MAC address table (Async mode)
+        /// Get the MAC Address Table Database (Async mode). Use this to get the MAC address table database that is held by the currently managed Virtual Hub. The MAC address table database is a table that the Virtual Hub requires to perform the action of switching Ethernet frames and the Virtual Hub decides the sorting destination session of each Ethernet frame based on the MAC address table database. The MAC address database is built by the Virtual Hub automatically analyzing the contents of the communication.
         /// </summary>
         public async Task<VpnRpcEnumMacTable> EnumMacTableAsync(VpnRpcEnumMacTable input_param) => await Call<VpnRpcEnumMacTable>("EnumMacTable", input_param);
 
@@ -660,7 +660,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumMacTable EnumMacTable(VpnRpcEnumMacTable input_param) => EnumMacTableAsync(input_param).Result;
 
         /// <summary>
-        /// Delete MAC address table entry (Async mode)
+        /// Delete MAC Address Table Entry (Async mode). Use this API to operate the MAC address table database held by the currently managed Virtual Hub and delete a specified MAC address table entry from the database. To get the contents of the current MAC address table database use the EnumMacTable API.
         /// </summary>
         public async Task<VpnRpcDeleteTable> DeleteMacTableAsync(VpnRpcDeleteTable input_param) => await Call<VpnRpcDeleteTable>("DeleteMacTable", input_param);
 
@@ -670,7 +670,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcDeleteTable DeleteMacTable(VpnRpcDeleteTable input_param) => DeleteMacTableAsync(input_param).Result;
 
         /// <summary>
-        /// Get IP address table (Async mode)
+        /// Get the IP Address Table Database (Async mode). Use this to get the IP address table database that is held by the currently managed Virtual Hub. The IP address table database is a table that is automatically generated by analyzing the contents of communication so that the Virtual Hub can always know which session is using which IP address and it is frequently used by the engine that applies the Virtual Hub security policy. By specifying the session name you can get the IP address table entry that has been associated with that session.
         /// </summary>
         public async Task<VpnRpcEnumIpTable> EnumIpTableAsync(VpnRpcEnumIpTable input_param) => await Call<VpnRpcEnumIpTable>("EnumIpTable", input_param);
 
@@ -680,7 +680,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumIpTable EnumIpTable(VpnRpcEnumIpTable input_param) => EnumIpTableAsync(input_param).Result;
 
         /// <summary>
-        /// Delete IP address table entry (Async mode)
+        /// Delete IP Address Table Entry (Async mode). Use this API to operate the IP address table database held by the currently managed Virtual Hub and delete a specified IP address table entry from the database. To get the contents of the current IP address table database use the EnumIpTable API.
         /// </summary>
         public async Task<VpnRpcDeleteTable> DeleteIpTableAsync(VpnRpcDeleteTable input_param) => await Call<VpnRpcDeleteTable>("DeleteIpTable", input_param);
 
@@ -690,7 +690,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcDeleteTable DeleteIpTable(VpnRpcDeleteTable input_param) => DeleteIpTableAsync(input_param).Result;
 
         /// <summary>
-        /// Set keep-alive function setting (Async mode)
+        /// Set the Keep Alive Internet Connection Function (Async mode). Use this to set the destination host name etc. of the Keep Alive Internet Connection Function. For network connection environments where connections will automatically be disconnected where there are periods of no communication that are longer than a set period, by using the Keep Alive Internet Connection Function, it is possible to keep alive the Internet connection by sending packets to a nominated server on the Internet at set intervals. When using this API, you can specify the following: Host Name, Port Number, Packet Send Interval, and Protocol. Packets sent to keep alive the Internet connection will have random content and personal information that could identify a computer or user is not sent. You can use the SetKeep API to enable/disable the Keep Alive Internet Connection Function. To execute this API on a VPN Server or VPN Bridge, you must have administrator privileges.
         /// </summary>
         public async Task<VpnRpcKeep> SetKeepAsync(VpnRpcKeep input_param) => await Call<VpnRpcKeep>("SetKeep", input_param);
 
@@ -700,7 +700,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcKeep SetKeep(VpnRpcKeep input_param) => SetKeepAsync(input_param).Result;
 
         /// <summary>
-        /// Get keep-alive function setting (Async mode)
+        /// Get the Keep Alive Internet Connection Function (Async mode). Use this to get the current setting contents of the Keep Alive Internet Connection Function. In addition to the destination's Host Name, Port Number, Packet Send Interval and Protocol, you can obtain the current enabled/disabled status of the Keep Alive Internet Connection Function.
         /// </summary>
         public async Task<VpnRpcKeep> GetKeepAsync(VpnRpcKeep input_param) => await Call<VpnRpcKeep>("GetKeep", input_param);
 
@@ -710,7 +710,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcKeep GetKeep(VpnRpcKeep input_param) => GetKeepAsync(input_param).Result;
 
         /// <summary>
-        /// Enable SecureNAT function of the hub (Async mode)
+        /// Enable the Virtual NAT and DHCP Server Function (SecureNAT Function) (Async mode). Use this to enable the Virtual NAT and DHCP Server function (SecureNAT Function) on the currently managed Virtual Hub and begin its operation. Before executing this API, you must first check the setting contents of the current Virtual NAT function and DHCP Server function using the SetSecureNATOption API and GetSecureNATOption API. By enabling the SecureNAT function, you can virtually operate a NAT router (IP masquerade) and the DHCP Server function on a virtual network on the Virtual Hub. [Warning about SecureNAT Function] The SecureNAT function is recommended only for system administrators and people with a detailed knowledge of networks. If you use the SecureNAT function correctly, it is possible to achieve a safe form of remote access via a VPN. However when used in the wrong way, it can put the entire network in danger. Anyone who does not have a thorough knowledge of networks and anyone who does not have the network administrator's permission must not enable the SecureNAT function. For a detailed explanation of the SecureNAT function, please refer to the VPN Server's manual and online documentation. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcHub> EnableSecureNATAsync(VpnRpcHub input_param) => await Call<VpnRpcHub>("EnableSecureNAT", input_param);
 
@@ -720,7 +720,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHub EnableSecureNAT(VpnRpcHub input_param) => EnableSecureNATAsync(input_param).Result;
 
         /// <summary>
-        /// Disable the SecureNAT function of the hub (Async mode)
+        /// Disable the Virtual NAT and DHCP Server Function (SecureNAT Function) (Async mode). Use this to disable the Virtual NAT and DHCP Server function (SecureNAT Function) on the currently managed Virtual Hub. By executing this API the Virtual NAT function immediately stops operating and the Virtual DHCP Server function deletes the DHCP lease database and stops the service. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcHub> DisableSecureNATAsync(VpnRpcHub input_param) => await Call<VpnRpcHub>("DisableSecureNAT", input_param);
 
@@ -730,7 +730,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcHub DisableSecureNAT(VpnRpcHub input_param) => DisableSecureNATAsync(input_param).Result;
 
         /// <summary>
-        /// Set SecureNAT options (Async mode)
+        /// Change Settings of SecureNAT Function (Async mode). Use this to change and save the virtual host network interface settings, virtual NAT function settings and virtual DHCP server settings of the Virtual NAT and DHCP Server function (SecureNAT function) on the currently managed Virtual Hub. The SecureNAT function holds one virtual network adapter on the L2 segment inside the Virtual Hub and it has been assigned a MAC address and an IP address. By doing this, another host connected to the same L2 segment is able to communicate with the SecureNAT virtual host as if it is an actual IP host existing on the network. [Warning about SecureNAT Function] The SecureNAT function is recommended only for system administrators and people with a detailed knowledge of networks. If you use the SecureNAT function correctly, it is possible to achieve a safe form of remote access via a VPN. However when used in the wrong way, it can put the entire network in danger. Anyone who does not have a thorough knowledge of networks and anyone who does not have the network administrators permission must not enable the SecureNAT function. For a detailed explanation of the SecureNAT function, please refer to the VPN Server's manual and online documentation. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnVhOption> SetSecureNATOptionAsync(VpnVhOption input_param) => await Call<VpnVhOption>("SetSecureNATOption", input_param);
 
@@ -740,7 +740,7 @@ namespace SoftEther.VPNServerRpc
         public VpnVhOption SetSecureNATOption(VpnVhOption input_param) => SetSecureNATOptionAsync(input_param).Result;
 
         /// <summary>
-        /// Get SecureNAT options (Async mode)
+        /// Get Settings of SecureNAT Function (Async mode). This API get registered settings for the SecureNAT function which is set by the SetSecureNATOption API.
         /// </summary>
         public async Task<VpnVhOption> GetSecureNATOptionAsync(VpnVhOption input_param) => await Call<VpnVhOption>("GetSecureNATOption", input_param);
 
@@ -750,7 +750,7 @@ namespace SoftEther.VPNServerRpc
         public VpnVhOption GetSecureNATOption(VpnVhOption input_param) => GetSecureNATOptionAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate NAT entries of the SecureNAT (Async mode)
+        /// Get Virtual NAT Function Session Table of SecureNAT Function (Async mode). Use this to get the table of TCP and UDP sessions currently communicating via the Virtual NAT (NAT table) in cases when the Virtual NAT function is operating on the currently managed Virtual Hub. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcEnumNat> EnumNATAsync(VpnRpcEnumNat input_param) => await Call<VpnRpcEnumNat>("EnumNAT", input_param);
 
@@ -760,7 +760,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumNat EnumNAT(VpnRpcEnumNat input_param) => EnumNATAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate DHCP entries (Async mode)
+        /// Get Virtual DHCP Server Function Lease Table of SecureNAT Function (Async mode). Use this to get the lease table of IP addresses, held by the Virtual DHCP Server, that are assigned to clients in cases when the Virtual NAT function is operating on the currently managed Virtual Hub. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcEnumDhcp> EnumDHCPAsync(VpnRpcEnumDhcp input_param) => await Call<VpnRpcEnumDhcp>("EnumDHCP", input_param);
 
@@ -770,7 +770,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumDhcp EnumDHCP(VpnRpcEnumDhcp input_param) => EnumDHCPAsync(input_param).Result;
 
         /// <summary>
-        /// Get status of the SecureNAT (Async mode)
+        /// Get the Operating Status of the Virtual NAT and DHCP Server Function (SecureNAT Function) (Async mode). Use this to get the operating status of the Virtual NAT and DHCP Server function (SecureNAT Function) when it is operating on the currently managed Virtual Hub. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcNatStatus> GetSecureNATStatusAsync(VpnRpcNatStatus input_param) => await Call<VpnRpcNatStatus>("GetSecureNATStatus", input_param);
 
@@ -780,7 +780,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcNatStatus GetSecureNATStatus(VpnRpcNatStatus input_param) => GetSecureNATStatusAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate Ethernet devices (Async mode)
+        /// Get List of Network Adapters Usable as Local Bridge (Async mode). Use this to get a list of Ethernet devices (network adapters) that can be used as a bridge destination device as part of a Local Bridge connection. If possible, network connection name is displayed. You can use a device displayed here by using the AddLocalBridge API. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcEnumEth> EnumEthernetAsync() => await Call<VpnRpcEnumEth>("EnumEthernet", new VpnRpcEnumEth());
 
@@ -790,7 +790,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumEth EnumEthernet() => EnumEthernetAsync().Result;
 
         /// <summary>
-        /// Add a new local bridge (Async mode)
+        /// Create Local Bridge Connection (Async mode). Use this to create a new Local Bridge connection on the VPN Server. By using a Local Bridge, you can configure a Layer 2 bridge connection between a Virtual Hub operating on this VPN server and a physical Ethernet Device (Network Adapter). You can create a tap device (virtual network interface) on the system and connect a bridge between Virtual Hubs (the tap device is only supported by Linux versions). It is possible to establish a bridge to an operating network adapter of your choice for the bridge destination Ethernet device (network adapter), but in high load environments, we recommend you prepare a network adapter dedicated to serve as a bridge. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcLocalBridge> AddLocalBridgeAsync(VpnRpcLocalBridge input_param) => await Call<VpnRpcLocalBridge>("AddLocalBridge", input_param);
 
@@ -800,7 +800,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcLocalBridge AddLocalBridge(VpnRpcLocalBridge input_param) => AddLocalBridgeAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a local bridge (Async mode)
+        /// Delete Local Bridge Connection (Async mode). Use this to delete an existing Local Bridge connection. To get a list of current Local Bridge connections use the EnumLocalBridge API. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcLocalBridge> DeleteLocalBridgeAsync(VpnRpcLocalBridge input_param) => await Call<VpnRpcLocalBridge>("DeleteLocalBridge", input_param);
 
@@ -810,7 +810,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcLocalBridge DeleteLocalBridge(VpnRpcLocalBridge input_param) => DeleteLocalBridgeAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate local bridges (Async mode)
+        /// Get List of Local Bridge Connection (Async mode). Use this to get a list of the currently defined Local Bridge connections. You can get the Local Bridge connection Virtual Hub name and the bridge destination Ethernet device (network adapter) name or tap device name, as well as the operating status.
         /// </summary>
         public async Task<VpnRpcEnumLocalBridge> EnumLocalBridgeAsync() => await Call<VpnRpcEnumLocalBridge>("EnumLocalBridge", new VpnRpcEnumLocalBridge());
 
@@ -820,7 +820,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumLocalBridge EnumLocalBridge() => EnumLocalBridgeAsync().Result;
 
         /// <summary>
-        /// Get availability to localbridge function (Async mode)
+        /// Get whether the localbridge function is supported on the current system (Async mode).
         /// </summary>
         public async Task<VpnRpcBridgeSupport> GetBridgeSupportAsync() => await Call<VpnRpcBridgeSupport>("GetBridgeSupport", new VpnRpcBridgeSupport());
 
@@ -830,7 +830,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcBridgeSupport GetBridgeSupport() => GetBridgeSupportAsync().Result;
 
         /// <summary>
-        /// Reboot server itself (Async mode)
+        /// Reboot VPN Server Service (Async mode). Use this to restart the VPN Server service. When you restart the VPN Server, all currently connected sessions and TCP connections will be disconnected and no new connections will be accepted until the restart process has completed. By using this API, only the VPN Server service program will be restarted and the physical computer that VPN Server is operating on does not restart. This management session will also be disconnected, so you will need to reconnect to continue management. Also, by specifying the "IntValue" parameter to "1", the contents of the configuration file (.config) held by the current VPN Server will be initialized. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcTest> RebootServerAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("RebootServer", input_param);
 
@@ -840,7 +840,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest RebootServer(VpnRpcTest input_param) => RebootServerAsync(input_param).Result;
 
         /// <summary>
-        /// Get capabilities (Async mode)
+        /// Get List of Server Functions / Capability (Async mode). Use this get a list of functions and capability of the VPN Server currently connected and being managed. The function and capability of VPN Servers are different depending on the operating VPN server's edition and version. Sometimes commands may be included in the API line management utility that cannot operate because of the function and capability of the destination VPN Server. Using this API, you can find out the capability of the target VPN Server and report it. If the version of the VPN Server is newer than the API line management utility and there are functions that the API line management utility does not recognize, you can display the contents strings (variable names) as they are.
         /// </summary>
         public async Task<VpnCapslist> GetCapsAsync() => await Call<VpnCapslist>("GetCaps", new VpnCapslist());
 
@@ -850,7 +850,7 @@ namespace SoftEther.VPNServerRpc
         public VpnCapslist GetCaps() => GetCapsAsync().Result;
 
         /// <summary>
-        /// Get configuration file stream (Async mode)
+        /// Get the current configuration of the VPN Server (Async mode). Use this to get a text file (.config file) that contains the current configuration contents of the VPN server. You can get the status on the VPN Server at the instant this API is executed. You can edit the configuration file by using a regular text editor. To write an edited configuration to the VPN Server, use the SetConfig API. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcConfig> GetConfigAsync() => await Call<VpnRpcConfig>("GetConfig", new VpnRpcConfig());
 
@@ -860,7 +860,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcConfig GetConfig() => GetConfigAsync().Result;
 
         /// <summary>
-        /// Overwrite configuration file by specified data (Async mode)
+        /// Write Configuration File to VPN Server (Async mode). Use this to write the configuration file to the VPN Server. By executing this API, the contents of the specified configuration file will be applied to the VPN Server and the VPN Server program will automatically restart and upon restart, operate according to the new configuration contents. Because it is difficult for an administrator to write all the contents of a configuration file, we recommend you use the GetConfig API to get the current contents of the VPN Server configuration and save it to file. You can then edit these contents in a regular text editor and then use the SetConfig API to rewrite the contents to the VPN Server. This API is for people with a detailed knowledge of the VPN Server and if an incorrectly configured configuration file is written to the VPN Server, it not only could cause errors, it could also result in the lost of the current setting data. Take special care when carrying out this action. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcConfig> SetConfigAsync(VpnRpcConfig input_param) => await Call<VpnRpcConfig>("SetConfig", input_param);
 
@@ -870,17 +870,17 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcConfig SetConfig(VpnRpcConfig input_param) => SetConfigAsync(input_param).Result;
 
         /// <summary>
-        /// Get default hub administration options (Async mode)
+        /// Get Virtual Hub Administration Option default values (Async mode).
         /// </summary>
         public async Task<VpnRpcAdminOption> GetDefaultHubAdminOptionsAsync(VpnRpcAdminOption input_param) => await Call<VpnRpcAdminOption>("GetDefaultHubAdminOptions", input_param);
 
         /// <summary>
-        /// Get default hub administration options (Sync mode)
+        /// Get Virtual Hub Administration Option default values (Sync mode).
         /// </summary>
         public VpnRpcAdminOption GetDefaultHubAdminOptions(VpnRpcAdminOption input_param) => GetDefaultHubAdminOptionsAsync(input_param).Result;
 
         /// <summary>
-        /// Get hub administration options (Async mode)
+        /// Get List of Virtual Hub Administration Options (Async mode). Use this to get a list of Virtual Hub administration options that are set on the currently managed Virtual Hub. The purpose of the Virtual Hub administration options is for the VPN Server Administrator to set limits for the setting ranges when the administration of the Virtual Hub is to be trusted to each Virtual Hub administrator. Only an administrator with administration privileges for this entire VPN Server is able to add, edit and delete the Virtual Hub administration options. The Virtual Hub administrators are unable to make changes to the administration options, however they are able to view them. There is an exception however. If allow_hub_admin_change_option is set to "1", even Virtual Hub administrators are able to edit the administration options. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster member.
         /// </summary>
         public async Task<VpnRpcAdminOption> GetHubAdminOptionsAsync(VpnRpcAdminOption input_param) => await Call<VpnRpcAdminOption>("GetHubAdminOptions", input_param);
 
@@ -890,7 +890,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAdminOption GetHubAdminOptions(VpnRpcAdminOption input_param) => GetHubAdminOptionsAsync(input_param).Result;
 
         /// <summary>
-        /// Set hub administration options (Async mode)
+        /// Set Values of Virtual Hub Administration Options (Async mode). Use this to change the values of Virtual Hub administration options that are set on the currently managed Virtual Hub. The purpose of the Virtual Hub administration options is for the VPN Server Administrator to set limits for the setting ranges when the administration of the Virtual Hub is to be trusted to each Virtual Hub administrator. Only an administrator with administration privileges for this entire VPN Server is able to add, edit and delete the Virtual Hub administration options. The Virtual Hub administrators are unable to make changes to the administration options, however they are able to view them. There is an exception however. If allow_hub_admin_change_option is set to "1", even Virtual Hub administrators are able to edit the administration options. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster member.
         /// </summary>
         public async Task<VpnRpcAdminOption> SetHubAdminOptionsAsync(VpnRpcAdminOption input_param) => await Call<VpnRpcAdminOption>("SetHubAdminOptions", input_param);
 
@@ -900,7 +900,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAdminOption SetHubAdminOptions(VpnRpcAdminOption input_param) => SetHubAdminOptionsAsync(input_param).Result;
 
         /// <summary>
-        /// Get hub extended options (Async mode)
+        /// Get List of Virtual Hub Extended Options (Async mode). Use this to get a Virtual Hub Extended Options List that is set on the currently managed Virtual Hub. Virtual Hub Extended Option enables you to configure more detail settings of the Virtual Hub. By default, both VPN Server's global administrators and individual Virtual Hub's administrators can modify the Virtual Hub Extended Options. However, if the deny_hub_admin_change_ext_option is set to 1 on the Virtual Hub Admin Options, the individual Virtual Hub's administrators cannot modify the Virtual Hub Extended Options. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster member.
         /// </summary>
         public async Task<VpnRpcAdminOption> GetHubExtOptionsAsync(VpnRpcAdminOption input_param) => await Call<VpnRpcAdminOption>("GetHubExtOptions", input_param);
 
@@ -910,7 +910,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAdminOption GetHubExtOptions(VpnRpcAdminOption input_param) => GetHubExtOptionsAsync(input_param).Result;
 
         /// <summary>
-        /// Set hub extended options (Async mode)
+        /// Set a Value of Virtual Hub Extended Options (Async mode). Use this to set a value in the Virtual Hub Extended Options List that is set on the currently managed Virtual Hub. Virtual Hub Extended Option enables you to configure more detail settings of the Virtual Hub. By default, both VPN Server's global administrators and individual Virtual Hub's administrators can modify the Virtual Hub Extended Options. However, if the deny_hub_admin_change_ext_option is set to 1 on the Virtual Hub Admin Options, the individual Virtual Hub's administrators cannot modify the Virtual Hub Extended Options. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster member.
         /// </summary>
         public async Task<VpnRpcAdminOption> SetHubExtOptionsAsync(VpnRpcAdminOption input_param) => await Call<VpnRpcAdminOption>("SetHubExtOptions", input_param);
 
@@ -920,7 +920,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAdminOption SetHubExtOptions(VpnRpcAdminOption input_param) => SetHubExtOptionsAsync(input_param).Result;
 
         /// <summary>
-        /// Add a new virtual layer-3 switch (Async mode)
+        /// Define New Virtual Layer 3 Switch (Async mode). Use this to define a new Virtual Layer 3 Switch on the VPN Server. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. [Explanation on Virtual Layer 3 Switch Function] You can define Virtual Layer 3 Switches between multiple Virtual Hubs operating on this VPN Server and configure routing between different IP networks. [Caution about the Virtual Layer 3 Switch Function] The Virtual Layer 3 Switch functions are provided for network administrators and other people who know a lot about networks and IP routing. If you are using the regular VPN functions, you do not need to use the Virtual Layer 3 Switch functions. If the Virtual Layer 3 Switch functions are to be used, the person who configures them must have sufficient knowledge of IP routing and be perfectly capable of not impacting the network.
         /// </summary>
         public async Task<VpnRpcL3Sw> AddL3SwitchAsync(VpnRpcL3Sw input_param) => await Call<VpnRpcL3Sw>("AddL3Switch", input_param);
 
@@ -930,7 +930,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw AddL3Switch(VpnRpcL3Sw input_param) => AddL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a virtual layer-3 switch (Async mode)
+        /// Delete Virtual Layer 3 Switch (Async mode). Use this to delete an existing Virtual Layer 3 Switch that is defined on the VPN Server. When the specified Virtual Layer 3 Switch is operating, it will be automatically deleted after operation stops. To get a list of existing Virtual Layer 3 Switches, use the RouterList API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcL3Sw> DelL3SwitchAsync(VpnRpcL3Sw input_param) => await Call<VpnRpcL3Sw>("DelL3Switch", input_param);
 
@@ -940,7 +940,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw DelL3Switch(VpnRpcL3Sw input_param) => DelL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate virtual layer-3 switches (Async mode)
+        /// Get List of Virtual Layer 3 Switches (Async mode). Use this to define a new Virtual Layer 3 Switch on the VPN Server. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. [Explanation on Virtual Layer 3 Switch Function] You can define Virtual Layer 3 Switches between multiple Virtual Hubs operating on this VPN Server and configure routing between different IP networks. [Caution about the Virtual Layer 3 Switch Function] The Virtual Layer 3 Switch functions are provided for network administrators and other people who know a lot about networks and IP routing. If you are using the regular VPN functions, you do not need to use the Virtual Layer 3 Switch functions. If the Virtual Layer 3 Switch functions are to be used, the person who configures them must have sufficient knowledge of IP routing and be perfectly capable of not impacting the network.
         /// </summary>
         public async Task<VpnRpcEnumL3Sw> EnumL3SwitchAsync() => await Call<VpnRpcEnumL3Sw>("EnumL3Switch", new VpnRpcEnumL3Sw());
 
@@ -950,7 +950,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumL3Sw EnumL3Switch() => EnumL3SwitchAsync().Result;
 
         /// <summary>
-        /// Start a virtual layer-3 switch (Async mode)
+        /// Start Virtual Layer 3 Switch Operation (Async mode). Use this to start the operation of an existing Virtual Layer 3 Switch defined on the VPN Server whose operation is currently stopped. To get a list of existing Virtual Layer 3 Switches, use the EnumL3Switch API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. [Explanation on Virtual Layer 3 Switch Function] You can define Virtual Layer 3 Switches between multiple Virtual Hubs operating on this VPN Server and configure routing between different IP networks. [Caution about the Virtual Layer 3 Switch Function] The Virtual Layer 3 Switch functions are provided for network administrators and other people who know a lot about networks and IP routing. If you are using the regular VPN functions, you do not need to use the Virtual Layer 3 Switch functions. If the Virtual Layer 3 Switch functions are to be used, the person who configures them must have sufficient knowledge of IP routing and be perfectly capable of not impacting the network.
         /// </summary>
         public async Task<VpnRpcL3Sw> StartL3SwitchAsync(VpnRpcL3Sw input_param) => await Call<VpnRpcL3Sw>("StartL3Switch", input_param);
 
@@ -960,7 +960,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw StartL3Switch(VpnRpcL3Sw input_param) => StartL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Stop a virtual layer-3 switch (Async mode)
+        /// Stop Virtual Layer 3 Switch Operation (Async mode). Use this to stop the operation of an existing Virtual Layer 3 Switch defined on the VPN Server whose operation is currently operating. To get a list of existing Virtual Layer 3 Switches, use the EnumL3Switch API. To call this API, you must have VPN Server administrator privileges.
         /// </summary>
         public async Task<VpnRpcL3Sw> StopL3SwitchAsync(VpnRpcL3Sw input_param) => await Call<VpnRpcL3Sw>("StopL3Switch", input_param);
 
@@ -970,7 +970,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Sw StopL3Switch(VpnRpcL3Sw input_param) => StopL3SwitchAsync(input_param).Result;
 
         /// <summary>
-        /// Add new virtual interface on virtual L3 switch (Async mode)
+        /// Add Virtual Interface to Virtual Layer 3 Switch (Async mode). Use this to add to a specified Virtual Layer 3 Switch, a virtual interface that connects to a Virtual Hub operating on the same VPN Server. You can define multiple virtual interfaces and routing tables for a single Virtual Layer 3 Switch. A virtual interface is associated to a virtual Hub and operates as a single IP host on the Virtual Hub when that Virtual Hub is operating. When multiple virtual interfaces that respectively belong to a different IP network of a different Virtual Hub are defined, IP routing will be automatically performed between these interfaces. You must define the IP network space that the virtual interface belongs to and the IP address of the interface itself. Also, you must specify the name of the Virtual Hub that the interface will connect to. You can specify a Virtual Hub that currently doesn't exist for the Virtual Hub name. The virtual interface must have one IP address in the Virtual Hub. You also must specify the subnet mask of an IP network that the IP address belongs to. Routing via the Virtual Layer 3 Switches of IP spaces of multiple virtual Hubs operates based on the IP address is specified here. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the RouterStop API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3If> AddL3IfAsync(VpnRpcL3If input_param) => await Call<VpnRpcL3If>("AddL3If", input_param);
 
@@ -980,7 +980,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3If AddL3If(VpnRpcL3If input_param) => AddL3IfAsync(input_param).Result;
 
         /// <summary>
-        /// Delete a virtual interface on virtual L3 switch (Async mode)
+        /// Delete Virtual Interface of Virtual Layer 3 Switch (Async mode). Use this to delete a virtual interface already defined in the specified Virtual Layer 3 Switch. You can get a list of the virtual interfaces currently defined, by using the EnumL3If API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the StopL3Switch API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3If> DelL3IfAsync(VpnRpcL3If input_param) => await Call<VpnRpcL3If>("DelL3If", input_param);
 
@@ -990,7 +990,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3If DelL3If(VpnRpcL3If input_param) => DelL3IfAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate virtual interfaces on virtual L3 switch (Async mode)
+        /// Get List of Interfaces Registered on the Virtual Layer 3 Switch (Async mode). Use this to get a list of virtual interfaces when virtual interfaces have been defined on a specified Virtual Layer 3 Switch. You can define multiple virtual interfaces and routing tables for a single Virtual Layer 3 Switch. A virtual interface is associated to a virtual Hub and operates as a single IP host on the Virtual Hub when that Virtual Hub is operating. When multiple virtual interfaces that respectively belong to a different IP network of a different Virtual Hub are defined, IP routing will be automatically performed between these interfaces. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcEnumL3If> EnumL3IfAsync(VpnRpcEnumL3If input_param) => await Call<VpnRpcEnumL3If>("EnumL3If", input_param);
 
@@ -1000,7 +1000,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumL3If EnumL3If(VpnRpcEnumL3If input_param) => EnumL3IfAsync(input_param).Result;
 
         /// <summary>
-        /// Add new routing table entry on virtual L3 switch (Async mode)
+        /// Add Routing Table Entry for Virtual Layer 3 Switch (Async mode). Here you can add a new routing table entry to the routing table of the specified Virtual Layer 3 Switch. If the destination IP address of the IP packet does not belong to any IP network that belongs to a virtual interface, the IP routing engine of the Virtual Layer 3 Switch will reference the routing table and execute routing. You must specify the contents of the routing table entry to be added to the Virtual Layer 3 Switch. You must specify any IP address that belongs to the same IP network in the virtual interface of this Virtual Layer 3 Switch as the gateway address. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the StopL3Switch API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3Table> AddL3TableAsync(VpnRpcL3Table input_param) => await Call<VpnRpcL3Table>("AddL3Table", input_param);
 
@@ -1010,7 +1010,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Table AddL3Table(VpnRpcL3Table input_param) => AddL3TableAsync(input_param).Result;
 
         /// <summary>
-        /// Delete routing table entry on virtual L3 switch (Async mode)
+        /// Delete Routing Table Entry of Virtual Layer 3 Switch (Async mode). Use this to delete a routing table entry that is defined in the specified Virtual Layer 3 Switch. You can get a list of the already defined routing table entries by using the EnumL3Table API. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge. To execute this API, the target Virtual Layer 3 Switch must be stopped. If it is not stopped, first use the RouterStop API to stop it and then execute this API.
         /// </summary>
         public async Task<VpnRpcL3Table> DelL3TableAsync(VpnRpcL3Table input_param) => await Call<VpnRpcL3Table>("DelL3Table", input_param);
 
@@ -1020,7 +1020,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcL3Table DelL3Table(VpnRpcL3Table input_param) => DelL3TableAsync(input_param).Result;
 
         /// <summary>
-        /// Get routing table on virtual L3 switch (Async mode)
+        /// Get List of Routing Tables of Virtual Layer 3 Switch (Async mode). Use this to get a list of routing tables when routing tables have been defined on a specified Virtual Layer 3 Switch. If the destination IP address of the IP packet does not belong to any IP network that belongs to a virtual interface, the IP routing engine of the Virtual Layer 3 Switch will reference this routing table and execute routing. To call this API, you must have VPN Server administrator privileges. Also, this API does not operate on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcEnumL3Table> EnumL3TableAsync(VpnRpcEnumL3Table input_param) => await Call<VpnRpcEnumL3Table>("EnumL3Table", input_param);
 
@@ -1030,17 +1030,17 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumL3Table EnumL3Table(VpnRpcEnumL3Table input_param) => EnumL3TableAsync(input_param).Result;
 
         /// <summary>
-        /// Get CRL (Certificate Revocation List) index (Async mode)
+        /// Get List of Certificates Revocation List (Async mode). Use this to get a Certificates Revocation List that is set on the currently managed Virtual Hub. By registering certificates in the Certificates Revocation List, the clients who provide these certificates will be unable to connect to this Virtual Hub using certificate authentication mode. Normally with this function, in cases where the security of a private key has been compromised or where a person holding a certificate has been stripped of their privileges, by registering that certificate as invalid on the Virtual Hub, it is possible to deny user authentication when that certificate is used by a client to connect to the Virtual Hub. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcEnumCrl> EnumCrlAsync(VpnRpcEnumCrl input_param) => await Call<VpnRpcEnumCrl>("EnumCrl", input_param);
 
         /// <summary>
-        /// Get CRL (Certificate Revocation List) index (Sync mode)
+        /// xxx
         /// </summary>
         public VpnRpcEnumCrl EnumCrl(VpnRpcEnumCrl input_param) => EnumCrlAsync(input_param).Result;
 
         /// <summary>
-        /// Add new CRL (Certificate Revocation List) entry (Async mode)
+        /// Add a Revoked Certificate (Async mode). Use this to add a new revoked certificate definition in the Certificate Revocation List that is set on the currently managed Virtual Hub. Specify the contents to be registered in the Certificate Revocation List by using the parameters of this API. When a user connects to a Virtual Hub in certificate authentication mode and that certificate matches 1 or more of the contents registered in the certificates revocation list, the user is denied connection. A certificate that matches all the conditions that are defined by the parameters specified by this API will be judged as invalid. The items that can be set are as follows: Name (CN), Organization (O), Organization Unit (OU), Country (C), State (ST), Locale (L), Serial Number (hexadecimal), MD5 Digest Value (hexadecimal, 128 bit), and SHA-1 Digest Value (hexadecimal, 160 bit). For the specification of a digest value (hash value) a certificate is optionally specified depending on the circumstances. Normally when a MD5 or SHA-1 digest value is input, it is not necessary to input the other items. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCrl> AddCrlAsync(VpnRpcCrl input_param) => await Call<VpnRpcCrl>("AddCrl", input_param);
 
@@ -1050,7 +1050,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCrl AddCrl(VpnRpcCrl input_param) => AddCrlAsync(input_param).Result;
 
         /// <summary>
-        /// Delete CRL (Certificate Revocation List) entry (Async mode)
+        /// Delete a Revoked Certificate (Async mode). Use this to specify and delete a revoked certificate definition from the certificate revocation list that is set on the currently managed Virtual Hub. To get the list of currently registered revoked certificate definitions, use the EnumCrl API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCrl> DelCrlAsync(VpnRpcCrl input_param) => await Call<VpnRpcCrl>("DelCrl", input_param);
 
@@ -1060,7 +1060,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCrl DelCrl(VpnRpcCrl input_param) => DelCrlAsync(input_param).Result;
 
         /// <summary>
-        /// Get CRL (Certificate Revocation List) entry (Async mode)
+        /// Get a Revoked Certificate (Async mode). Use this to specify and get the contents of a revoked certificate definition from the Certificates Revocation List that is set on the currently managed Virtual Hub. To get the list of currently registered revoked certificate definitions, use the EnumCrl API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCrl> GetCrlAsync(VpnRpcCrl input_param) => await Call<VpnRpcCrl>("GetCrl", input_param);
 
@@ -1070,7 +1070,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCrl GetCrl(VpnRpcCrl input_param) => GetCrlAsync(input_param).Result;
 
         /// <summary>
-        /// Set CRL (Certificate Revocation List) entry (Async mode)
+        /// Change Existing CRL (Certificate Revocation List) Entry (Async mode). Use this to alter an existing revoked certificate definition in the Certificate Revocation List that is set on the currently managed Virtual Hub. Specify the contents to be registered in the Certificate Revocation List by using the parameters of this API. When a user connects to a Virtual Hub in certificate authentication mode and that certificate matches 1 or more of the contents registered in the certificates revocation list, the user is denied connection. A certificate that matches all the conditions that are defined by the parameters specified by this API will be judged as invalid. The items that can be set are as follows: Name (CN), Organization (O), Organization Unit (OU), Country (C), State (ST), Locale (L), Serial Number (hexadecimal), MD5 Digest Value (hexadecimal, 128 bit), and SHA-1 Digest Value (hexadecimal, 160 bit). For the specification of a digest value (hash value) a certificate is optionally specified depending on the circumstances. Normally when a MD5 or SHA-1 digest value is input, it is not necessary to input the other items. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcCrl> SetCrlAsync(VpnRpcCrl input_param) => await Call<VpnRpcCrl>("SetCrl", input_param);
 
@@ -1080,7 +1080,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcCrl SetCrl(VpnRpcCrl input_param) => SetCrlAsync(input_param).Result;
 
         /// <summary>
-        /// Set access control list (Async mode)
+        /// Add Rule to Source IP Address Limit List (Async mode). Use this to add a new rule to the Source IP Address Limit List that is set on the currently managed Virtual Hub. The items set here will be used to decide whether to allow or deny connection from a VPN Client when this client attempts connection to the Virtual Hub. You can specify a client IP address, or IP address or mask to match the rule as the contents of the rule item. By specifying an IP address only, there will only be one specified computer that will match the rule, but by specifying an IP net mask address or subnet mask address, all the computers in the range of that subnet will match the rule. You can specify the priority for the rule. You can specify an integer of 1 or greater for the priority and the smaller the number, the higher the priority. To get a list of the currently registered Source IP Address Limit List, use the GetAcList API. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcAcList> SetAcListAsync(VpnRpcAcList input_param) => await Call<VpnRpcAcList>("SetAcList", input_param);
 
@@ -1090,7 +1090,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAcList SetAcList(VpnRpcAcList input_param) => SetAcListAsync(input_param).Result;
 
         /// <summary>
-        /// Get access control list (Async mode)
+        /// Get List of Rule Items of Source IP Address Limit List (Async mode). Use this to get a list of Source IP Address Limit List rules that is set on the currently managed Virtual Hub. You can allow or deny VPN connections to this Virtual Hub according to the client computer's source IP address. You can define multiple rules and set a priority for each rule. The search proceeds from the rule with the highest order or priority and based on the action of the rule that the IP address first matches, the connection from the client is either allowed or denied. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcAcList> GetAcListAsync(VpnRpcAcList input_param) => await Call<VpnRpcAcList>("GetAcList", input_param);
 
@@ -1100,7 +1100,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAcList GetAcList(VpnRpcAcList input_param) => GetAcListAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate log files (Async mode)
+        /// Get List of Log Files (Async mode). Use this to display a list of log files outputted by the VPN Server that have been saved on the VPN Server computer. By specifying a log file file name displayed here and calling it using the ReadLogFile API you can download the contents of the log file. If you are connected to the VPN Server in server admin mode, you can display or download the packet logs and security logs of all Virtual Hubs and the server log of the VPN Server. When connected in Virtual Hub Admin Mode, you are able to view or download only the packet log and security log of the Virtual Hub that is the target of management.
         /// </summary>
         public async Task<VpnRpcEnumLogFile> EnumLogFileAsync() => await Call<VpnRpcEnumLogFile>("EnumLogFile", new VpnRpcEnumLogFile());
 
@@ -1110,7 +1110,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumLogFile EnumLogFile() => EnumLogFileAsync().Result;
 
         /// <summary>
-        /// Read a log file (Async mode)
+        /// Download a part of Log File (Async mode). Use this to download the log file that is saved on the VPN Server computer. To download the log file first get the list of log files using the EnumLogFile API and then download the log file using the ReadLogFile API. If you are connected to the VPN Server in server admin mode, you can display or download the packet logs and security logs of all Virtual Hubs and the server log of the VPN Server. When connected in Virtual Hub Admin Mode, you are able to view or download only the packet log and security log of the Virtual Hub that is the target of management.
         /// </summary>
         public async Task<VpnRpcReadLogFile> ReadLogFileAsync(VpnRpcReadLogFile input_param) => await Call<VpnRpcReadLogFile>("ReadLogFile", input_param);
 
@@ -1120,7 +1120,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcReadLogFile ReadLogFile(VpnRpcReadLogFile input_param) => ReadLogFileAsync(input_param).Result;
 
         /// <summary>
-        /// Set syslog function setting (Async mode)
+        /// Set syslog Send Function (Async mode). Use this to set the usage of syslog send function and which syslog server to use.
         /// </summary>
         public async Task<VpnSyslogSetting> SetSysLogAsync(VpnSyslogSetting input_param) => await Call<VpnSyslogSetting>("SetSysLog", input_param);
 
@@ -1130,7 +1130,7 @@ namespace SoftEther.VPNServerRpc
         public VpnSyslogSetting SetSysLog(VpnSyslogSetting input_param) => SetSysLogAsync(input_param).Result;
 
         /// <summary>
-        /// Get syslog function setting (Async mode)
+        /// Get syslog Send Function (Async mode). This allows you to get the current setting contents of the syslog send function. You can get the usage setting of the syslog function and the host name and port number of the syslog server to use.
         /// </summary>
         public async Task<VpnSyslogSetting> GetSysLogAsync(VpnSyslogSetting input_param) => await Call<VpnSyslogSetting>("GetSysLog", input_param);
 
@@ -1140,7 +1140,7 @@ namespace SoftEther.VPNServerRpc
         public VpnSyslogSetting GetSysLog(VpnSyslogSetting input_param) => GetSysLogAsync(input_param).Result;
 
         /// <summary>
-        /// Set message of today on hub (Async mode)
+        /// Set Today's Message of Virtual Hub (Async mode). The message will be displayed on VPN Client UI when a user will establish a connection to the Virtual Hub.
         /// </summary>
         public async Task<VpnRpcMsg> SetHubMsgAsync(VpnRpcMsg input_param) => await Call<VpnRpcMsg>("SetHubMsg", input_param);
 
@@ -1150,7 +1150,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcMsg SetHubMsg(VpnRpcMsg input_param) => SetHubMsgAsync(input_param).Result;
 
         /// <summary>
-        /// Get message of today on hub (Async mode)
+        /// Get Today's Message of Virtual Hub (Async mode). The message will be displayed on VPN Client UI when a user will establish a connection to the Virtual Hub.
         /// </summary>
         public async Task<VpnRpcMsg> GetHubMsgAsync(VpnRpcMsg input_param) => await Call<VpnRpcMsg>("GetHubMsg", input_param);
 
@@ -1160,7 +1160,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcMsg GetHubMsg(VpnRpcMsg input_param) => GetHubMsgAsync(input_param).Result;
 
         /// <summary>
-        /// Do Crash (Async mode)
+        /// Raise a error on the VPN Server / Bridge to terminate the process forcefully (Async mode). This API will raise a fatal error (memory access violation) on the VPN Server / Bridge running process in order to crash the process. As the result, VPN Server / Bridge will be terminated and restarted if it is running as a service mode. If the VPN Server is running as a user mode, the process will not automatically restarted. This API is for a situation when the VPN Server / Bridge is under a non-recoverable error or the process is in an infinite loop. This API will disconnect all VPN Sessions on the VPN Server / Bridge. All unsaved settings in the memory of VPN Server / Bridge will be lost. Before run this API, call the Flush API to try to save volatile data to the configuration file. To execute this API, you must have VPN Server / VPN Bridge administrator privileges.
         /// </summary>
         public async Task<VpnRpcTest> CrashAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("Crash", input_param);
 
@@ -1170,7 +1170,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest Crash(VpnRpcTest input_param) => CrashAsync(input_param).Result;
 
         /// <summary>
-        /// Get message for administrators (Async mode)
+        /// Get the message for administrators (Async mode).
         /// </summary>
         public async Task<VpnRpcMsg> GetAdminMsgAsync() => await Call<VpnRpcMsg>("GetAdminMsg", new VpnRpcMsg());
 
@@ -1185,12 +1185,12 @@ namespace SoftEther.VPNServerRpc
         public async Task<VpnRpcTest> FlushAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("Flush", input_param);
 
         /// <summary>
-        /// Flush configuration file (Sync mode)
+        /// Save All Volatile Data of VPN Server / Bridge to the Configuration File (Sync mode). The number of configuration file bytes will be returned as the "IntValue" parameter. Normally, the VPN Server / VPN Bridge retains the volatile configuration data in memory. It is flushed to the disk as vpn_server.config or vpn_bridge.config periodically. The period is 300 seconds (5 minutes) by default. (The period can be altered by modifying the AutoSaveConfigSpan item in the configuration file.) The data will be saved on the timing of shutting down normally of the VPN Server / Bridge. Execute the Flush API to make the VPN Server / Bridge save the settings to the file immediately. The setting data will be stored on the disk drive of the server computer. Use the Flush API in a situation that you do not have an enough time to shut down the server process normally. To call this API, you must have VPN Server administrator privileges. To execute this API, you must have VPN Server / VPN Bridge administrator privileges.
         /// </summary>
         public VpnRpcTest Flush(VpnRpcTest input_param) => FlushAsync(input_param).Result;
 
         /// <summary>
-        /// Set IPsec service configuration (Async mode)
+        /// Enable or Disable IPsec VPN Server Function (Async mode). Enable or Disable IPsec VPN Server Function on the VPN Server. If you enable this function, Virtual Hubs on the VPN Server will be able to accept Remote-Access VPN connections from L2TP-compatible PCs, Mac OS X and Smartphones, and also can accept EtherIP Site-to-Site VPN Connection. VPN Connections from Smartphones suchlike iPhone, iPad and Android, and also from native VPN Clients on Mac OS X and Windows can be accepted. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnIPsecServices> SetIPsecServicesAsync(VpnIPsecServices input_param) => await Call<VpnIPsecServices>("SetIPsecServices", input_param);
 
@@ -1200,7 +1200,7 @@ namespace SoftEther.VPNServerRpc
         public VpnIPsecServices SetIPsecServices(VpnIPsecServices input_param) => SetIPsecServicesAsync(input_param).Result;
 
         /// <summary>
-        /// Get IPsec service configuration (Async mode)
+        /// Get the Current IPsec VPN Server Settings (Async mode). Get and view the current IPsec VPN Server settings on the VPN Server. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnIPsecServices> GetIPsecServicesAsync() => await Call<VpnIPsecServices>("GetIPsecServices", new VpnIPsecServices());
 
@@ -1210,7 +1210,7 @@ namespace SoftEther.VPNServerRpc
         public VpnIPsecServices GetIPsecServices() => GetIPsecServicesAsync().Result;
 
         /// <summary>
-        /// Add EtherIP ID setting (Async mode)
+        /// Add New EtherIP / L2TPv3 over IPsec Client Setting to Accept EthreIP / L2TPv3 Client Devices (Async mode). Add a new setting entry to enable the EtherIP / L2TPv3 over IPsec Server Function to accept client devices. In order to accept connections from routers by the EtherIP / L2TPv3 over IPsec Server Function, you have to define the relation table between an IPsec Phase 1 string which is presented by client devices of EtherIP / L2TPv3 over IPsec compatible router, and the designation of the destination Virtual Hub. After you add a definition entry by AddEtherIpId API, the defined connection setting to the Virtual Hub will be applied on the login-attepting session from an EtherIP / L2TPv3 over IPsec client device. The username and password in an entry must be registered on the Virtual Hub. An EtherIP / L2TPv3 client will be regarded as it connected the Virtual HUB with the identification of the above user information. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnEtherIpId> AddEtherIpIdAsync(VpnEtherIpId input_param) => await Call<VpnEtherIpId>("AddEtherIpId", input_param);
 
@@ -1220,7 +1220,7 @@ namespace SoftEther.VPNServerRpc
         public VpnEtherIpId AddEtherIpId(VpnEtherIpId input_param) => AddEtherIpIdAsync(input_param).Result;
 
         /// <summary>
-        /// Get EtherIP ID setting (Async mode)
+        /// Get the Current List of EtherIP / L2TPv3 Client Device Entry Definitions (Async mode). This API gets and shows the list of entries to accept VPN clients by EtherIP / L2TPv3 over IPsec Function. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnEtherIpId> GetEtherIpIdAsync(VpnEtherIpId input_param) => await Call<VpnEtherIpId>("GetEtherIpId", input_param);
 
@@ -1230,7 +1230,7 @@ namespace SoftEther.VPNServerRpc
         public VpnEtherIpId GetEtherIpId(VpnEtherIpId input_param) => GetEtherIpIdAsync(input_param).Result;
 
         /// <summary>
-        /// Delete EtherIP ID setting (Async mode)
+        /// Delete an EtherIP / L2TPv3 over IPsec Client Setting (Async mode). This API deletes an entry to accept VPN clients by EtherIP / L2TPv3 over IPsec Function. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnEtherIpId> DeleteEtherIpIdAsync(VpnEtherIpId input_param) => await Call<VpnEtherIpId>("DeleteEtherIpId", input_param);
 
@@ -1240,7 +1240,7 @@ namespace SoftEther.VPNServerRpc
         public VpnEtherIpId DeleteEtherIpId(VpnEtherIpId input_param) => DeleteEtherIpIdAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate EtherIP ID settings (Async mode)
+        /// Get the Current List of EtherIP / L2TPv3 Client Device Entry Definitions (Async mode). This API gets and shows the list of entries to accept VPN clients by EtherIP / L2TPv3 over IPsec Function. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcEnumEtherIpId> EnumEtherIpIdAsync() => await Call<VpnRpcEnumEtherIpId>("EnumEtherIpId", new VpnRpcEnumEtherIpId());
 
@@ -1250,7 +1250,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcEnumEtherIpId EnumEtherIpId() => EnumEtherIpIdAsync().Result;
 
         /// <summary>
-        /// Set configurations for OpenVPN and SSTP (Async mode)
+        /// Set Settings for OpenVPN Clone Server Function (Async mode). The VPN Server has the clone functions of OpenVPN software products by OpenVPN Technologies, Inc. Any OpenVPN Clients can connect to this VPN Server. The manner to specify a username to connect to the Virtual Hub, and the selection rule of default Hub by using this clone server functions are same to the IPsec Server functions. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnOpenVpnSstpConfig> SetOpenVpnSstpConfigAsync(VpnOpenVpnSstpConfig input_param) => await Call<VpnOpenVpnSstpConfig>("SetOpenVpnSstpConfig", input_param);
 
@@ -1260,7 +1260,7 @@ namespace SoftEther.VPNServerRpc
         public VpnOpenVpnSstpConfig SetOpenVpnSstpConfig(VpnOpenVpnSstpConfig input_param) => SetOpenVpnSstpConfigAsync(input_param).Result;
 
         /// <summary>
-        /// Get configurations for OpenVPN and SSTP (Async mode)
+        /// Get the Current Settings of OpenVPN Clone Server Function (Async mode). Get and show the current settings of OpenVPN Clone Server Function. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnOpenVpnSstpConfig> GetOpenVpnSstpConfigAsync() => await Call<VpnOpenVpnSstpConfig>("GetOpenVpnSstpConfig", new VpnOpenVpnSstpConfig());
 
@@ -1270,7 +1270,7 @@ namespace SoftEther.VPNServerRpc
         public VpnOpenVpnSstpConfig GetOpenVpnSstpConfig() => GetOpenVpnSstpConfigAsync().Result;
 
         /// <summary>
-        /// Get status of DDNS client (Async mode)
+        /// Show the Current Status of Dynamic DNS Function (Async mode). Get and show the current status of the Dynamic DNS function. The Dynamic DNS assigns a unique and permanent DNS hostname for this VPN Server. You can use that hostname to specify this VPN Server on the settings for VPN Client and VPN Bridge. You need not to register and keep a domain name. Also, if your ISP assignes you a dynamic (not-fixed) IP address, the corresponding IP address of your Dynamic DNS hostname will be automatically changed. It enables you to keep running the VPN Server by using only a dynamic IP address. Therefore, you need not any longer to keep static global IP addresses with expenses monthly costs. [Caution] To disable the Dynamic DNS Function, modify the configuration file of VPN Server. The "declare root" directive has the "declare DDnsClient" directive. In this directive, you can switch "bool Disable" from false to true, and reboot the VPN Server, then the Dynamic DNS Function will be disabled. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge.
         /// </summary>
         public async Task<VpnDDnsClientStatus> GetDDnsClientStatusAsync() => await Call<VpnDDnsClientStatus>("GetDDnsClientStatus", new VpnDDnsClientStatus());
 
@@ -1280,7 +1280,7 @@ namespace SoftEther.VPNServerRpc
         public VpnDDnsClientStatus GetDDnsClientStatus() => GetDDnsClientStatusAsync().Result;
 
         /// <summary>
-        /// Change host-name for DDNS client (Async mode)
+        /// Set the Dynamic DNS Hostname (Async mode). You can use this API to change the hostname assigned by the Dynamic DNS function. The currently assigned hostname can be showen by the GetDDnsClientStatus API. The Dynamic DNS assigns a unique and permanent DNS hostname for this VPN Server. You can use that hostname to specify this VPN Server on the settings for VPN Client and VPN Bridge. You need not to register and keep a domain name. Also, if your ISP assignes you a dynamic (not-fixed) IP address, the corresponding IP address of your Dynamic DNS hostname will be automatically changed. It enables you to keep running the VPN Server by using only a dynamic IP address. Therefore, you need not any longer to keep static global IP addresses with expenses monthly costs. [Caution] To disable the Dynamic DNS Function, modify the configuration file of VPN Server. The "declare root" directive has the "declare DDnsClient" directive. In this directive, you can switch "bool Disable" from false to true, and reboot the VPN Server, then the Dynamic DNS Function will be disabled. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcTest> ChangeDDnsClientHostnameAsync(VpnRpcTest input_param) => await Call<VpnRpcTest>("ChangeDDnsClientHostname", input_param);
 
@@ -1290,7 +1290,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest ChangeDDnsClientHostname(VpnRpcTest input_param) => ChangeDDnsClientHostnameAsync(input_param).Result;
 
         /// <summary>
-        /// Regenerate server certification (Async mode)
+        /// Generate New Self-Signed Certificate with Specified CN (Common Name) and Register on VPN Server (Async mode). You can use this API to replace the current certificate on the VPN Server to a new self-signed certificate which has the CN (Common Name) value in the fields. This API is convenient if you are planning to use Microsoft SSTP VPN Clone Server Function. Because of the value of CN (Common Name) on the SSL certificate of VPN Server must match to the hostname specified on the SSTP VPN client. This API will delete the existing SSL certificate of the VPN Server. It is recommended to backup the current SSL certificate and private key by using the ServerKeyGet API beforehand. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcTest> RegenerateServerCertAsync() => await Call<VpnRpcTest>("RegenerateServerCert", new VpnRpcTest());
 
@@ -1300,7 +1300,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcTest RegenerateServerCert() => RegenerateServerCertAsync().Result;
 
         /// <summary>
-        /// Generate OpenVPN configuration files (Async mode)
+        /// Generate a Sample Setting File for OpenVPN Client (Async mode). Originally, the OpenVPN Client requires a user to write a very difficult configuration file manually. This API helps you to make a useful configuration sample. What you need to generate the configuration file for the OpenVPN Client is to run this API. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcReadLogFile> MakeOpenVpnConfigFileAsync() => await Call<VpnRpcReadLogFile>("MakeOpenVpnConfigFile", new VpnRpcReadLogFile());
 
@@ -1310,7 +1310,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcReadLogFile MakeOpenVpnConfigFile() => MakeOpenVpnConfigFileAsync().Result;
 
         /// <summary>
-        /// Set special listener status (Async mode)
+        /// Enable / Disable the VPN over ICMP / VPN over DNS Server Function (Async mode). You can establish a VPN only with ICMP or DNS packets even if there is a firewall or routers which blocks TCP/IP communications. You have to enable the following functions beforehand. Warning: Use this function for emergency only. It is helpful when a firewall or router is misconfigured to blocks TCP/IP, but either ICMP or DNS is not blocked. It is not for long-term stable using. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcSpecialListener> SetSpecialListenerAsync(VpnRpcSpecialListener input_param) => await Call<VpnRpcSpecialListener>("SetSpecialListener", input_param);
 
@@ -1320,7 +1320,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSpecialListener SetSpecialListener(VpnRpcSpecialListener input_param) => SetSpecialListenerAsync(input_param).Result;
 
         /// <summary>
-        /// Get special listener status (Async mode)
+        /// Get Current Setting of the VPN over ICMP / VPN over DNS Function (Async mode). Get and show the current VPN over ICMP / VPN over DNS Function status. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge.
         /// </summary>
         public async Task<VpnRpcSpecialListener> GetSpecialListenerAsync() => await Call<VpnRpcSpecialListener>("GetSpecialListener", new VpnRpcSpecialListener());
 
@@ -1330,7 +1330,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcSpecialListener GetSpecialListener() => GetSpecialListenerAsync().Result;
 
         /// <summary>
-        /// Get Azure status (Async mode)
+        /// Show the current status of VPN Azure function (Async mode). Get and show the current status of the VPN Azure function. VPN Azure makes it easier to establish a VPN Session from your home PC to your office PC. While a VPN connection is established, you can access to any other servers on the private network of your company. You don't need a global IP address on the office PC (VPN Server). It can work behind firewalls or NATs. No network administrator's configuration required. You can use the built-in SSTP-VPN Client of Windows in your home PC. VPN Azure is a cloud VPN service operated by SoftEther Corporation. VPN Azure is free of charge and available to anyone. Visit http://www.vpnazure.net/ to see details and how-to-use instructions. The VPN Azure hostname is same to the hostname of the Dynamic DNS setting, but altering the domain suffix to "vpnazure.net". To change the hostname use the ChangeDDnsClientHostname API. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcAzureStatus> GetAzureStatusAsync() => await Call<VpnRpcAzureStatus>("GetAzureStatus", new VpnRpcAzureStatus());
 
@@ -1340,7 +1340,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAzureStatus GetAzureStatus() => GetAzureStatusAsync().Result;
 
         /// <summary>
-        /// Set Azure status (Async mode)
+        /// Enable / Disable VPN Azure Function (Async mode). Enable or disable the VPN Azure function. VPN Azure makes it easier to establish a VPN Session from your home PC to your office PC. While a VPN connection is established, you can access to any other servers on the private network of your company. You don't need a global IP address on the office PC (VPN Server). It can work behind firewalls or NATs. No network administrator's configuration required. You can use the built-in SSTP-VPN Client of Windows in your home PC. VPN Azure is a cloud VPN service operated by SoftEther Corporation. VPN Azure is free of charge and available to anyone. Visit http://www.vpnazure.net/ to see details and how-to-use instructions. The VPN Azure hostname is same to the hostname of the Dynamic DNS setting, but altering the domain suffix to "vpnazure.net". To change the hostname use the ChangeDDnsClientHostname API. To call this API, you must have VPN Server administrator privileges. This API cannot be invoked on VPN Bridge. You cannot execute this API for Virtual Hubs of VPN Servers operating as a cluster.
         /// </summary>
         public async Task<VpnRpcAzureStatus> SetAzureStatusAsync(VpnRpcAzureStatus input_param) => await Call<VpnRpcAzureStatus>("SetAzureStatus", input_param);
 
@@ -1350,7 +1350,7 @@ namespace SoftEther.VPNServerRpc
         public VpnRpcAzureStatus SetAzureStatus(VpnRpcAzureStatus input_param) => SetAzureStatusAsync(input_param).Result;
 
         /// <summary>
-        /// Get DDNS proxy configuration (Async mode)
+        /// Get the Proxy Settings for Connecting to the DDNS server (Async mode).
         /// </summary>
         public async Task<VpnInternetSetting> GetDDnsInternetSettngAsync() => await Call<VpnInternetSetting>("GetDDnsInternetSettng", new VpnInternetSetting());
 
@@ -1365,7 +1365,7 @@ namespace SoftEther.VPNServerRpc
         public async Task<VpnInternetSetting> SetDDnsInternetSettngAsync(VpnInternetSetting input_param) => await Call<VpnInternetSetting>("SetDDnsInternetSettng", input_param);
 
         /// <summary>
-        /// Set DDNS proxy configuration (Sync mode)
+        /// Set the Proxy Settings for Connecting to the DDNS server (Async mode).
         /// </summary>
         public VpnInternetSetting SetDDnsInternetSettng(VpnInternetSetting input_param) => SetDDnsInternetSettngAsync(input_param).Result;
 
@@ -1375,12 +1375,12 @@ namespace SoftEther.VPNServerRpc
         public async Task<VpnVgsConfig> SetVgsConfigAsync(VpnVgsConfig input_param) => await Call<VpnVgsConfig>("SetVgsConfig", input_param);
 
         /// <summary>
-        /// Setting VPN Gate Server Configuration (Sync mode)
+        /// Set the VPN Gate Server Configuration (Sync mode). This API is valid for Win32 binary distribution of the Stable Edition of SoftEther VPN Server.
         /// </summary>
         public VpnVgsConfig SetVgsConfig(VpnVgsConfig input_param) => SetVgsConfigAsync(input_param).Result;
 
         /// <summary>
-        /// Get VPN Gate configuration (Async mode)
+        /// Get the VPN Gate Server Configuration (Sync mode). This API is valid for Win32 binary distribution of the Stable Edition of SoftEther VPN Server.
         /// </summary>
         public async Task<VpnVgsConfig> GetVgsConfigAsync() => await Call<VpnVgsConfig>("GetVgsConfig", new VpnVgsConfig());
 
