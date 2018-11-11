@@ -184,7 +184,7 @@ namespace SoftEther.JsonRpc
             this.TimeoutMsecs = DefaultTimeoutMsecs;
         }
 
-        public async Task<string> CallInternal<TResult>(string method_name, object param)
+        public async Task<string> CallInternalAsync(string method_name, object param)
         {
             string id = DateTime.Now.Ticks.ToString();
 
@@ -225,9 +225,9 @@ namespace SoftEther.JsonRpc
             return ret_string;
         }
 
-        public async Task<TResult> Call<TResult>(string method_name, object param)
+        public async Task<TResult> CallAsync<TResult>(string method_name, object param)
         {
-            string ret_string = await CallInternal<TResult>(method_name, param);
+            string ret_string = await CallInternalAsync(method_name, param);
 
             JsonRpcResponse <TResult> ret = ret_string.JsonToObject<JsonRpcResponse<TResult>>();
 
