@@ -152,12 +152,12 @@ namespace SoftEther.VPNClientRpc
         public VpnRpcUseSecure GetUseSecure(VpnRpcUseSecure input_param) => GetUseSecureAsync(input_param).Result;
 
         /// <summary>
-        /// Enumerate objects in the secure device (Async mode)
+        /// Do not use: obsolete (Async mode)
         /// </summary>
         public async Task<VpnRpcEnumObjectInSecure> EnumObjectInSecureAsync(VpnRpcEnumObjectInSecure input_param) => await CallAsync<VpnRpcEnumObjectInSecure>("EnumObjectInSecure", input_param);
 
         /// <summary>
-        /// Enumerate objects in the secure device (Sync mode)
+        /// Do not use: obsolete (Sync mode)
         /// </summary>
         public VpnRpcEnumObjectInSecure EnumObjectInSecure(VpnRpcEnumObjectInSecure input_param) => EnumObjectInSecureAsync(input_param).Result;
 
@@ -300,86 +300,6 @@ namespace SoftEther.VPNClientRpc
         /// Get the issuer (Sync mode)
         /// </summary>
         public VpnRpcGetIssuer GetIssuer(VpnRpcGetIssuer input_param) => GetIssuerAsync(input_param).Result;
-
-        /// <summary>
-        /// Get VPN Gate list (Async mode)
-        /// </summary>
-        public async Task<VpnVghostlist> VgcGetListAsync(VpnVghostlist input_param) => await CallAsync<VpnVghostlist>("VgcGetList", input_param);
-
-        /// <summary>
-        /// Get VPN Gate list (Sync mode)
-        /// </summary>
-        public VpnVghostlist VgcGetList(VpnVghostlist input_param) => VgcGetListAsync(input_param).Result;
-
-        /// <summary>
-        /// Refresh VPN Gate list (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> VgcRefreshListAsync(VpnRpcTest input_param) => await CallAsync<VpnRpcTest>("VgcRefreshList", input_param);
-
-        /// <summary>
-        /// Refresh VPN Gate list (Sync mode)
-        /// </summary>
-        public VpnRpcTest VgcRefreshList(VpnRpcTest input_param) => VgcRefreshListAsync(input_param).Result;
-
-        /// <summary>
-        /// Get status of VPN Gate list (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> VgcGetListStatusAsync(VpnRpcTest input_param) => await CallAsync<VpnRpcTest>("VgcGetListStatus", input_param);
-
-        /// <summary>
-        /// Get status of VPN Gate list (Sync mode)
-        /// </summary>
-        public VpnRpcTest VgcGetListStatus(VpnRpcTest input_param) => VgcGetListStatusAsync(input_param).Result;
-
-        /// <summary>
-        /// Get configuration of VPN Gate (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> VgcGetConfigAsync(VpnRpcTest input_param) => await CallAsync<VpnRpcTest>("VgcGetConfig", input_param);
-
-        /// <summary>
-        /// Get configuration of VPN Gate (Sync mode)
-        /// </summary>
-        public VpnRpcTest VgcGetConfig(VpnRpcTest input_param) => VgcGetConfigAsync(input_param).Result;
-
-        /// <summary>
-        /// Set the configuration of the VPN Gate (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> VgcSetConfigAsync(VpnRpcTest input_param) => await CallAsync<VpnRpcTest>("VgcSetConfig", input_param);
-
-        /// <summary>
-        /// Set the configuration of the VPN Gate (Sync mode)
-        /// </summary>
-        public VpnRpcTest VgcSetConfig(VpnRpcTest input_param) => VgcSetConfigAsync(input_param).Result;
-
-        /// <summary>
-        /// Start connection to VPN Gate (Async mode)
-        /// </summary>
-        public async Task<VpnRpcTest> VgcConnectAsync(VpnRpcTest input_param) => await CallAsync<VpnRpcTest>("VgcConnect", input_param);
-
-        /// <summary>
-        /// Start connection to VPN Gate (Sync mode)
-        /// </summary>
-        public VpnRpcTest VgcConnect(VpnRpcTest input_param) => VgcConnectAsync(input_param).Result;
-
-        /// <summary>
-        /// Get the common proxy settings (Async mode)
-        /// </summary>
-        public async Task<VpnInternetSetting> GetCommonProxySettingAsync(VpnInternetSetting input_param) => await CallAsync<VpnInternetSetting>("GetCommonProxySetting", input_param);
-
-        /// <summary>
-        /// Get the common proxy settings (Sync mode)
-        /// </summary>
-        public VpnInternetSetting GetCommonProxySetting(VpnInternetSetting input_param) => GetCommonProxySettingAsync(input_param).Result;
-
-        /// <summary>
-        /// Set the common proxy settings (Async mode)
-        /// </summary>
-        public async Task<VpnInternetSetting> SetCommonProxySettingAsync(VpnInternetSetting input_param) => await CallAsync<VpnInternetSetting>("SetCommonProxySetting", input_param);
-
-        /// <summary>
-        /// Set the common proxy settings (Sync mode)
-        /// </summary>
-        public VpnInternetSetting SetCommonProxySetting(VpnInternetSetting input_param) => SetCommonProxySettingAsync(input_param).Result;
 
         /// <summary>
         /// Configure the account (Async mode)

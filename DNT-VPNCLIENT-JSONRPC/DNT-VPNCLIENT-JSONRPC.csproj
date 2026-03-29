@@ -6,6 +6,7 @@
     <RootNamespace>DNT_VPN_JSONRPC</RootNamespace>
     <NuGetAudit>false</NuGetAudit>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   
   <ItemGroup>
