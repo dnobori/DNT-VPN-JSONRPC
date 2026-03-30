@@ -12,10 +12,6 @@ namespace DNT_VPN_JSONRPC
     {
         VpnClientRpc Rpc;
 
-        Random rand = new Random();
-
-        string hub_name;
-
         public VPNRPCTest()
         {
             Rpc = new VpnClientRpc("127.0.0.1", 9999, "microsoft", "");

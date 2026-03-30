@@ -14,7 +14,7 @@ using SoftEther.JsonRpc;
 namespace SoftEther.VPNClientRpc
 {
     /// <summary>
-    /// A data structure that stores the result of retrieving the VPN Client version information.
+    /// A data structure that stores the result of retrieving the VPN Client version information
     /// </summary>
     public class VpnRpcClientVersion
     {
@@ -96,7 +96,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// VPN Client Password Setting (for set direction)
+    /// VPN Client Password Setting
     /// </summary>
     public class VpnRpcClientPassword
     {
@@ -112,7 +112,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// VPN Client Password Setting (for get direction)
+    /// VPN Client Password Setting
     /// </summary>
     public class VpnRpcClientPasswordSetting
     {
@@ -133,7 +133,7 @@ namespace SoftEther.VPNClientRpc
     public class VpnRpcClientEnumCAItem
     {
         /// <summary>
-        /// Certificate key
+        /// Certificate key (internal 32-bit ID)
         /// </summary>
         public uint Key_u32;
 
@@ -164,13 +164,13 @@ namespace SoftEther.VPNClientRpc
         public uint NumItem_u32;
 
         /// <summary>
-        /// Item
+        /// Item list
         /// </summary>
         public VpnRpcClientEnumCAItem[] CAList;
     }
 
     /// <summary>
-    /// Certificate item
+    /// A X.509 certificate item
     /// </summary>
     public class VpnRpcCert
     {
@@ -186,7 +186,7 @@ namespace SoftEther.VPNClientRpc
     public class VpnRpcClientDeleteCA
     {
         /// <summary>
-        /// Certificate key
+        /// Certificate key (internal 32-bit ID)
         /// </summary>
         public uint Key_u32;
     }
@@ -197,7 +197,7 @@ namespace SoftEther.VPNClientRpc
     public class VpnRpcGetCA
     {
         /// <summary>
-        /// Certificate key
+        /// Certificate key (internal 32-bit ID)
         /// </summary>
         public uint Key_u32;
 
@@ -208,17 +208,17 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Secure device enumeration item
+    /// security device enumeration item
     /// </summary>
     public class VpnRpcClientEnumSecureItem
     {
         /// <summary>
-        /// Device ID
+        /// Device ID (internal 32-bit ID)
         /// </summary>
         public uint DeviceId_u32;
 
         /// <summary>
-        /// Type
+        /// Device type
         /// </summary>
         public uint Type_u32;
 
@@ -234,7 +234,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Enumeration of secure devices
+    /// Enumeration of security devices
     /// </summary>
     public class VpnRpcClientEnumSecure
     {
@@ -244,13 +244,13 @@ namespace SoftEther.VPNClientRpc
         public uint NumItem_u32;
 
         /// <summary>
-        /// Item
+        /// Items list
         /// </summary>
         public VpnRpcClientEnumSecureItem[] SecureDeviceList;
     }
 
     /// <summary>
-    /// Specify a secure device
+    /// Specify a security device
     /// </summary>
     public class VpnRpcUseSecure
     {
@@ -260,6 +260,9 @@ namespace SoftEther.VPNClientRpc
         public uint DeviceId_u32;
     }
 
+    /// <summary>
+    /// An security device item
+    /// </summary>
     public class VpnRpcEnumObjectInSecureItem
     {
         /// <summary>
@@ -274,7 +277,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Enumerate objects in the secure device
+    /// Enumerate objects in the security device
     /// </summary>
     public class VpnRpcEnumObjectInSecure
     {
@@ -292,7 +295,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Create a virtual LAN
+    /// Specify an Virtual Network Adapter
     /// </summary>
     public class VpnRpcClientCreateVlan
     {
@@ -739,11 +742,6 @@ namespace SoftEther.VPNClientRpc
         /// Last connection date and time (Ver 3.0 or later)
         /// </summary>
         public DateTime LastConnectDateTime_dt;
-
-        ///// <summary>
-        ///// Temporary data
-        ///// </summary>
-        //public uint tmp1_u32;
     }
 
     /// <summary>
@@ -774,7 +772,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Get the issuer
+    /// Get the issuer of a specified certificate
     /// </summary>
     public class VpnRpcGetIssuer
     {
@@ -790,7 +788,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Test
+    /// Test RPC parameter
     /// </summary>
     public class VpnRpcTest
     {
@@ -804,7 +802,7 @@ namespace SoftEther.VPNClientRpc
     }
 
     /// <summary>
-    /// Get the account
+    /// Get an account object
     /// </summary>
     public class VpnRpcClientGetAccount
     {
